@@ -1,0 +1,41 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 3.4.Otros Modelos para Análisis de Datos
+
+blabla  
+
+## 3.4.1.Selección de Pruebas Estadísticas
+
+bla  
+chunk
+
+## 3.4.2.MANOVA
+
+bla  
+chunk
+
+## 3.4.3.Regresión Logística
+
+bla  
+chunk
+
+## 3.4.4.Ordenación
+
+bla  
+chunk
+
+## 3.4.5.Análisis de Datos Espaciales
+
+bla  
+chunk
+

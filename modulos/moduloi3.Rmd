@@ -1,0 +1,41 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 2.3.La Distribución Normal
+
+blabla
+
+## 2.3.1.Propiedades de la Distribución Normal
+
+bla  
+chunk  
+
+## 2.3.2.Transformación Z
+
+bla
+chunk
+
+## 2.3.3.Distribución de la Muestra
+
+bla  
+chunk  
+
+## 2.3.4.Pruebas de Normalidad
+
+bla  
+cunk  
+
+## 2.3.5.Aproximación a la Distribución Binomial
+
+bla  
+chunk
+

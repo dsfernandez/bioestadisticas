@@ -1,0 +1,27 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# 1.4.Estadísticas Descriptivas
+
+blabla
+
+## 1.4.1.Parámetros Poblacionales y de la Muestra
+
+bla
+chunk
+
+## 1.4.2.Medidas de la Tendencia Central
+
+bla
+chunk
+
+## 1.4.3.Medidas de Dispersión
+
+bla
+chunk
+

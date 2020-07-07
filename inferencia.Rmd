@@ -17,7 +17,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "moduloi1.html",
+  href = "./modulos/moduloi1.html",
   "Inferencia Estadística y Prueba de Hipótesis Estadística"
 )
 ```
@@ -30,7 +30,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "moduloi2.html",
+  href = "./modulos/moduloi2.html",
   "Hipótesis sobre Frecuencias"
 )
 ```
@@ -43,7 +43,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "moduloi3.html",
+  href = "./modulos/moduloi3.html",
   "La Distribución Normal"
 )
 ```
@@ -56,7 +56,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "moduloi4.html",
+  href = "./modulos/moduloi4.html",
   "Inferencias acerca de la Media de Una Población"
 )
 ```
@@ -69,7 +69,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "moduloi5.html",
+  href = "./modulos/moduloi5.html",
   "Inferencias acerca de la Media de Dos Poblaciones"
 )
 ```

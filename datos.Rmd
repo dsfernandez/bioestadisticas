@@ -42,7 +42,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "modulod3.html",
+  href = "./modulos/modulod3.html",
   "Tablas y Gráficas"
 )
 ```
@@ -55,7 +55,7 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "modulod4.html",
+  href = "./modulos/modulod4.html",
   "Estadísticas Descriptivas"
 )
 ```
@@ -68,8 +68,8 @@ blabla
 
 ```{r, echo=FALSE}
 tags$a(
-  href = "modulod5.html",
-  "Estadísticas Descriptivas"
+  href = "./modulos/modulod5.html",
+  "Probabilidades y Distribuciones Discretas"
 )
 ```
 

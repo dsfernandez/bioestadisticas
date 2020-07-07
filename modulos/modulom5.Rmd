@@ -1,0 +1,41 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 3.5.Diseño Experimental
+
+blabla  
+
+## 3.5.1.Diseño Observacional y Experimental
+
+bla  
+chunk
+
+## 3.5.2.Preguntas e Hipótesis Estadísticas
+
+bla  
+chunk
+
+## 3.5.3.Aleatorización
+
+bla  
+chunk
+
+## 3.5.4.Reducción de Errores de Muestreo
+
+bla  
+chunk
+
+## 3.5.5.Bases de Datos y Fuentes de Información
+
+bla  
+chunk
+
