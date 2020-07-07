@@ -1,0 +1,5 @@
+---
+title: "Bioestadísticas"
+---
+
+Materiales del curso de Biometría

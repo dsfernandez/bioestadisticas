@@ -1,0 +1,9 @@
+name: "Bioestadísticas"
+output_dir: "."
+navbar:
+  title: "Bioestadísticas"
+  left:
+    - text: "Portal"
+      href: index.html
+    - text: "Contenido"
+      href: about.html
