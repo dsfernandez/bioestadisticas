@@ -1,0 +1,24 @@
+---
+
+---
+
+# Inferencia e Hipótesis Estadísticas
+
+blababab
+
+## Módulos
+
+```{r, echo=FALSE}
+# install.packages("htmltools")
+library(htmltools)
+# create link to pages
+tags$a(
+  href = "moduloi1.html",
+  "Inferencia Estadística y Prueba de Hipótesis",
+)
+cat("  \n")
+tags$a(
+  href = "moduloi2.html",
+  "Errores en Decisiones",
+)
+```

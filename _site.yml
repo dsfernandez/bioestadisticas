@@ -8,6 +8,10 @@ navbar:
       href: contenido.html
     - text: "Datos"
       href: datos.html
+    - text: "Inferencia"
+      href: inferencia.html
+    - text: "Modelos"
+      href: modelos.html
 output:
   html_document:
     toc: true

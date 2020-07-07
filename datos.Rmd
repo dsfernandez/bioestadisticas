@@ -2,17 +2,32 @@
 
 ---
 
-# Datos
+```{r, echo=FALSE}
+library(htmltools)
+```
+
+
+# 1.Datos
 
 blabla bla 
 
-```{r, echo=FALSE}
-# install.packages("htmltools")
-library(htmltools)
+## 1.1.Población y Muestra
+blabla  
 
+```{r, echo=FALSE}
 tags$a(
-  href = "modulo1.html",
-  "Link to modulo 1"
+  href = "modulod1.html",
+  "Población y Muestra"
 )
 ```
 
+$~$
+
+## 1.2.Variables y Manejo de Datos
+
+```{r, echo=FALSE}
+tags$a(
+  href = "modulod2.html",
+  "Variables y Manejo de Datos"
+)
+```
