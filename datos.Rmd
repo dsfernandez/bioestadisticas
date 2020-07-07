@@ -1,0 +1,18 @@
+---
+
+---
+
+# Datos
+
+blabla bla 
+
+```{r, echo=FALSE}
+# install.packages("htmltools")
+library(htmltools)
+
+tags$a(
+  href = "modulo1.html",
+  "Link to modulo 1"
+)
+```
+

@@ -1,9 +1,14 @@
 name: "Bioestadísticas"
 output_dir: "."
 navbar:
-  title: "Bioestadísticas"
+  title: "Bioestadística"
+  href: index.html
   left:
-    - text: "Portal"
-      href: index.html
     - text: "Contenido"
-      href: about.html
+      href: contenido.html
+    - text: "Datos"
+      href: datos.html
+output:
+  html_document:
+    toc: true
+    toc_float: true

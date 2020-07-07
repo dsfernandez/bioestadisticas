@@ -1,5 +1,9 @@
 ---
-title: "Bioestadísticas"
+
 ---
 
-Materiales del curso de Biometría
+# Biometría BIOL 3740
+
+## Descripción del curso
+
+## Materiales del curso de Biometría
