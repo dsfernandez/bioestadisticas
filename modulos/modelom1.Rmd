@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # 3.1.Análisis de Varianza
 
-blabla  
+blablabla  
 
 ## 3.1.1.Fundamentos y Supuestos del ANOVA
 
