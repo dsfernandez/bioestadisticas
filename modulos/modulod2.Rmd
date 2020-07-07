@@ -1,8 +1,10 @@
 ---
-
+title: "1.2.Variables y Manejo de Datos"
+output:
+  html_document:
+    toc: true
+    toc_float: true
 ---
-
-# 1.2.Variables y Manejo de Datos
 
 blabla
 
