@@ -2,23 +2,78 @@
 
 ---
 
-# Inferencia e Hipótesis Estadísticas
+```{r, echo=FALSE}
+library(htmltools)
+```
 
-blababab
 
-## Módulos
+# 2.Inferencia y Prueba de Hipótesis
+
+blabla bla 
+
+## 2.1.Inferencia Estadística y Prueba de Hipótesis
+
+blabla  
 
 ```{r, echo=FALSE}
-# install.packages("htmltools")
-library(htmltools)
-# create link to pages
 tags$a(
   href = "moduloi1.html",
-  "Inferencia Estadística y Prueba de Hipótesis",
-)
-cat("  \n")
-tags$a(
-  href = "moduloi2.html",
-  "Errores en Decisiones",
+  "Inferencia Estadística y Prueba de Hipótesis Estadística"
 )
 ```
+
+$~$
+
+## 2.2.Hipótesis sobre Frecuencias
+
+blabla
+
+```{r, echo=FALSE}
+tags$a(
+  href = "moduloi2.html",
+  "Hipótesis sobre Frecuencias"
+)
+```
+
+$~$
+
+## 2.3.La Distribución Normal
+
+blabla
+
+```{r, echo=FALSE}
+tags$a(
+  href = "moduloi3.html",
+  "La Distribución Normal"
+)
+```
+
+$~$
+
+## 2.4.Inferencias acerca de la Media de Una Población
+
+blabla
+
+```{r, echo=FALSE}
+tags$a(
+  href = "moduloi4.html",
+  "Inferencias acerca de la Media de Una Población"
+)
+```
+
+$~$
+
+## 2.5.Inferencias acerca de la Media de Dos Poblaciones
+
+blabla
+
+```{r, echo=FALSE}
+tags$a(
+  href = "moduloi5.html",
+  "Inferencias acerca de la Media de Dos Poblaciones"
+)
+```
+
+$~$
+
+## Glosario 

@@ -1,0 +1,14 @@
+---
+
+---
+
+# 1.2.Variables y Manejo de Datos
+
+blabla
+
+## 1.2.1.Tipos de Variables
+
+blabla
+chunks
+
+## Tema 2
