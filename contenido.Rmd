@@ -2,8 +2,11 @@
 
 ---
 
-# Contenido
+# Diseño del curso
 
-aqui va el contenido de forma general
+El curso tiene un diseño según el formato UMT (unidad, módulo, tema).  Consta de tres __unidades__ (Datos, Inferencia y Modelos), cinco __módulos__ para cada unidad y entre tres y cinco __temas__ por módulo.
 
-enlace a matriz UMT
+[ __Diseño UMT del curso__](https://docs.google.com/spreadsheets/d/1yaoF2FtqcPcSIn-Io9ZxXIEGfXJrqGIKfCN3r7cW3dw/edit?usp=sharing)
+
+
+

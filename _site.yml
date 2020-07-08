@@ -4,7 +4,7 @@ navbar:
   title: "Bioestadística"
   href: index.html
   left:
-    - text: "Contenido"
+    - text: "Diseño"
       href: contenido.html
     - text: "Datos"
       href: datos.html
