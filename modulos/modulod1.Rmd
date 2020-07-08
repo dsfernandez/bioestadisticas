@@ -8,11 +8,22 @@ output:
 
 # 1.1.Población y Muestra
 
-blabla
+El estudio de la Biología requiere conocer las propiedades de los seres vivos, y la investigación científica incluye la medición de estas propiedades.  La o el investigador encontrará las siguientes situaciones:  
+* no poder medir a todos los individuos de un grupo (población);  
+* dos individuos, aunque sean de una misma especie, o tejido (si se trata de células), no son exactamente iguales.  
 
-## 1.1.1.¿Para qué estadísticas?
+Esto conlleva al menos dos tareas para el/la investigador/a, si quiere llegar a una conclusión con la menor incertidumbre posible: (a) determinar una cantidad "representativa" de individuos de una población (muestra), y (b) estimar numéricamente la variabilidad entre los individuos.  
 
-bla  
+Vemos, entonces, que en el mundo real de los seres vivos (y de los componentes abióticos del mismo), la investigación científica se desarrolla en un marco de variación e incertidumbre.  Las estadísticas nos proveen las herramientas matemáticas para poder describir esa variación e incertidumbre, y tratar de acercarnos a una interpretación de los datos, que permita el avance de la investigación científica.
+
+## 1.1.1.¿Para qué estadísticas?  
+__Objetivo:__ Reconocer alguna aplicación de las estadísticas en la investigación biológica.
+
+[las estadísticas frente a los temblores y el coronavirus: dos caras opuestas]
+
+[nos permite tomar decisiones y hacer críticas de la información]
+
+Ejemplo para R  
 chunk  
 
 [  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
