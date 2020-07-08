@@ -14,10 +14,22 @@ El estudio de la Biología requiere conocer las propiedades de los seres vivos, 
 
 Esto conlleva al menos dos tareas para el/la investigador/a, si quiere llegar a una conclusión con la menor incertidumbre posible: (a) determinar una cantidad "representativa" de individuos de una población (muestra), y (b) estimar numéricamente la variabilidad entre los individuos.  
 
-Vemos, entonces, que en el mundo real de los seres vivos (y de los componentes abióticos del mismo), la investigación científica se desarrolla en un marco de variación e incertidumbre.  Las estadísticas nos proveen las herramientas matemáticas para poder describir esa variación e incertidumbre, y tratar de acercarnos a una interpretación de los datos, que permita el avance de la investigación científica.
+Vemos, entonces, que en el mundo real de los seres vivos (y de los componentes abióticos del mismo), la investigación científica se desarrolla en un marco de variación e incertidumbre.  Las estadísticas nos proveen las herramientas matemáticas para poder analizar esa variación e incertidumbre, y tratar de acercarnos a una interpretación de los datos, que permita establecer conclusiones o nuevas rutas de investigación.
 
-## 1.1.1.¿Para qué estadísticas?  
-__Objetivo:__ Reconocer alguna aplicación de las estadísticas en la investigación biológica.
+## 1.1.1.¿Para qué estadísticas?
+#### Objetivo
+Reconocer alguna aplicación de las estadísticas en la investigación biológica.
+
+#### Actividades
+_Foro en MOODLE:_ ¿Cómo te pueden ayudar las estadísticas, de una manera concreta, en tus estudios o tu vida cotidiana?
+
+_Ejercicio:_ Las estadísticas en la investigación biológica, indica un ejemplo para lo siguiente:  
+* Tratamiento para el COVID-19.  
+* Casos de dengue.
+* Calidad de agua en embalses.
+
+
+
 
 [las estadísticas frente a los temblores y el coronavirus: dos caras opuestas]
 
