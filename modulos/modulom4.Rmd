@@ -17,25 +17,35 @@ blabla
 ## 3.4.1.Selección de Pruebas Estadísticas
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.4.2.MANOVA
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.4.3.Regresión Logística
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.4.4.Ordenación
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.4.5.Análisis de Datos Espaciales
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 

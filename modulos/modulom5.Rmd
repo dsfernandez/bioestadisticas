@@ -17,25 +17,35 @@ blabla
 ## 3.5.1.Diseño Observacional y Experimental
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.5.2.Preguntas e Hipótesis Estadísticas
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.5.3.Aleatorización
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.5.4.Reducción de Errores de Muestreo
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.5.5.Bases de Datos y Fuentes de Información
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 

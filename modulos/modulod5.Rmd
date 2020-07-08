@@ -17,25 +17,35 @@ blabla
 ## 1.5.1.Probabilidades
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.5.2.Número de Posibilidades
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.5.3.Independencia y Probabilidad Condicional
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.5.4.Eventos Mutuamente Exclusivos
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.5.5.Distribución Binomial y de Poisson
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 

@@ -13,15 +13,21 @@ blabla
 ## 1.2.1.Tipos de Variables
 
 blabla
-chunks
+chunks  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.2.2.Transformación de Datos
 
 blabla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.2.3.Manejo de Datos
 
 blabla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 

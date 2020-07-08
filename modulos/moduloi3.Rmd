@@ -19,23 +19,33 @@ blabla
 bla  
 chunk  
 
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+
 ## 2.3.2.Transformación Z
 
 bla
-chunk
+chunk  
+
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
 
 ## 2.3.3.Distribución de la Muestra
 
 bla  
 chunk  
 
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+
 ## 2.3.4.Pruebas de Normalidad
 
 bla  
 cunk  
 
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+
 ## 2.3.5.Aproximación a la Distribución Binomial
 
 bla  
-chunk
+chunk  
+
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
 

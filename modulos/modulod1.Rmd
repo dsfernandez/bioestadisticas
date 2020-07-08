@@ -13,20 +13,28 @@ blabla
 ## 1.1.1.¿Para qué estadísticas?
 
 bla  
-chunks  
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.1.2.Población y Muestra
 
 bla  
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.1.3.Errores de Muestreo
 
 bla  
 chunk  
 
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+
 ## 1.1.4.Muestra Aleatoria
 
 bla   
 chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 

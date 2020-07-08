@@ -19,18 +19,26 @@ blabla
 bla  
 chunk  
 
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+
 ## 2.5.2.Intervalo de Confianza para las Medias
 
 bla  
-chunk
+chunk  
+
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
 
 ## 2.5.3.Supuestos y Pruebas No-paramétricas
 
 bla  
 chunk  
 
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+
 ## 2.5.4.Poder de la Prueba
 
 bla  
-chunk
+chunk  
+
+[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
 

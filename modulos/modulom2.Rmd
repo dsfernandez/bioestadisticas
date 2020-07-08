@@ -17,20 +17,28 @@ blabla
 ## 3.2.1.Asociación o Modelo
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.2.2.Coeficiente de Correlación de Pearson
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.2.3.Matriz de Correlación
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 
 ## 3.2.4.Correlación No-paramétrica
 
 bla  
-chunk
+chunk  
+
+[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
 

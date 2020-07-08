@@ -13,15 +13,21 @@ blabla
 ## 1.3.1.Gráficas con Datos Numéricos
 
 blabla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.3.2.Tablas
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.3.3.Gráficas de Distribución de Frecuencias
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 

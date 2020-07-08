@@ -13,15 +13,21 @@ blabla
 ## 1.4.1.Parámetros Poblacionales y de la Muestra
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.4.2.Medidas de la Tendencia Central
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
 ## 1.4.3.Medidas de Dispersión
 
 bla
-chunk
+chunk  
+
+[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
 
