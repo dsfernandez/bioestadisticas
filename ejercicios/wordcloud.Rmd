@@ -9,6 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## Gráfica "word cloud" a partir de texto
+
+Tomado de:  
+
+Word cloud generator in R : One killer function to do everything you need - Easy Guides - Wiki - STHDA [WWW Document], n.d. URL http://www.sthda.com/english/wiki/word-cloud-generator-in-r-one-killer-function-to-do-everything-you-need (accessed 7.8.20).
+
 Paquetes necesarios:  
 * tm  
 * SnowballC  
@@ -27,7 +34,10 @@ library(RCurl)
 library(XML)
 ```
 
+## Funciones necesarias para crear el "word cloud"
+
 ```{r}
+# wordcloud function
 rquery.wordcloud <- function(x, type=c("text", "url", "file"), 
                           lang="english", excludeWords=NULL, 
                           textStemming=FALSE, colorPalette="Dark2",
@@ -75,15 +85,84 @@ rquery.wordcloud <- function(x, type=c("text", "url", "file"),
   
   invisible(list(tdm=tdm, freqTable = d))
 }
+# html_to_text function
+html_to_text<-function(url){
+  library(RCurl)
+  library(XML)
+  # download html
+  html.doc <- getURL(url)  
+  #convert to plain text
+  doc = htmlParse(html.doc, asText=TRUE)
+ # "//text()" returns all text outside of HTML tags.
+ # We also don’t want text such as style and script codes
+  text <- xpathSApply(doc, "//text()[not(ancestor::script)][not(ancestor::style)][not(ancestor::noscript)][not(ancestor::form)]", xmlValue)
+  # Format text vector into one character string
+  return(paste(text, collapse = " "))
+}
 ```
 
-
-
-## Nube de palabras
+## Nube de palabras a partir de tres fuentes
 
 ```{r}
-
-
-res <- rquery.wordcloud(tx, type ="text", min.freq = 2, textStemming=FALSE, lang = "spanish")
+# desde un url
+deurl <- "https://dsfernandez.github.io/bioestadisticas/modulos/modulod1.html"
+# desde texto
+depath <- "url o dirección del archivo"
+# desde vector de texto
+detexto <- c("texto")
+## ejemplo de "wordcloud" de página de internet
+res <- rquery.wordcloud(deurl, type ="url",
+                        lang = "spanish",
+                        excludeWords = NULL,
+                        textStemming = FALSE,
+                        colorPalette = "Dark2",
+                        min.freq = 2,
+                        max.words = 100)
 ```
+
+## Parámetros de la función 
+  
+> __x__ : character string (plain text, web URL, txt file path)  
+> __type__ : specify whether x is a plain text, a web page URL or a .txt file path  
+> __lang__ : the language of the text. This is important to be specified in order to remove the common stopwords (like ‘the’, ‘we’, ‘is’, ‘are’) from the text before further analysis. Supported languages are danish, dutch, english, finnish, french, german, hungarian, italian, norwegian, portuguese, russian, spanish and swedish.  
+> __excludeWords__ : a vector containing your own stopwords to be eliminated from the text. e.g : c(“word1”, “word2”)  
+> __textStemming__ : reduces words to their root form. Default value is FALSE. A stemming process reduces the words “moving” and “movement” to the root word, “move”.  
+> __colorPalette__ : Possible values are :
+a name of color palette taken from RColorBrewer package (e.g.: colorPalette = “Dark2”)
+color name (e.g. : colorPalette = “red”)
+a color code (e.g. : colorPalette = “#FF1245”)  
+> __min.freq__ : words with frequency below min.freq will not be plotted  
+> __max.words__ : maximum number of words to be plotted. least frequent terms dropped  
+
+## Análisis del texto
+
+A partir de la función _rquery.wordcloud()_ se pueden obtener dos objetos:  
+* __tdm__ : matriz de términos del documento  
+* __freqTable__ : tabla de frecuencias  
+
+### Tabla y gráfica de frecuencias
+
+```{r}
+# tabla de frecuencias (primeras 20 más frecuentes)
+TablaFrecuencia <- res$freqTable
+head(TablaFrecuencia, 20)
+# gráfica de frecuencias (primeras 10 palabras)
+barplot(TablaFrecuencia[1:10,]$freq, las = 2, 
+        names.arg = TablaFrecuencia[1:10,]$word,
+        col ="lightblue", main ="Palabras más frecuentes",
+        ylab = "Frecuencia")
+```
+
+### Selección de palabras con cierta frecuencia
+
+```{r}
+# palabras que aparecen con cierta frecuencia
+tdm <- res$tdm
+findFreqTerms(tdm, lowfreq = 4)
+# relación entre una palabra y otras
+findAssocs(tdm, terms = "datos", corlimit = 0.1)
+```
+
+
+
 
