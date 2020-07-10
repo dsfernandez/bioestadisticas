@@ -29,8 +29,9 @@ navbar:
           href: modulos/moduloi4.html
         - text: "Inferencias: Dos Poblaciones"
           href: modulos/moduloi5.html
+        - text: "Otros Recursos"
+          href: modulos/inferencia.html
       text: "Inferencias"
-      href: inferencia.html
     - 
       menu:
         - text: "Análisis de Varianza"
@@ -43,6 +44,8 @@ navbar:
           href: modulos/modulom4.html
         - text: "Diseño Experimental"
           href: modulos/modulom5.html
+        - text: "Otros Recursos"
+          href: modulos/modelos.html
       text: "Modelos"
   title: "Bioestadística"
   href: index.html
