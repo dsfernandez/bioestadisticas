@@ -15,8 +15,8 @@ navbar:
         - text: "Probabilidades - Distribuciones Discretas"
           href: modulos/modulod5.html
         - text: "Otros Recursos"
-          href: datos.html
-      text: "Datos"
+          href: modulos/datos.html
+      label: "Datos"
     -
       menu:
         - text: "Inferencia Estadística - Prueba de Hipótesis"
