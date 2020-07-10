@@ -16,7 +16,7 @@ navbar:
           href: modulos/modulod5.html
         - text: "Otros Recursos"
           href: modulos/datos.html
-      label: "Datos"
+      text: "Datos"
     -
       menu:
         - text: "Inferencia Estadística - Prueba de Hipótesis"
