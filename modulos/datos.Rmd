@@ -14,9 +14,18 @@ library(htmltools)
 # Otros Recursos
 
 ## 1.1.Población y Muestra  
-* Enlaces:  
+#### Enlaces:    
 
-* Referencias:  
+#### Referencias:
+
+#### Aplicaciones:  
+* wordcloud - nube de palabras a partir de un texto    
+```{r, echo=FALSE}
+tags$a(
+  href = "~/Documents/GitHub/bioestadisticas/recursos/wordcloud.html",
+  "wordcloud"
+)
+```  
 
 $~$
 
