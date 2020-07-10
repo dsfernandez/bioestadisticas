@@ -22,7 +22,7 @@ library(htmltools)
 * wordcloud - nube de palabras a partir de un texto    
 ```{r, echo=FALSE}
 tags$a(
-  href = "~/Documents/GitHub/bioestadisticas/recursos/wordcloud.html",
+  href = "./recursos/wordcloud.html",
   "wordcloud"
 )
 ```  
