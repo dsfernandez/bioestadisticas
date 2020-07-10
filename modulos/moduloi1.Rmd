@@ -19,19 +19,19 @@ blabla
 bla  
 chunk 
 
-[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.1.2.Errores en Decisiones
 
 bla  
 chunk  
 
-[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.1.3.Pruebas de Hipótesis
 
 bla  
 chunk  
 
-[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 

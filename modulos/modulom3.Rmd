@@ -19,32 +19,32 @@ blabla
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.3.2.Parámetros de la Regresión
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.3.3.Pruebas de Hipótesis para la Regresión
 
 bla
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.3.4.Predicción de y a partir de x
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.3.5.Otras Técnicas de Regresión
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)

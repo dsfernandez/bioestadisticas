@@ -15,19 +15,19 @@ blabla
 blabla
 chunks  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.2.2.Transformación de Datos
 
 blabla
 chunk  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.2.3.Manejo de Datos
 
 blabla
 chunk  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 

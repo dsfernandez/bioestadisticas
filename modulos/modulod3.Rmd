@@ -15,19 +15,19 @@ blabla
 blabla
 chunk  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.3.2.Tablas
 
 bla
 chunk  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.3.3.Gráficas de Distribución de Frecuencias
 
 bla
 chunk  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 

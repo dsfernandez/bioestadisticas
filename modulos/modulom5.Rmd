@@ -19,33 +19,33 @@ blabla
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.5.2.Preguntas e Hipótesis Estadísticas
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.5.3.Aleatorización
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.5.4.Reducción de Errores de Muestreo
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.5.5.Bases de Datos y Fuentes de Información
 
 bla  
 chunk  
 
-[ __Modelos__](https://dsfernandez.github.io/bioestadisticas/modelos.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 

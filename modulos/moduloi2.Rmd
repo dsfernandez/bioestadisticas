@@ -19,19 +19,19 @@ blabla
 bla  
 chunk  
 
-[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.2.2.Prueba de Asociación
 
 bla
 chunk  
 
-[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.2.3.Prueba de Probabilidad Exacta de Fisher
 
 bla  
 chunk  
 
-[ __Inferencia__](https://dsfernandez.github.io/bioestadisticas/inferencia.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
