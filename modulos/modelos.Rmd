@@ -6,74 +6,12 @@
 library(htmltools)
 ```
 
+# Otros Recursos
 
-# 3.Modelos Lineales
+### Enlaces:    
 
-blabla bla 
+### Referencias:
 
-## 3.1.Análisis de Varianza
+### Aplicaciones:  
 
-blabla  
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/modulom1.html",
-  "Análisis de Varianza"
-)
-```
-
-$~$
-
-## 3.2.Análisis de Correlación
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/modulom2.html",
-  "Análisis de Correlación"
-)
-```
-
-$~$
-
-## 3.3.Análisis de Regresión
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/modulom3.html",
-  "Análisis de Regresión"
-)
-```
-
-$~$
-
-## 3.4.Otros Modelos para Análisis de Datos
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/modulom4.html",
-  "Otros Modelos para Análisis de Datos"
-)
-```
-
-$~$
-
-## 3.5.Diseño Experimental
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/modulom5.html",
-  "Diseño Experimental"
-)
-```
-
-$~$
-
-## Glosario 
+### Glosario

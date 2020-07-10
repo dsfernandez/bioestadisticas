@@ -6,74 +6,12 @@
 library(htmltools)
 ```
 
+# Otros Recursos
 
-# 2.Inferencia y Prueba de Hipótesis
+### Enlaces:    
 
-blabla bla 
+### Referencias:
 
-## 2.1.Inferencia Estadística y Prueba de Hipótesis
+### Aplicaciones:  
 
-blabla  
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/moduloi1.html",
-  "Inferencia Estadística y Prueba de Hipótesis Estadística"
-)
-```
-
-$~$
-
-## 2.2.Hipótesis sobre Frecuencias
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/moduloi2.html",
-  "Hipótesis sobre Frecuencias"
-)
-```
-
-$~$
-
-## 2.3.La Distribución Normal
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/moduloi3.html",
-  "La Distribución Normal"
-)
-```
-
-$~$
-
-## 2.4.Inferencias acerca de la Media de Una Población
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/moduloi4.html",
-  "Inferencias acerca de la Media de Una Población"
-)
-```
-
-$~$
-
-## 2.5.Inferencias acerca de la Media de Dos Poblaciones
-
-blabla
-
-```{r, echo=FALSE}
-tags$a(
-  href = "./modulos/moduloi5.html",
-  "Inferencias acerca de la Media de Dos Poblaciones"
-)
-```
-
-$~$
-
-## Glosario 
+### Glosario
