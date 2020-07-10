@@ -14,6 +14,8 @@ navbar:
           href: modulos/modulod4.html
         - text: "Probabilidades - Distribuciones Discretas"
           href: modulos/modulod5.html
+        - text: "Otros Recursos"
+          href: datos.html
       text: "Datos"
     -
       menu:

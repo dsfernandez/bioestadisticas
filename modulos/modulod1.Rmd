@@ -38,7 +38,7 @@ _Ejercicio:_ Las estadísticas en la investigación biológica, indica un ejempl
 Ejemplo para R  
 chunk  
 
-[  __Datos__](https://dsfernandez.github.io/bioestadisticas/datos.html)
+[  __Menú__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.1.2.Población y Muestra
 
