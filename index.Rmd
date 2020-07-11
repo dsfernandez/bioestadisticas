@@ -3,9 +3,16 @@
 ---
 
 # Biometría BIOL 3740
+#### UNIVERSIDAD DE PUERTO RICO en HUMACAO
+#### Departamento de Biología
+[ __Denny S. Fernández del Viso__](https://sites.google.com/site/hicindicium/home)
 
 
 ## Descripción del curso
+Curso introductorio de estadísticas aplicadas a la biología.  El diseño del curso se basa en el modelo UMT (unidad-módulo-tema):  
+
+[ __Estructura del Curso__](https://docs.google.com/spreadsheets/d/1yaoF2FtqcPcSIn-Io9ZxXIEGfXJrqGIKfCN3r7cW3dw/edit?usp=sharing)
 
 
 ## Referencias y Recursos
+#### Textos principales:
