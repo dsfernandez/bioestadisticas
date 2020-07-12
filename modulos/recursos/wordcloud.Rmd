@@ -24,8 +24,9 @@ Paquetes necesarios:
 * RCurl  
 * XML  
 
-```{r}
-## install.packages(c("tm", "SnowballC", "wordcloud", "RColorBrewer", "RCurl", "XML"))
+```{r packages, echo=TRUE, message=FALSE}
+## para instalar paquetes:
+# install.packages(c("tm", "SnowballC", "wordcloud", "RColorBrewer", "RCurl", "XML"))
 library(tm)
 library(SnowballC)
 library(wordcloud)
@@ -103,7 +104,7 @@ html_to_text<-function(url){
 
 ## Nube de palabras a partir de tres fuentes
 
-```{r}
+```{r nube, echo=TRUE, message=FALSE, warning=FALSE}
 # desde un url
 deurl <- "https://dsfernandez.github.io/bioestadisticas/modulos/modulod1.html"
 # desde texto
