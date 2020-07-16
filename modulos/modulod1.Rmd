@@ -6,7 +6,7 @@ output:
     toc_float: true
 ---
 
-# 1.1.Población y Muestra
+# 1.1.Estadísticas
 
 El estudio de la Biología requiere conocer las propiedades de los seres vivos, y la investigación científica incluye la medición de estas propiedades.  La o el investigador encontrará las siguientes situaciones:  
 * no poder medir a todos los individuos de un grupo (población);  

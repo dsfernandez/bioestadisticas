@@ -4,7 +4,7 @@ navbar:
   left:
     - 
       menu:
-        - text: "Población y Muestra"
+        - text: "Estadísticas"
           href: modulos/modulod1.html
         - text: "Variables - Manejo de Datos"
           href: modulos/modulod2.html
