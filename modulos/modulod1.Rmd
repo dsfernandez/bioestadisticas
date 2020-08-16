@@ -1,10 +1,18 @@
 ---
-title:
+title:  "Estadísticas"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
+```
+
 
 # 1.1.Estadísticas
 
@@ -17,6 +25,8 @@ Esto conlleva al menos dos tareas para el/la investigador/a, si quiere llegar a 
 
 Vemos, entonces, que en el mundo real de los seres vivos (y de los componentes abióticos del mismo), la investigación científica se desarrolla en un marco de variación e incertidumbre.  Las estadísticas nos proveen las herramientas matemáticas para poder analizar esa variación e incertidumbre, y tratar de acercarnos a una interpretación de los datos, que permita establecer conclusiones o nuevas rutas de investigación.
 
+*** 
+
 ## 1.1.1.¿Para qué estadísticas?
 #### Objetivo
 Reconocer alguna aplicación de las estadísticas en la investigación biológica.
@@ -26,9 +36,28 @@ Reconocer alguna aplicación de las estadísticas en la investigación biológic
 _Foro en MOODLE:_ Los datos de la epidemia de Covid-19
 
 _Encuesta:_ ¿Cómo te pueden ayudar las estadísticas, de una manera concreta, en tus estudios o tu vida cotidiana?
-\
 
+#### Resultados    
+
+[Nube de Palabras](https://rpubs.com/dsfernandez/649391)  
+
+### ¿Para quiénes son las estadísticas?  
+
+* Para los que usamos cualquier medio para ver o leer las noticias:
+  + están cargadas de falacias (las tendencias, los falsos conflictos);
+  + entender las estadísticas nos hace algo escépticos, y nos permite filtrar conclusiones débiles (o falsas) 
+ de las sólidas.  
+* Para los que leen literatura científica (todo/as nosotro/as), en cualquier área.  
+  + La encontramos en la organización y descripción de los datos.
+  + En los modelos de regresión y multivariados, en los que se relacionan diversas variables y factores.
+  + En los estudios epidemiológicos y de salud pública, para predecir futuras epidemias.
+  + En las industrias de alimento y farmaceúticas, para garantizar la calidad con muestreos apropiados.  
+* Para los que realizan investigación científica.  En este curso se van a familiarizar y trabajar con las estadísticas que se usan en el quehacer científico, incluyendo las __estadísticas descriptivas__, la __inferencia estadística__, y el __diseño de experimentos y observaciones__.
+ 
+ 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+*** 
 
 ## 1.1.2.Población y Muestra
 
