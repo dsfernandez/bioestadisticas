@@ -111,12 +111,12 @@ deurl <- "https://dsfernandez.github.io/bioestadisticas/modulos/modulod1.html"
 # desde texto
 depath <- "url o dirección del archivo"
 # desde vector de texto
-detexto <- c("./Biometria_encuesta_estadisticas-tu_20200815.txt")
+detexto <- c("./Biometria_foro-datos_analisis-texto_epidemia_20200815.txt")
 ## ejemplo de "wordcloud" de página de internet
 res <- rquery.wordcloud(detexto, type ="file",
                         lang = "spanish",
-                        excludeWords = c("estadísticas", "estadisticas", "estudios", "vida", "cotidiana", "ayudar", "pueden"),
-                        textStemming = FALSE,
+                        excludeWords = c("datos", "manejar", "covid", "epidemia", "análisis", "estadístico"),
+                        textStemming = TRUE,
                         colorPalette = "Dark2",
                         min.freq = 4,
                         max.words = 100)
@@ -145,9 +145,9 @@ A partir de la función _rquery.wordcloud()_ se pueden obtener dos objetos:
 ### Tabla y gráfica de frecuencias
 
 ```{r}
-# tabla de frecuencias (primeras 20 más frecuentes)
+# tabla de frecuencias (primeras 10 más frecuentes)
 TablaFrecuencia <- res$freqTable
-head(TablaFrecuencia, 20)
+head(TablaFrecuencia, 10)
 # gráfica de frecuencias (primeras 10 palabras)
 barplot(TablaFrecuencia[1:10,]$freq, las = 2, 
         names.arg = TablaFrecuencia[1:10,]$word,
@@ -160,9 +160,9 @@ barplot(TablaFrecuencia[1:10,]$freq, las = 2,
 ```{r}
 # palabras que aparecen con cierta frecuencia
 tdm <- res$tdm
-findFreqTerms(tdm, lowfreq = 4)
+findFreqTerms(tdm, lowfreq = 6)
 # relación entre una palabra y otras
-findAssocs(tdm, terms = "upr", corlimit = 0.1)
+findAssocs(tdm, terms = c("salud"), corlimit = 0.1)
 ```
 
 

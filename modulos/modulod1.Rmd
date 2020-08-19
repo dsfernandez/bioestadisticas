@@ -29,7 +29,7 @@ Vemos, entonces, que en el mundo real de los seres vivos (y de los componentes a
 
 ## 1.1.1.¿Para qué estadísticas?
 #### Objetivo
-Reconocer alguna aplicación de las estadísticas en la investigación biológica.
+__Reconocer alguna aplicación de las estadísticas en la investigación biológica.__
 
 #### Actividades  
 
@@ -60,10 +60,24 @@ _Encuesta:_ ¿Cómo te pueden ayudar las estadísticas, de una manera concreta, 
 *** 
 
 ## 1.1.2.Población y Muestra
+#### Objetivo
+__Reconocer la importancia de las muestras en las estadísticas__  
 
-bla  
-chunk  
+### ¿Cuántos peces hay en el océano?  
 
+Varias especies de peces, usualmente pescados en grandes cantidades, han visto sus poblaciones disminuidas a niveles, que ya no se consideran comercialmente explotables.
+
+![](./imagenes/pesca-decline.jpg)
+
+¿Cómo podemos saber que está disminuyendo la cantidad de peces (al menos de algunas especies) en el océano?  No sería práctico ir en submarinos a contarlos.  Pero podemos obtener información de cuántos pescan por unidad de esfuerzo en los barcos pesqueros.  Esto nos ilustra el concepto de __población__ (todos los individuos de una especie en el océano), y una __muestra__ (la cantidad atrapada en una salida de un barco pesquero).
+
+#### Definiciones  
+
+[ __población__](https://online.upr.edu/mod/glossary/showentry.php?eid=5159)  
+
+[ __muestra__](https://online.upr.edu/mod/glossary/showentry.php?eid=5161)  
+
+ 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.1.3.Errores de Muestreo
