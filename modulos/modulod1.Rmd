@@ -31,13 +31,13 @@ Vemos, entonces, que en el mundo real de los seres vivos (y de los componentes a
 #### Objetivo
 __Reconocer alguna aplicación de las estadísticas en la investigación biológica.__
 
-#### Actividades  
+#### __Actividades__  
 
 _Foro en MOODLE:_ Los datos de la epidemia de Covid-19
 
 _Encuesta:_ ¿Cómo te pueden ayudar las estadísticas, de una manera concreta, en tus estudios o tu vida cotidiana?
 
-#### Resultados    
+#### __Resultados__    
 
 [Nube de Palabras](https://rpubs.com/dsfernandez/649391)  
 
@@ -71,12 +71,17 @@ Varias especies de peces, usualmente pescados en grandes cantidades, han visto s
 
 ¿Cómo podemos saber que está disminuyendo la cantidad de peces (al menos de algunas especies) en el océano?  No sería práctico ir en submarinos a contarlos.  Pero podemos obtener información de cuántos pescan por unidad de esfuerzo en los barcos pesqueros.  Esto nos ilustra el concepto de __población__ (todos los individuos de una especie en el océano), y una __muestra__ (la cantidad atrapada en una salida de un barco pesquero).
 
-#### Definiciones  
+#### __Definiciones__  
 
 [ __población__](https://online.upr.edu/mod/glossary/showentry.php?eid=5159)  
 
-[ __muestra__](https://online.upr.edu/mod/glossary/showentry.php?eid=5161)  
+[ __muestra__](https://online.upr.edu/mod/glossary/showentry.php?eid=5161)
 
+#### __Actividades__
+
+_Discusión en grupo:_ Un amigo, que tiene árboles de aguacate, afirma que los aguacates de Puerto Rico son más grandes que los de la República Dominicana; concluye esto luego de comparar sus aguacates con los importados, que ha comprado en el supermercado.  
+Con sus conocimientos estadísticos de población y muestra, discuta con su grupo si mi amigo puede hacer esa afirmación o no, y por qué.  
+\
  
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
