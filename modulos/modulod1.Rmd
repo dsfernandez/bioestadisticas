@@ -86,16 +86,74 @@ Con sus conocimientos estadísticos de población y muestra, discuta con su grup
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.1.3.Errores de Muestreo
+#### Objetivo  
+__Reconocer y evitar los posibles errores en la selección de una muestra__
 
-bla  
-chunk  
+#### __Actividad__  
+_Pregunta_  
+
+De acuerdo a los ejemplos del libro (1.2, 1.3, 1.4)  ¿Qué tienen en común equipos de laboratorio, ecología de caminos, y animales para experimentación?  
+
+#### __Definiciones__
+
+[ __precisión__](https://online.upr.edu/mod/glossary/showentry.php?eid=4997)    
+[ __exactitud__](https://online.upr.edu/mod/glossary/showentry.php?eid=5638)    
+[ __muestra sesgada__](https://online.upr.edu/mod/glossary/showentry.php?eid=5630)  
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.1.4.Muestra Aleatoria
+#### Objetivo
+__Aplicar una metodología para obtener muestras aleatorias__
 
-bla   
-chunk  
+#### __Definiciones__  
+
+[ __muestra aleatoria__](https://online.upr.edu/mod/glossary/showentry.php?eid=5631)  
+[ __independencia estadística__](https://online.upr.edu/mod/glossary/showentry.php?eid=5641)    
+[ __muestra aleatoria estratificada__](https://online.upr.edu/mod/glossary/showentry.php?eid=5633)   
+
+### Método general para obtener una muestra aleatoria simple  
+
+> 1. Asignarle un número entero a cada unidad (individuo o posición) en la población (1, 2, 3, ..., N)  
+> 2. Decidir cuántas unidades serán colectadas por muestra.  El tamaño de esta muestra será n.  
+> 3. Utilizar un método para generar números al azar entre 1 y N.  
+> 4. Tomar las unidades que corresponden a los números generados.  Estos individuos serán los medidos o tratados en esa muestra.  
+
+#### __Ejercicios__  
+
+_Selección de estudiante para presentar:_ Quiero seleccionar al azar dos estudiantes para realizar una presentación.  Utilizando la lista de estudiantes, ordenada alfabéticamente, asignamos un número a cada individuo.  Vamos a usar un generador de números al azar de R (¿es realmente al azar?) para obtener dos números del conjunto de estudiantes numerados.  
+```{r}
+# función sample con parámetros (min:max, n, reemplazo)
+sample(1:30, 2, replace = F)
+```
+
+¿Qué puede ocurrir si _replace = T_?  
+\
+
+_Selección de plantas en una siembra:_  De una siembra de girasoles queremos tomar una muestra aleatoria de 30 plantas, para un análisis de los aceites de las semillas.  
+
+![siembra de girasoles](./imagenes/sunflower.jpg)
+
+Como es una siembra con distribución regular de las plantas, podemos construir un mapa de la ubicación de cada planta, en el que cada cuadrito representa una planta:  
+
+![mapa de las plantas de girasol](./imagenes/grid-sunflower.jpg)
+
+Generamos 30 pares de números que representan las coordenadas X-Y de cada planta en el mapa:
+```{r}
+# coordenada X
+coor.x <- sample(1:30, 30, replace = T)
+# coordenada Y
+coor.y <- sample(1:20, 30, replace = T)
+# unimos las coordenadas
+coord.girasol <- data.frame(coor.x, coor.y)
+coord.girasol
+```
+
+¿Por qué utilizamos _replace=T_?
+¿Se pueden producir coordenadas repetidas?  
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
