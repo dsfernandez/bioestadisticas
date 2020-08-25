@@ -94,7 +94,16 @@ __Reconocer y evitar los posibles errores en la selección de una muestra__
 #### __Actividad__  
 _Pregunta_  
 
-De acuerdo a los ejemplos del libro (1.2, 1.3, 1.4)  ¿Qué tienen en común equipos de laboratorio, ecología de caminos, y animales para experimentación?  
+Con los ejemplos del libro (1.2, 1.3, 1.4), aplique los conceptos de precisión, exactitud y muestra sesgada.  Describa cómo se manifiestan en cada caso.
+
+__Example 1.2.__ _Salt Concentration:_  A chemistry instructor mixed a salt solution (NaCl) and  knows the correct concentration of salt, say 10.00 g per  liter. Suppose a student does three gravimetric determinations and finds the following answers: 9.50, 9.52, and  9.48 g per liter.  
+
+__Example 1.3.__  _Snake Surveys from Road:_   Herpetologists sometimes estimate snake population  size by conducting road surveys where the snakes are  much easier to see. The number of snakes spotted crossing the road should be proportional to population size  and one might think that sex ratio could be determined  this way as well. However, biologists must be careful in  how they interpret such data, since this survey technique  is dependent on the activity levels of the snakes. For  instance, in the spring, nearly all snakes observed crossing the road are adult males. We could be tempted to  conclude that this population has very few females, when  in fact only the adult males are actively searching for  mates! The females are present in the population, but are  not fairly represented by this biased survey technique.  
+
+__Example 1.4__  _Rabbit Growth Hormone:_  A large laboratory colony of rabbits was used as a source  of growth hormone, extracted from blood samples. A  lab assistant captured some of the rabbits, but didn’t  notice that young rabbits were easier to catch than older  rabbits. We now know that the concentration of growth  hormone declines with the age of the rabbit. The resulting extracts were higher in growth hormone than they  should have been. Only later did the scientist in charge  discover that he was obtaining a biased sample of  growth hormone measurements. 
+
+Havel, John E.. Introductory Biological Statistics (p. 4). Waveland Press, Inc.. Kindle Edition. 
+
 
 #### __Definiciones__
 
