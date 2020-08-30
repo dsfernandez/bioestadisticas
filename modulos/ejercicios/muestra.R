@@ -12,3 +12,4 @@ coor.y <- sample(1:20, 30, replace = T)
 # aqui escriben
 coord.girasol <- data.frame(coor.x, coor.y)
 coord.girasol
+
