@@ -159,6 +159,7 @@ hist.melodata
 Otra forma de presentar las frecuencias, es en forma acumulada:
 
 ![ __Figura 7.  Frecuencia acumulada para la longitud de 797 hembras de pez mosquito (mm), usando barras y puntos con líneas.__](./imagenes/3-10 frecuencia-acum.jpg)
+
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
