@@ -132,7 +132,6 @@ Una __distribución de frecuencias__ muestra un resumen del número de observaci
 
 ### Frecuencias de categorías o variables discretas    
 
-
 #### __Ejemplos__  
 
 La frecuencia de casos de una variable categórica, usualmente se grafican mediante barras.
