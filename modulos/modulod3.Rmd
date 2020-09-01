@@ -63,6 +63,19 @@ Se utilizan para representar los cambios a lo largo del tiempo (eje x) en una va
 
 ![ __Figura 3.  Duración del hielo, en días, en cada año en Lago Mendota, Wisconsin.  Datos tomados de lter.limnology.wisc.edu__](./imagenes/serie-tiempo.jpg)   
 
+Usando R
+```{r ts}
+library(readxl)
+covid_Austr <- read_excel("data/CoviD-19 Australia.xlsx")
+p <- ggplot(covid_Austr, aes(x=date, y=contagiados)) +
+  geom_line() + 
+  xlab("")
+p
+```
+
+#### Figura 4. Número de nuevos contagios con CoViD-19 por día, en Australia.
+
+
 ### Otros tipos de Gráficas
 Hay otras opciones para representar datos numéricos, incluyendo:  
 
@@ -132,11 +145,21 @@ ggplot(Arthritis, aes(x=Treatment, fill=Improved)) +
      geom_bar(position="dodge")
 ```
 
-#### Figura 4.  Efecto del tratamiento con una droga nueva, en pacientes con artritis, a los que se les suministró un placebo y una dosis de la droga.  
+#### Figura 5.  Efecto del tratamiento con una droga nueva, en pacientes con artritis, a los que se les suministró un placebo y una dosis de la droga.  
 
 La frecuencia de casos para una variable numérica discreta, también se puede graficar mediante barras separadas.
 
-![ __Figura 5.  Plántulas de _maple_ (arce) por parcela de un metro cuadrado.__](./imagenes/3-4 barras-frecuencia.jpg)
+![ __Figura 6.  Frecuencia de la cantidad de plántulas de _maple_ (arce) por parcela de un metro cuadrado.__](./imagenes/3-4 barras-frecuencia.jpg)
+
+Usando R
+```{r frecdiscr}
+maple <- read.csv("./data/Table 3.3.csv")
+ggplot(maple, aes(Seedlings)) +
+  geom_bar(fill = "#0073C2FF", width = 0.7) +
+  labs(x="Número de plántulas por parcela", y = "Frecuencia")
+```
+
+__Figura 7.  Fecuencia de la cantidad de plántulas de _maple_ (arce) por parcela de un metro cuadrado.__
 
 ### Histogramas para distribución de frecuencia de variables numéricas continuas  
 
@@ -149,16 +172,26 @@ La selección del intervalo de la clase, es algo arbitraria, pues depende de la 
 Histograma de la variable altura de la planta _Melocactus intortus_  
 ```{r histograma}
 hist.melodata <- ggplot(melocactus, aes(alturatotal)) + 
-  geom_histogram(aes(y=..density..), bins = 14, colour="white", fill="green") +
-  labs(x="Altura total de la planta,cm", y = "Density")
+  geom_histogram(binwidth=5, colour="white", fill="green") +
+  labs(x="Altura total de la planta,cm", y = "Frecuencia")
 hist.melodata
 ```
 
-#### Figura 6.  Distribución de frecuencias de altura total de la planta (cm), en plantas de _Melocactus intortus_ del Bosque Seco de Guánica.  
+#### Figura 8.  Distribución de frecuencias de altura total de la planta (cm), en plantas de _Melocactus intortus_ del Bosque Seco de Guánica.  
 
 Otra forma de presentar las frecuencias, es en forma acumulada:
 
-![ __Figura 7.  Frecuencia acumulada para la longitud de 797 hembras de pez mosquito (mm), usando barras y puntos con líneas.__](./imagenes/3-10 frecuencia-acum.jpg)
+![ __Figura 9.  Frecuencia acumulada para la longitud de 797 hembras de pez mosquito (mm), usando barras y puntos con líneas.__](./imagenes/3-10 frecuencia-acum.jpg)  
+
+Usando R
+```{r frecacum}
+frec_acum <- ggplot(data = melocactus, aes(x = alturatotal)) + 
+    geom_histogram(aes(y = cumsum(..count..)), binwidth = 1, boundary = 0, color = "white", fill ="green") +
+  labs(x="Altura total de la planta,cm", y = "Frecuencia acumulada")
+frec_acum
+```
+
+#### Figura 10.  Frecuencia acumulada de altura total de la planta (cm), en plantas de _Melocactus intortus_ del Bosque Seco de Guánica.
 
 \
 
