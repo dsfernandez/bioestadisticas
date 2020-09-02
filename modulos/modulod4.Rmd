@@ -1,33 +1,60 @@
 ---
-title:
+title:  "Estadísticas Descriptivas"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
+```
 
-# 1.4.Estadísticas Descriptivas
+# 1.4.Estadísticas Descriptivas: Medidas de la Tendencia Central y de Dispersión de los Datos
 
-blabla
 
-## 1.4.1.Parámetros Poblacionales y de la Muestra
 
-bla
-chunk  
+## 1.4.1.Parámetros Poblacionales y de la Muestra  
 
-[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+### Parámetros y estadísticos
 
-## 1.4.2.Medidas de la Tendencia Central
-
-bla
-chunk  
+\  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 1.4.3.Medidas de Dispersión
+## 1.4.2.Medidas de la Tendencia Central  
 
-bla
-chunk  
+### Proporción  
+
+### Moda  
+
+### Mediana  
+
+### Media  
+
+### Media ponderada  
+
+### Tendencia central en gráficas  
+
+\ 
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 1.4.3.Medidas de Dispersión    
+
+### Rango o ámbito
+
+### Cuantiles, cuartiles y sus distancias
+
+### Varianza, desviación estándar y error estándar 
+
+### Coeficiente de variación  
+
+### Medidas de dispersión en gráficas  
+
+\ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
