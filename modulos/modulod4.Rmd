@@ -190,34 +190,34 @@ A esta variación en las medidas de las observaciones alrededor de la media se l
 El __rango__ (en castellano puede llamarse también ámbito o alcance) es la diferencia entre el valor más grande y el más pequeño en los datos de una muestra.
 
 #### __Ejemplo__
-Con los datos de _Melocactus intortus_ vamos a calcular el rango de los datos de la longitud de la inflorescencia.
+Con los datos de _Melocactus intortus_ vamos a calcular el rango de los datos de la altura total de la planta.
 ```{r rango}
 # leer los datos
 melocactus <- read.csv("./data/melocactus.csv")
 # valor máximo
-LImax <- max(melocactus$longinflo)
+LImax <- max(melocactus$alturatotal)
 # valor mínimo
-LImin <- min(melocactus$longinflo)
+LImin <- min(melocactus$alturatotal)
 # rango
 Rango <- LImax - LImin
 resultados <- data.frame(LImax, LImin, Rango)
 resultados
 ```  
-El valor del rango está muy influenciado por los valores extremos o _outliers_; en este caso los individuos que no tienen inflorescencia (longitud 0), no permiten obtener un valor mínimo de la longitud cuando hay inflorescencia.  Por esto el rango es solo una medida de los posibles valores que puede tener una variable, pero no una buena medida de la dispersión en muchos casos.  
+El valor del rango está muy influenciado por los valores extremos o _outliers_, por esto el rango es solo una medida de los posibles valores que puede tener una variable, pero no una buena medida de la dispersión en muchos casos.  
 
 ### Percentilas, cuartiles y sus distancias
 Cómo vimos anteriormente, la mediana divide los datos de tal manera que la mitad de los valores entán por debajo de su valor, y la otra mitad sobre ese valor.  Podemos dividir los datos en conjuntos compuestos por proporciones diferentes a 0.5 (50%), y a estos valores de los datos que marcan esas divisiones se les denomina __percentilas__; la mediana sería la percentila 50%.  
 En las estadísticas descriptivas usualmente se utilizan las percentilas 25% y 75%, para medir la dispersión de los datos, y a estas y a la mediana (percentila 50%) se les denomina __cuartiles__ (primero, segundo (mediana) y tercer cuartiles).  Las percentilas 5% y 95% son también muy usadas para describir los datos que están muy por debajo o muy por encima de la tendencia central.  
 
 #### __Ejemplo__
-Con los datos de _Melocactus intortus_ vamos a calcular percentilas de los datos de la longitud de la inflorescencia.  
+Con los datos de _Melocactus intortus_ vamos a calcular percentilas de los datos de la altura total de la planta.  
 ```{r percentilas}
 # leer los datos
 melocactus <- read.csv("./data/melocactus.csv")
 # cálculo de percentilas
-summary(melocactus$longinflo)
+summary(melocactus$alturatotal)
 # otras percentilas
-quantile(melocactus$longinflo, c(0.05, 0.90, 0.95))
+quantile(melocactus$alturatotal, c(0.05, 0.90, 0.95))
 ```  
 ### Gráficas Box & Whisker  
 La representación gráfica de la dispersión, medida con cuartiles se puede hacer utilizando la gráfica __Box & Whisker__ (caja y bigote).  
@@ -226,6 +226,7 @@ library(ggplot2)
 ggplot(melocactus, aes(x=alturatotal)) + geom_boxplot(fill="cornflowerblue") +
   labs(x = "Altura total de la planta, cm")
 ```
+
 #### Figura 3. Gráfica de Box & Whisker para la altura total de la planta (cm), a partir de los datos de _Melocactus intortus_ en el Bosque de Guánica.  
 
 En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%).  Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la __distancia intercuartil__ ($Q_3 - Q_1$), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites.  Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.
