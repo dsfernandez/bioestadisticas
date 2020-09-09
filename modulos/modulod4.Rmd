@@ -132,16 +132,41 @@ $$\bar X = \frac{\sum x}{n}$$
 
 es decir, la suma de todos los valores, dividido entre la cantidad de valores de la muestra.  
 
+La función de R para calcular la media en __mean(x)__, donde __x__ es un vector de datos de una variable.
+
 ### Media ponderada   
 En algunos casos los datos numéricos discretos están organizados como una distribución de frecuencia (ver Figura 7 del tema Gráficas y Tablas).  En estos casos usamos lo que se conoce como una __media ponderada__ _(weighted mean)_, y su fórmula es la siguiente:  
 $$\bar X_w = \frac{\sum fx}{\sum f}$$
 
-La media ponderada se usa cuando diferentes medidas tienen diferentes pesos o niveles de importancia.  Un ejemplo conocido es el cálculo de "promedio" o _GPA_.  
+La media ponderada se usa cuando diferentes medidas tienen diferentes pesos o niveles de importancia.  Un ejemplo conocido es el cálculo de "promedio" o _GPA_. 
 
+#### __Ejemplo__
+J. Picachú tiene las siguientes notas luego de su primer año en la universidad:  
+```{r notas, echo=FALSE, message=FALSE, warning=FALSE}
+library(readxl)
+notas <- read_excel("./data/notas.xlsx")
+notas
+```
+Para usar el promedio ponderado primero debemos calcular la cantidad de créditos por nota __(f)__:
+```{r creditos, echo=FALSE}
+frecuencia <- read_excel("./data/notas.xlsx", 
+    sheet = "ponderado")
+frecuencia
+```
+Ahora podemos calcular el promedio ponderado, o _GPA_ para este caso:
+```{r GPA}
+GPA <- sum(frecuencia$f * frecuencia$valor_nota) / sum(frecuencia$f)
+GPA
+```
 
-### Comparación entre la moda, la mediana y la media  
+### Comparación entre la moda, la mediana y la media    
+Según sea la distribución de frecuencias de los valores de una muestra, la moda, la mediana y la media podrán estar muy cerca o separadas una de otra.
 
+![Distribución Simétrica de los Datos](./imagenes/4-1a Symmetrical Frequency.jpg)  
+__Figura 1. Histograma mostrando una distribución simétrica de la frecuencia de valores de los datos.__  
 
+![Distribución Asimétrica (Sesgada) de los Datos](./imagenes/4-1b Right-Skewed Frequency Distribution.jpg)  
+__Figura 2. Histograma mostrando una distribución asimétrica o sesgada de la frecuencia de valores de los datos.__  
 
 \ 
 
