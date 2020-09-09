@@ -102,11 +102,11 @@ En una lista ordenada de valores numéricos, la __mediana__ es el valor que divi
 
 Cuando el número de datos es impar, el valor de la mediana es uno de los datos, aquel que divide en partes iguales la secuencia de datos.  Cuando el número de datos es par, los dos valores centrales se promedian, para obtener la mediana:  
 
-> _caso 1:_  2, 2, 2, __3__, 3, 4, 4  M = 3    
+> _caso 1:_ &nbsp;  2, 2, 2, __3__, 3, 4, 4 &nbsp; &nbsp; M = 3    
 
-> _caso 2:_  2, 2, 2, __3, 4__, 4, 4, 4  M = 3.5   
+> _caso 2:_ &nbsp; 2, 2, 2, __3, 4__, 4, 4, 4 &nbsp; &nbsp; M = 3.5   
 
-> _caso 3:_  2, 2, 2, __3, 4__, 10, 100, 1000    M = 3.5  
+> _caso 3:_ &nbsp; 2, 2, 2, __3, 4__, 10, 100, 1000  &nbsp; &nbsp;  M = 3.5  
 
 ```{r}
 # mediana caso 1
