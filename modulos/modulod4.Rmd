@@ -50,7 +50,7 @@ Si _x_ es el número de observaciones de interés y _n_ el tamaño de la muestra
 $$\hat p = \frac{x}{n}$$
 A menudo las proporciones se convierten a porcentajes _(%)_ multiplicando por 100.  
 
-#### __Ejemplo__  
+#### __Ejercicio__  
 A partir de los resultados de una encuesta vamos a calcular la proporción de estudiantes que viven en Humacao.  
 ```{r proporcion}
 # individuos que cumplen la condición
@@ -70,7 +70,7 @@ resulta
 ### Moda  
 Es otra manera de describir la tendencia central de una variable categórica.  La __moda__ es el valor más común de unos datos.  Para determinar la moda no es necesario un cálculo especial, la moda se identifica; una manera de obtenerla es observar una gráfica de  barras de frecuencias o un histograma (para variables continuas).  A continuación tiene una función para identificar la moda en números y caracteres.  
 
-#### __Ejemplo__  
+#### __Ejercicio__  
 Moda de los datos de edad de la clase.  
 
 ¿Cúal es la diferencia entre moda y proporción?
@@ -119,6 +119,9 @@ medianas <- data.frame(mediana1, mediana2, mediana3)
 colnames(medianas) <- c("Caso 1", "Caso 2", "Caso 3")
 medianas
 ```
+#### __Ejercicio__  
+Calcular manualmente la mediana de la edad de la clase.  
+
 
 \ 
 
@@ -132,7 +135,10 @@ $$\bar X = \frac{\sum x}{n}$$
 
 es decir, la suma de todos los valores, dividido entre la cantidad de valores de la muestra.  
 
-La función de R para calcular la media en __mean(x)__, donde __x__ es un vector de datos de una variable.
+La función de R para calcular la media en __mean(x)__, donde __x__ es un vector de datos de una variable.  
+
+#### __Ejercicio__  
+Calculo de la media de la edad de la clase.
 
 ### Media ponderada   
 En algunos casos los datos numéricos discretos están organizados como una distribución de frecuencia (ver Figura 7 del tema Gráficas y Tablas).  En estos casos usamos lo que se conoce como una __media ponderada__ _(weighted mean)_, y su fórmula es la siguiente:  
@@ -172,13 +178,61 @@ __Figura 2. Histograma mostrando una distribución asimétrica o sesgada de la f
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 1.4.3.Medidas de Dispersión    
+## 1.4.3.Medidas de Dispersión  
+#### Objetivos  
+__Obtener medidas para evaluar la variación de los datos alrededor de la tendencia central__  
 
-### Rango o ámbito
+En algunas situaciones puede ser más importante conocer las variaciones de las medidas con respecto al valor de la tendencia central, que esta misma.  En el manejo de la diabetes, las variaciones diarias en la concentración de azúcar en la sangre son más importantes que su promedio.  
 
-### Cuantiles, cuartiles y sus distancias
+A esta variación en las medidas de las observaciones alrededor de la media se la conoce con el término __dispersión__.  Vamos a revisar las medidas de dispersión más comunes en estadística.   
+
+### Rango o ámbito  
+El __rango__ (en castellano puede llamarse también ámbito o alcance) es la diferencia entre el valor más grande y el más pequeño en los datos de una muestra.
+
+#### __Ejemplo__
+Con los datos de _Melocactus intortus_ vamos a calcular el rango de los datos de la longitud de la inflorescencia.
+```{r rango}
+# leer los datos
+melocactus <- read.csv("./data/melocactus.csv")
+# valor máximo
+LImax <- max(melocactus$longinflo)
+# valor mínimo
+LImin <- min(melocactus$longinflo)
+# rango
+Rango <- LImax - LImin
+resultados <- data.frame(LImax, LImin, Rango)
+resultados
+```  
+El valor del rango está muy influenciado por los valores extremos o _outliers_; en este caso los individuos que no tienen inflorescencia (longitud 0), no permiten obtener un valor mínimo de la longitud cuando hay inflorescencia.  Por esto el rango es solo una medida de los posibles valores que puede tener una variable, pero no una buena medida de la dispersión en muchos casos.  
+
+### Percentilas, cuartiles y sus distancias
+Cómo vimos anteriormente, la mediana divide los datos de tal manera que la mitad de los valores entán por debajo de su valor, y la otra mitad sobre ese valor.  Podemos dividir los datos en conjuntos compuestos por proporciones diferentes a 0.5 (50%), y a estos valores de los datos que marcan esas divisiones se les denomina __percentilas__; la mediana sería la percentila 50%.  
+En las estadísticas descriptivas usualmente se utilizan las percentilas 25% y 75%, para medir la dispersión de los datos, y a estas y a la mediana (percentila 50%) se les denomina __cuartiles__ (primero, segundo (mediana) y tercer cuartiles).  Las percentilas 5% y 95% son también muy usadas para describir los datos que están muy por debajo o muy por encima de la tendencia central.  
+
+#### __Ejemplo__
+Con los datos de _Melocactus intortus_ vamos a calcular percentilas de los datos de la longitud de la inflorescencia.  
+```{r percentilas}
+# leer los datos
+melocactus <- read.csv("./data/melocactus.csv")
+# cálculo de percentilas
+summary(melocactus$longinflo)
+# otras percentilas
+quantile(melocactus$longinflo, c(0.05, 0.90, 0.95))
+```  
+### Gráficas Box & Whisker  
+La representación gráfica de la dispersión, medida con cuartiles se puede hacer utilizando la gráfica __Box & Whisker__ (caja y bigote).  
+```{r graficaBW, message=FALSE, warning=FALSE}
+library(ggplot2)
+ggplot(melocactus, aes(x=alturatotal)) + geom_boxplot(fill="cornflowerblue") +
+  labs(x = "Altura total de la planta, cm")
+```
+#### Figura 3. Gráfica de Box & Whisker para la altura total de la planta (cm), a partir de los datos de _Melocactus intortus_ en el Bosque de Guánica.  
+
+En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%).  Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la __distancia intercuartil__ ($Q_3 - Q_1$), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites.  Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.
 
 ### Varianza, desviación estándar y error estándar 
+
+
 
 ### Coeficiente de variación  
 
