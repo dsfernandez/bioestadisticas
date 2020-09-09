@@ -1745,8 +1745,10 @@ div.tocify {
 <p class="caption">Figura 1. <em>Melocactus intortus</em> en Bosque Seco de Guánica</p>
 </div>
 <pre class="r"><code># activación de paquete de gráficas
-library(ggplot2)
-# cargar datos melocactus
+library(ggplot2)</code></pre>
+<pre><code>## Warning: replacing previous import &#39;vctrs::data_frame&#39; by &#39;tibble::data_frame&#39;
+## when loading &#39;dplyr&#39;</code></pre>
+<pre class="r"><code># cargar datos melocactus
 melocactus &lt;- read.csv(&quot;./data/melocactus.csv&quot;)
 # gráfica de puntos
 scpl &lt;- ggplot(melocactus, aes(alturatotal, longinflo))

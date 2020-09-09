@@ -1526,33 +1526,160 @@ div.tocify {
 
 <div id="estadísticas-descriptivas-medidas-de-la-tendencia-central-y-de-dispersión-de-los-datos" class="section level1">
 <h1>1.4.Estadísticas Descriptivas: Medidas de la Tendencia Central y de Dispersión de los Datos</h1>
+<p>Al medir alguna característica (variable) en individuos de una población (o muestra generalmente), usualmente encontraremos que hay diferencias en los valores obtenidos. En esta sección del curso conoceremos algunas maneras de encontrar medidas de la tendencia central de las variables, y de la variación entre los individuos.</p>
 <div id="parámetros-poblacionales-y-de-la-muestra" class="section level2">
 <h2>1.4.1.Parámetros Poblacionales y de la Muestra</h2>
+<div id="objetivo" class="section level4">
+<h4>Objetivo</h4>
+<p><strong>Diferenciar parámetros y estadísticos, en el lenguaje de las estadísticas</strong></p>
+<p>Con las mediciones que realizamos en una muestra, podemos calcular algunos aspectos de la tendencia central y variación entre individuos; estos valores se denominan <strong>estadísticos</strong>, y permiten estimar los valores de la tendencia central y la dispersión en la población, los que en este caso se denominan <strong>parámetros poblacionales</strong>.</p>
+</div>
 <div id="parámetros-y-estadísticos" class="section level3">
 <h3>Parámetros y estadísticos</h3>
+<p>A continuación una lista de algunos parámetros y estadísticos de uso común:</p>
+<blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>medida</th>
+<th align="center">parámetro</th>
+<th align="center">estadístico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>media</td>
+<td align="center"><span class="math inline">\(\mu\)</span></td>
+<td align="center"><span class="math inline">\(\bar X\)</span></td>
+</tr>
+<tr class="even">
+<td>mediana</td>
+<td align="center"><span class="math inline">\(\theta\)</span></td>
+<td align="center"><span class="math inline">\(M\)</span></td>
+</tr>
+<tr class="odd">
+<td>varianza</td>
+<td align="center"><span class="math inline">\(\sigma^2\)</span></td>
+<td align="center"><span class="math inline">\(s^2\)</span></td>
+</tr>
+<tr class="even">
+<td>desviación estándar</td>
+<td align="center"><span class="math inline">\(\sigma\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td>proporción</td>
+<td align="center"><span class="math inline">\(p\)</span></td>
+<td align="center"><span class="math inline">\(\hat p\)</span></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 <p> </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 </div>
 <div id="medidas-de-la-tendencia-central" class="section level2">
 <h2>1.4.2.Medidas de la Tendencia Central</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer los estadísticos que describen la tendencia central</strong></p>
+<p>La <strong>tendencia central</strong> de una muestra (o población) es el valor alrededor del cual se agrupan las observaciones o mediciones de una variable. Existen varios estadísticos para describirlas, y su selección depende del tipo de variable y la distribución de los datos.</p>
+</div>
 <div id="proporción" class="section level3">
 <h3>Proporción</h3>
+<p>Se refiere a la <strong>fracción</strong> de individuos o casos en una muestra, que tienen alguna característica (o nivel de una variable categórica).<br />
+Si <em>x</em> es el número de observaciones de interés y <em>n</em> el tamaño de la muestra, entonces la proporción observada será: <span class="math display">\[\hat p = \frac{x}{n}\]</span> A menudo las proporciones se convierten a porcentajes <em>(%)</em> multiplicando por 100.</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>A partir de los resultados de una encuesta vamos a calcular la proporción de estudiantes que viven en Humacao.</p>
+<pre class="r"><code># individuos que cumplen la condición
+x &lt;- 7
+# total de individuos en la muestra
+n &lt;- 29
+# proporción
+p &lt;- x / n
+# porcentaje
+pciento &lt;- p * 100
+# resultados
+resulta &lt;- data.frame(x, n, p, pciento)
+colnames(resulta) &lt;- c(&quot;en Humacao&quot;, &quot;Total&quot;, &quot;proporción&quot;, &quot;%&quot;)
+resulta</code></pre>
+<pre><code>##   en Humacao Total proporción        %
+## 1          7    29  0.2413793 24.13793</code></pre>
+</div>
 </div>
 <div id="moda" class="section level3">
 <h3>Moda</h3>
+<p>Es otra manera de describir la tendencia central de una variable categórica. La <strong>moda</strong> es el valor más común de unos datos. Para determinar la moda no es necesario un cálculo especial, la moda se identifica; una manera de obtenerla es observar una gráfica de barras de frecuencias o un histograma (para variables continuas). A continuación tiene una función para identificar la moda en números y caracteres.</p>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Moda de los datos de edad de la clase.</p>
+<p>¿Cúal es la diferencia entre moda y proporción?</p>
+<pre class="r"><code># tomado de: tutorials-point
+# crear la función
+getmode &lt;- function(x) {
+   uniqv &lt;- unique(x)
+   uniqv[which.max(tabulate(match(x, uniqv)))]
+}
+# vector con números
+v &lt;- c(2,1,2,3,1,2,3,4,1,5,5,3,2,3)
+
+# identificación de la moda
+result &lt;- getmode(v)
+print(result)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code># vector con texto
+charv &lt;- c(&quot;o&quot;,&quot;it&quot;,&quot;the&quot;,&quot;it&quot;,&quot;it&quot;)
+
+# identificación de la moda
+result &lt;- getmode(charv)
+print(result)</code></pre>
+<pre><code>## [1] &quot;it&quot;</code></pre>
+</div>
 </div>
 <div id="mediana" class="section level3">
 <h3>Mediana</h3>
+<p>En una lista ordenada de valores numéricos, la <strong>mediana</strong> es el valor que divide de manera igual, por arriba y por abajo, la cantidad de valores de la variable.</p>
+<p>Cuando el número de datos es impar, el valor de la mediana es uno de los datos, aquel que divide en partes iguales la secuencia de datos. Cuando el número de datos es par, los dos valores centrales se promedian, para obtener la mediana:</p>
+<blockquote>
+<p><em>caso 1:</em> 2, 2, 2, <strong>3</strong>, 3, 4, 4 M = 3</p>
+</blockquote>
+<blockquote>
+<p><em>caso 2:</em> 2, 2, 2, <strong>3, 4</strong>, 4, 4, 4 M = 3.5</p>
+</blockquote>
+<blockquote>
+<p><em>caso 3:</em> 2, 2, 2, <strong>3, 4</strong>, 10, 100, 1000 M = 3.5</p>
+</blockquote>
+<pre class="r"><code># mediana caso 1
+mediana1 &lt;- median(c(2, 2, 2, 3, 3, 4, 4))
+# mediana caso 2
+mediana2 &lt;- median(c(2, 2, 2, 3, 4, 4, 4, 4))
+# mediana caso 3
+mediana3 &lt;- median(c(2, 2, 2, 3, 4, 10, 100, 1000))
+medianas &lt;- data.frame(mediana1, mediana2, mediana3)
+colnames(medianas) &lt;- c(&quot;Caso 1&quot;, &quot;Caso 2&quot;, &quot;Caso 3&quot;)
+medianas</code></pre>
+<pre><code>##   Caso 1 Caso 2 Caso 3
+## 1      3    3.5    3.5</code></pre>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 <div id="media" class="section level3">
 <h3>Media</h3>
+<p>La <strong>media</strong> es el promedio aritmético de un conjunto de datos numéricos. Si realizamos la medición de todos los individuos de una población y calculamos la media, obtendremos la verdadera <strong>media poblacional</strong> (<span class="math inline">\(\mu\)</span>). Si las mediciones son en una muestra de la población y calculamos la media, obtendremos la <strong>media muestral</strong> (<span class="math inline">\(\bar X\)</span>).</p>
+<p>La fórmula de la media, para un conjunto de valores <span class="math inline">\(x_1,\ x_2,\ x_3,...,\ x_n\)</span>, será:<br />
+<span class="math display">\[\bar X = \frac{\sum x}{n}\]</span></p>
+<p>es decir, la suma de todos los valores, dividido entre la cantidad de valores de la muestra.</p>
 </div>
 <div id="media-ponderada" class="section level3">
 <h3>Media ponderada</h3>
+<p>En algunos casos los datos numéricos discretos están organizados como una distribución de frecuencia (ver Figura 7 del tema Gráficas y Tablas). En estos casos usamos lo que se conoce como una <strong>media ponderada</strong> <em>(weighted mean)</em>, y su fórmula es la siguiente:<br />
+<span class="math display">\[\bar X_w = \frac{\sum fx}{\sum f}\]</span></p>
+<p>La media ponderada se usa cuando diferentes medidas tienen diferentes pesos o niveles de importancia. Un ejemplo conocido es el cálculo de “promedio” o <em>GPA</em>.</p>
 </div>
-<div id="tendencia-central-en-gráficas" class="section level3">
-<h3>Tendencia central en gráficas</h3>
+<div id="comparación-entre-la-moda-la-mediana-y-la-media" class="section level3">
+<h3>Comparación entre la moda, la mediana y la media</h3>
 <p> </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
@@ -1570,9 +1697,6 @@ div.tocify {
 </div>
 <div id="coeficiente-de-variación" class="section level3">
 <h3>Coeficiente de variación</h3>
-</div>
-<div id="medidas-de-dispersión-en-gráficas" class="section level3">
-<h3>Medidas de dispersión en gráficas</h3>
 <p> </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
