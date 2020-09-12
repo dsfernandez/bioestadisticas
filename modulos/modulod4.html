@@ -1790,13 +1790,67 @@ ggplot(melocactus, aes(x=alturatotal)) + geom_boxplot(fill=&quot;cornflowerblue&
 <div id="figura-3.-gráfica-de-box-whisker-para-la-altura-total-de-la-planta-cm-a-partir-de-los-datos-de-melocactus-intortus-en-el-bosque-de-guánica." class="section level4">
 <h4>Figura 3. Gráfica de Box &amp; Whisker para la altura total de la planta (cm), a partir de los datos de <em>Melocactus intortus</em> en el Bosque de Guánica.</h4>
 <p>En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%). Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la <strong>distancia intercuartil</strong> (<span class="math inline">\(Q_3 - Q_1\)</span>), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites. Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.</p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 </div>
 <div id="varianza-desviación-estándar-y-error-estándar" class="section level3">
 <h3>Varianza, desviación estándar y error estándar</h3>
+<p>Ahora consideraremos algunas medidas de la dispersión alrededor de la media. De manera intuitiva podemos sugerir que una medida de dispersión es la diferencia entre cada valor (<span class="math inline">\(x_i\)</span>) de nuestra muestra y la media de la muestra (<span class="math inline">\(\bar X\)</span>): <span class="math display">\[d = (x_i - \bar X)\]</span> y que la suma de estas diferencias (<span class="math inline">\(\sum (x_i - \bar X)\)</span>) será una medida de la dispersión. Sin embargo, podemos probar, por la misma definición de media, que esta sumatoria es igual a 0, ya que los valores negativos y positivos se cancelan. Pero si elevamos al cuadrado cada diferencia, esto no ocurre y podemos definir la dispersión total como la <strong>suma de cuadrados de las diferencias</strong> <em>(SS)</em>, una cantidad muy importante en estadísticas y que se representa: <span class="math display">\[SS = \sum (x_i - \bar X)^2\]</span> <em>SS</em> mide la dispersión total, es decir que si tenemos más valores de la variable medida, tendremos más variación, y no serían comparables medidas de dispersión entre muestras de diversos tamaños. Para normalizar (estandarizar) está cantidad, se divide entre el tamaño de la muestra menos 1 (ajuste para evitar sesgo, según la teoría estadística), y tenemos entonces lo que se conoce como la <strong>varianza</strong>:<br />
+<span class="math display">\[s^2 = \frac{\sum (x_i - \bar X)^2}{n-1}\]</span><br />
+Para fines prácticos, es más común usar la raíz cuadrada de la varianza, llamada <strong>desviación estándar</strong> <em>(s)</em>, y así las unidades de la tendencia central y la dispersión se expresan en las mismas unidades de medición.</p>
+<p>La desviación estándar es una medida de la dispersión alrededor de la media en una muestra, pero podemos también considerar el caso en que tomemos un número grande de muestras de la misma población, y queremos conocer una medida de la dispersión de los valores de las medias de ese conjunto de muestras; en este caso se usa el <strong>error estándar</strong> como estimador de esa cantidad:<br />
+<span class="math display">\[s_{\bar X} = \frac{s}{\sqrt n}\]</span> dónde <em>n</em> es el tamaño de nuestra muestra, y <em>s</em> su desviación estándar. En términos prácticos este valor representa una medida de la <strong>precisión</strong> de nuestras mediciones, la cual aumenta al disminuir el error estándar. Esto justifica, en parte, la necesidad de tener muchos datos en una muestra.</p>
 </div>
 <div id="coeficiente-de-variación" class="section level3">
 <h3>Coeficiente de variación</h3>
+<p>Los valores anteriores de medidas de dispersión, son comparables entre muestras de la misma variable, sujetos o casos y unidades de medición, pero dejan de serlo cuando los grupos o variables medidas son muy dispares o tienen unidades diferentes. En estas situaciones es conveniente el uso del <strong>coeficiente de variación</strong> <em>(CV)</em>:</p>
+<p><span class="math display">\[CV(\%) = \frac{s}{\bar X} * 100\]</span> <strong>Ejemplo</strong><br />
+En la siguiente tabla se ilustra la utilidad del coeficiente de variación:</p>
+<p><strong>Masa Corporal en kg</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Estadístico</th>
+<th align="left">Ratón</th>
+<th align="left">Elefante</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\bar X\)</span></td>
+<td align="left">0.0125</td>
+<td align="left">1240</td>
+</tr>
+<tr class="even">
+<td align="center"><em>s</em></td>
+<td align="left">0.0072</td>
+<td align="left">626</td>
+</tr>
+<tr class="odd">
+<td align="center"><em>CV</em></td>
+<td align="left">57.6</td>
+<td align="left">50.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="método-para-calcular-tendencia-central-y-medidas-de-dispersión-en-r" class="section level3">
+<h3>Método para calcular tendencia central y medidas de dispersión en R</h3>
+<p>Hay varias maneras de calcular los estadísticos de la tendencia central usando R, a continuación usaremos una que permite calcular varios de ellos en los datos de altura total de la planta (cm) de <em>Melocactus intortus</em>, para grupos separados por un factor (estado: Enfermos, Saludables, X muertos).</p>
+<pre class="r"><code># leer los datos
+melocactus &lt;- read.csv(&quot;./data/melocactus.csv&quot;)
+# activar paquete doBy
+library(doBy)
+library(htmlTable) # para tablas elegantes
+descriptivas &lt;- summaryBy(alturatotal ~ estado, data = melocactus,
+  FUN = function(x) { c(media = mean(x), var = var(x), de = sd(x), es = sd(x)/sqrt(length(x)), CV = (sd(x)/mean(x))*100) } )
+colnames(descriptivas) &lt;- c(&quot;estado&quot;, &quot;media&quot;, &quot;varianza&quot;, &quot;desv. est.&quot;, &quot;error est.&quot;, &quot;CV%&quot;)
+txtRound(descriptivas, 2) #redondeo</code></pre>
+<pre><code>##   estado media varianza desv. est. error est.   CV%
+## 1      E 21.93   222.23      14.91       2.87 67.99
+## 2      S 23.04   241.01      15.52       1.79 67.38
+## 3      X 20.00   121.29      11.01       1.68 55.06</code></pre>
 <p> </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>

@@ -229,13 +229,54 @@ ggplot(melocactus, aes(x=alturatotal)) + geom_boxplot(fill="cornflowerblue") +
 
 #### Figura 3. Gráfica de Box & Whisker para la altura total de la planta (cm), a partir de los datos de _Melocactus intortus_ en el Bosque de Guánica.  
 
-En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%).  Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la __distancia intercuartil__ ($Q_3 - Q_1$), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites.  Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.
+En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%).  Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la __distancia intercuartil__ ($Q_3 - Q_1$), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites.  Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.  
 
-### Varianza, desviación estándar y error estándar 
+\ 
 
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
+### Varianza, desviación estándar y error estándar  
+Ahora consideraremos algunas medidas de la dispersión alrededor de la media.  De manera intuitiva podemos sugerir que una medida de dispersión es la diferencia entre cada valor ($x_i$) de nuestra muestra y la media de la muestra ($\bar X$):
+$$d = (x_i - \bar X)$$
+y que la suma de estas diferencias ($\sum (x_i - \bar X)$) será una medida de la dispersión.  Sin embargo, podemos probar, por la misma definición de media, que esta sumatoria es igual a 0, ya que los valores negativos y positivos se cancelan.  Pero si elevamos al cuadrado cada diferencia, esto no ocurre y podemos definir la dispersión total como la __suma de cuadrados de las diferencias__ _(SS)_, una cantidad muy importante en estadísticas y que se representa:
+$$SS = \sum (x_i - \bar X)^2$$
+_SS_ mide la dispersión total, es decir que si tenemos más valores de la variable medida, tendremos más variación, y no serían comparables medidas de dispersión entre muestras de diversos tamaños.  Para normalizar (estandarizar) está cantidad, se divide entre el tamaño de la muestra menos 1 (ajuste para evitar sesgo, según la teoría estadística), y tenemos entonces lo que se conoce como la __varianza__:  
+$$s^2 = \frac{\sum (x_i - \bar X)^2}{n-1}$$  
+Para fines prácticos, es más común usar la raíz cuadrada de la varianza, llamada __desviación estándar__ _(s)_, y así las unidades de la tendencia central y la dispersión se expresan en las mismas unidades de medición.  
 
-### Coeficiente de variación  
+La desviación estándar es una medida de la dispersión alrededor de la media en una muestra, pero podemos también considerar el caso en que tomemos un número grande de muestras de la misma población, y queremos conocer una medida de la dispersión de los valores de las medias de ese conjunto de muestras; en este caso se usa el __error estándar__ como estimador de esa cantidad:  
+$$s_{\bar X} = \frac{s}{\sqrt n}$$
+dónde _n_ es el tamaño de nuestra muestra, y _s_ su desviación estándar.  En términos prácticos este valor representa una medida de la __precisión__ de nuestras mediciones, la cual aumenta al disminuir el error estándar.  Esto justifica, en parte, la necesidad de tener muchos datos en una muestra.
+
+### Coeficiente de variación    
+Los valores anteriores de medidas de dispersión, son comparables entre muestras de la misma variable, sujetos o casos y unidades de medición, pero dejan de serlo cuando los grupos o variables medidas son muy dispares o tienen unidades diferentes.  En estas situaciones es conveniente el uso del __coeficiente de variación__ _(CV)_:  
+
+$$CV(\%) = \frac{s}{\bar X} * 100$$
+__Ejemplo__  
+En la siguiente tabla se ilustra la utilidad del coeficiente de variación:
+
+__Masa Corporal en kg__   
+
+|Estadístico|Ratón|Elefante|
+|:-----:|:-----|:-----|
+| $\bar X$ | 0.0125 | 1240 |
+| _s_ | 0.0072 | 626 |
+| _CV_ | 57.6 | 50.4 |
+
+### Método para calcular tendencia central y medidas de dispersión en R  
+Hay varias maneras de calcular los estadísticos de la tendencia central usando R, a continuación usaremos una que permite calcular varios de ellos en los datos de altura total de la planta (cm) de _Melocactus intortus_, para grupos separados por un factor (estado: Enfermos, Saludables, X muertos).
+```{r estadisticos, message=FALSE, warning=FALSE}
+# leer los datos
+melocactus <- read.csv("./data/melocactus.csv")
+# activar paquete doBy
+library(doBy)
+library(htmlTable) # para tablas elegantes
+descriptivas <- summaryBy(alturatotal ~ estado, data = melocactus,
+  FUN = function(x) { c(media = mean(x), var = var(x), de = sd(x), es = sd(x)/sqrt(length(x)), CV = (sd(x)/mean(x))*100) } )
+colnames(descriptivas) <- c("estado", "media", "varianza", "desv. est.", "error est.", "CV%")
+txtRound(descriptivas, 2) #redondeo
+```
+
 
 
 \ 
