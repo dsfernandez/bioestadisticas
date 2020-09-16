@@ -1,51 +1,106 @@
 ---
-title:
+title:  "Probabilidades y Distribuciones Discretas"  
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
 ```
 
-# 1.5.Probabilidades y Distribuciones Discretas
-
-blabla
+# 1.5.Probabilidades y Distribuciones Discretas  
+Todo lo biológico es incierto, pero podemos conocer algo de esa incertidumbre mediante el estudio de las __probabilidades__.
 
 ## 1.5.1.Probabilidades
+#### Objetivo  
+__Conocer las reglas básicas de las probabilidades__  
+__Probabilidad__ es la medida de la oportunidad de que ocurra un evento, y puede variar entre 0 y 1.  Cuando la probabilidad es 0, el evento no es posible.  Cuando la probabilidad es 1, el evento es totalmente posible.  En el campo de la biología, las probabilidades varían entre esos dos extremos teóricos.  
 
-bla
-chunk  
+### Probabilidad clásica y empírica  
+Hay dos maneras básicas de determinar la probabilidad de que ocurra un evento.  
+
+La __probabilidad clásica__, se basa en consideraciones teóricas.  Por ejemplo, un dado tiene seis caras (es un cubo), cada una con un número de puntos del 1 al 6; por lo tanto, la probabilidad de que ocurre un evento en particular, digamos que salgan en la parte superior 3 puntos, se puede calcular sin lanzar el dado, simplemente calculando la proporción: ocurrencias del evento esperado (3 puntos) dividido entre el número de eventos posibles (seis):
+$$p = \frac{1}{6} \approx 0.1667$$
+Otros ejemplos son las fichas de dominó, las caras de una moneda, las cartas de un juego de baraja.  
+
+#### __Ejercicio__  
+Calcule la probabilidad de tomar una ficha específica de dominó.  
+
+Otra manera de determinar la probabilidad de un evento, está basada en la frecuencia relativa del evento en la población (o la muestra, generalmente) de interés.  A esta frecuencia relativa (o proporción del evento) se la conoce como __probabilidad empírica__. Por ejemplo, la probabilidad de ocurrencia en una problación de alguna condición genética, se determina de manera empírica según las evaluaciones médicas, como el número de casos (eventos) por nacimientos, aunque no conozcamos el mecanismo u origen de la condición.  
+
+#### __Ejercicio__  
+¿Cuál es la probabilidad de ocurrencia de gemelos en la población de Puerto Rico?
+
+### La 'Regla de la División'    
+Los cálculos de probabilidades en los ejemplos anteriores, siguen la denominada Regla de la División: la probabilidad de un evento _(p)_ es el número de veces en las que el evento puede ocurrir _(s)_ dividido por el número total de eventos posibles _(n)_, asumiendo que todos los eventos individuales son igualmente probables.  
+$$p = \frac{s}{n}$$
+
+### La Ley de la Probabilidad Total  
+En algunos casos es difícil calcular la probabilidad de un evento en particular, no así las probabilidades de los otros eventos que no son el que nos interesa.  En este caso se puede aplicar la __ley de la probabilidad total__ que establece que la suma de las probabilidades de todos los eventos posibles es igual a 1.  Por lo tanto si conocemos las probabilidades de todos los eventos que no son el que nos interesa, podemos aplicar la __regla de substracción__:  
+$$p = 1 - q$$  
+dónde _(p)_ es la probabilidad del evento que nos interesa, y _(q)_ la probabilidad de todos los otros eventos posibles.    
+
+### Distribución de probabilidades  
+Una manera práctica de presentar las probabilidades de varios eventos, en grupos o poblaciones diversas, es mediante una lista de las probabilidades en forma de tabla o gráfica.  
+
+#### __Ejemplo__    
+
+```{r abo, message=FALSE, warning=FALSE}
+library(readxl)
+library(kableExtra)
+# datos ABO grupos étnicos
+abo <- read_excel("data/ABOtypes-ethnic-groups.xlsx", sheet = "tabla")
+# tabla
+abo %>% 
+  kbl(caption = "Tabla 1. Distribución de probabilidades (a partir de frecuencias) de los tipos de sangre ABO, en cuatro grupos étnicos de los Estados Unidos.") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+```{r barras, message=FALSE, warning=FALSE}
+library(ggplot2)
+# datos
+abog <- read_excel("data/ABOtypes-ethnic-groups.xlsx", sheet = "barras")
+# gráfica de barras por grupo étnico
+ggplot(abog, aes(x=Ethnic_Group, y = Probability,
+                 fill=Blood_Type)) +
+     geom_col(position="fill")
+```
+
+__Figura 1__ Distribución de probabilidades (a partir de frecuencias) de los tipos de sangre ABO, en cuatro grupos étnicos de los Estados Unidos.  
+
+
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.5.2.Número de Posibilidades
 
-bla
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.5.3.Independencia y Probabilidad Condicional
 
-bla
-chunk  
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.5.4.Eventos Mutuamente Exclusivos
 
-bla
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 1.5.5.Distribución Binomial y de Poisson
 
-bla
-chunk  
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
