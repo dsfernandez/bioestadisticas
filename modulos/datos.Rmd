@@ -1,10 +1,17 @@
 ---
-title:
+title:  "Recursos extras"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
+```
 
 ```{r, echo=FALSE}
 library(htmltools)
@@ -12,12 +19,14 @@ library(htmltools)
 
 # Otros Recursos
 
-### Enlaces:    
+## Enlaces:    
 
-### Referencias:
+## Referencias:
 
-### Aplicaciones:  
-* wordcloud - nube de palabras a partir de un texto    
+## Aplicaciones:  
+
+### wordcloud
+Nube de Palabras a partir de un texto:    
 ```{r, echo=FALSE}
 tags$a(
   href = "./recursos/wordcloud.html",
@@ -27,5 +36,5 @@ tags$a(
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-### Glosario  
+## Glosario  
 
