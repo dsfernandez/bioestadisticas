@@ -81,7 +81,7 @@ __Figura 1__ Distribución de probabilidades (a partir de frecuencias) de los ti
 ## 1.5.2.Número de Posibilidades
 #### Objetivos
 __Contabilizar todos los posibles resultados y eventos de un experimento o prueba__  
-Podemos contar los posibles resultados de experimentos o pruebas de diferentes maneras.  
+La definición de probabilidad requiere conocer el número total de eventos posibles, para poder calcular la misma.  En esta sección trataremos algunas maneras de cómo podemos contar los posibles resultados de experimentos o pruebas.  
 
 ### Secuencia de repeticiones  
 Cuando es importante la secuencia en los resultados de repeticiones podemos aplicar una función de potencia para encontrar el  número total de eventos posibles:
@@ -158,14 +158,14 @@ __Distinguir las probabilidades de eventos independientes y eventos no independi
 
 ### Probabilidad de eventos independientes  
 
-Dos eventos son independientes cuando la ocurrencia de uno, no afecta la ocurrencia del otro.  El ejemplo clásico es el lanzamiento varias veces de una modeda, en cada lanzamiento la probabilidad de obtener cara o cruz es la misma: 1/2 (0.5).  Ahora bien, si para cada lanzamiento esperamos un evento en particular, digamos que el primer lanzamiento sea cara y el segundo sea cruz, en este caso se aplica la __regla de la multiplicación__, es decir, esperamos que el evento A ocurra con un resultado y que el evento B ocurra también con un resultado esperado:  
+Dos eventos son independientes cuando la ocurrencia de uno, no afecta la ocurrencia del otro.  El ejemplo clásico es el lanzamiento varias veces de una modeda, en cada lanzamiento la probabilidad de obtener cara o cruz es la misma: 1/2 (0.5).  Ahora bien, si para cada lanzamiento esperamos un evento en particular, digamos que el primer lanzamiento sea cara y el segundo sea cara también, en este caso se aplica la __Regla de la Multiplicación__, es decir, esperamos que el evento A ocurra con un resultado y que el evento B ocurra también con un resultado esperado:  
 $$p(A\ y\ B) = p(A)\ *\ p(B)$$  
 
 #### __Ejemplo__  
 Una aplicación de esta regla en la biología, la encontramos cuando calculamos la probabilidad de un tipo particular de genotipo.  Por ejemplo, si queremos calcular la probabilidad de un genotipo recesivo, a partir de padres heterocigotos, asumiendo igual segregación de los alelos, la probabilidad del genotipo recesivo será: 1/2 x 1/2 = 1/4 (0.25).  
 
 ### Probabilidad condicional  
-Si dos eventos no son independientes, la probabilidad conjunta es una __condicional__, donde la probabilidad del segundo evento, está ligada a la probabilidad de la ocurrencia del primero.  En este caso se aplica la __regla general de la multiplicación__:  
+Si dos eventos no son independientes, la probabilidad conjunta es una __condicional__, donde la probabilidad del segundo evento, está ligada a la probabilidad de la ocurrencia del primero.  En este caso se aplica la __Regla General de la Multiplicación__:  
 $$p(A\ y\ B) = p(A)\ *\ p(B|A)$$  
 que se lee: la probabilidad de la ocurrencia secuencial de los eventos A y B, es la probabilidad del evento A, multiplicada por la probabilidad del evento B cuando ocurre el evento A.  
 
@@ -180,13 +180,36 @@ $$P(M\ y\ G) = 0.49*0.44 = 0.22$$
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 1.5.4.Eventos Mutuamente Exclusivos
+## 1.5.4.Eventos Mutuamente Exclusivos  
+#### Objetivos  
+__Calcular probabilidades de eventos mutuamente exclusivos total o parcialmente__  
 
- 
+En algunas situaciones deseamos conocer la probabilidad de que ocurran al menos dos o más eventos específicos excluyentes en una prueba; es decir ¿cuál es la probabilidad de que ocurra el evento A o el B (no ambos) en una prueba.  En este caso se aplica la __Regla de Adición Simple__:  
+$$P(A\ o\ B) = P(A) + P(B)$$  
+
+#### __Ejemplo__   
+¿Cuál es la probabilidad de que un dado muestre un 3 o un 7 en una tirada?
+P(3) = 1/6 y P(7) = 1/6, por lo tanto la probabilidad P(3 o 7) = 1/6 + 1/6 = 1/3.  
+
+### Exclusión incompleta  
+En el campo de la biología es frecuente la ocurrencia de eventos de forma exclusiva en algunos casos, pero en otros de manera concurrente.  En estos casos, la probabilidad de ocurrencia de un evento u otro, tomando en cuenta la concurrencia se calcula con la __Regla General de la Adición__:  
+$$P(A\ o\ B) = P(A) + P(B) - P(A\ y\ B)$$  
+podemos que cuando hay exclusión mutua completa, P(A y B) será igual a 0.  
+
+#### __Ejemplo__
+Ciertas condiciones de salud pueden estar presentes de manera excluyente (si ocurre una no ocurre la otra), o pueden ocurrir ambas simultáneamente.  Un ejemplo es la alta presión sanguínea y altos niveles de colesterol en la sangre.  Una forma de representar las probabilidades de estos eventos, es mediante lo que se conoce como diagramas de Venn.  
+
+![](./imagenes/5-5 Venn Diagram AB.jpg)  
+
+__Figura 2.__  Diagrama de Venn de los conjuntos de probabilidades de los eventos alta presión sanguínea, altos niveles de colesterol en la sangre, y la probabilidad concurrente de ambas condiciones.  
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 1.5.5.Distribución Binomial y de Poisson
+## 1.5.5.Distribución Binomial y de Poisson  
+#### Objetivos  
+__
 
 
 
