@@ -209,9 +209,141 @@ __Figura 2.__  Diagrama de Venn de los conjuntos de probabilidades de los evento
 
 ## 1.5.5.Distribución Binomial y de Poisson  
 #### Objetivos  
-__
+__Identificar las distribuciones adecuadas a datos discretos__  
+
+### La Distribución Binomial  
+Para muchos eventos o casos existen solo dos categorías mutuamente exclusivas, o aún cuando existan más de dos, se pueden separar en la categoría de interés y las otras en una sola categoría.   
+
+#### __Ejemplo__  
+
+* Tirar una moneda varias veces solo tiene dos categorías de resultados.  
+* Tirar los dados, aunque tiene seis posibles resultados, se pueden dividir en dos categorías: el número del 1 al 6 que me interesa, y los demás (p. ej.: 3 versus 1, 2, 4, 5 y 6).
+
+Una __distribución binomial de probabilidades__ describe las probabilidades de resultados para eventos, que presenten las siguientes propiedades:  
+
+1. El evento (p. ej: tirar los dados) ocurre una cantidad específica de veces _(k)_.  
+2. Cada vez que el evento ocurre, hay dos posibles resultados mutuamente excluyentes.  Uno de los resultados se considera "éxito" _(success)_ y su probabilidad se denota como _p_, y al otro se le denomina "falla" _(failure)_ y se denota como _q_.  Como solo hay dos posibles resultados, entonces: $p + q = 1$.  
+3. Los eventos son independientes (revisar definición).  
+4. El número de veces en los _k_ eventos que ocurre el resultado esperado, se denomina _x_; la probabilidad de ocurrencia de _x_ se representa como _p(x)_.  
+
+### Ecuación Binomial  
+La probabilidad de ocurrencia _p(x)_ de un resultado de un evento en particular _x_, en _k_ ocurrencias del evento, está dada por la ecuación de la __distribución binomial__:  
+$$p(x) = \frac{k!}{x!(k - x)!} p^{x} q^{(k - x)}$$  
+
+#### __Ejemplo__  
+(Example 5.7 - Havel _et al._ 2019) La fibrosis cística (FC) es un desorden hereditario, caracterizado por acumulación de mucosidad en los pulmones.  El gen que la determina es uno autosómico recesivo, por lo tanto si dos portadores heterocigotos tienen hijos, el riesgo de producir un bebé homocigoto con FC es 0.25 (25%).  ¿Cuál será la probabilidad de que en una pareja portadora con tres hijo/as haya uno o más afectado por FC?  
+
+Podemos usar la fórmula de la distribución binomial, y obtener las probabilidades de cada evento de interés:
+
+Para _x = 0_, con _k = 3_ (tres hijos, tres pruebas):
+$$p(0) = \frac{3!}{0!(3 - 0)!} 0.25^{0} 0.75^{(3 - 0)} = 0.75^3 = 0.42188$$  
+
+Podemos calcular las probabilidades para _x_ = 1, 2, 3, usando el siguiente código:
+```{r binomial}
+# un hijo con FC
+p_uno <- dbinom(1, size=3, prob=0.25)
+sprintf("probabilidad de un hijo con FC = %.5f", p_uno)
+# dos hijos con FC
+p_dos <- dbinom(2, size=3, prob=0.25)
+sprintf("probabilidad de dos hijos con FC = %.5f", p_dos)
+# tres hijos con FC
+p_tres <- dbinom(3, size=3, prob=0.25)
+sprintf("probabilidad de tres hijos con FC = %.5f", p_tres)
+```
+
+Como lo que pide el problema es la probabilidad de uno o más hijos con FC, podemos aplicar la regla de la adición (p(1 o 2 o 3)) ya que se trata de eventos mutuamente excluyentes, y sumar las probabilidades anteriores para uno, dos y tres hijos con FC.  
+
+También podemos usar el siguiente código para probabilidades acumuladas de mayor o igual a un hijo con FC, usando la regla de la substracción:  
+```{r}
+# probabilidad acumulada de 1 o más hijos con FC
+pacum1plus <- 1 - dbinom(0, size = 3, prob = 0.25)
+sprintf("probabilidad de uno o más hijos con FC = %.5f", pacum1plus)
+```
+
+### Frecuencias Esperadas  
+Es común en la investigación en biología, comparar los resultados de múltiples ensayos con las frecuencias esperadas de los eventos posibles en cada ensayo.   
+
+#### __Ejemplo__
+(Example 5.8 Havel _et al._ 2019) Una especie de cerdo silvestre africano, produce con mucha frecuencia un tamaño de camada de 6 cerditos.  Asumimos que la probabilidad de cada cerdito de ser macho o hembra es _p_ = 0.5, y por tratarse de camadas de 6 cerditos, _k_ = 6.  
+```{r}
+library(kableExtra)
+# probabilidades de que ocurran 0 a 6 cerditos machos en una camada
+cero <- dbinom(0, size = 6, prob = 0.5)
+uno <- dbinom(1, size = 6, prob = 0.5)
+dos <- dbinom(2, size = 6, prob = 0.5)
+tres <- dbinom(3, size = 6, prob = 0.5)
+cuatro <- dbinom(4, size = 6, prob = 0.5)
+cinco <- dbinom(5, size = 6, prob = 0.5)
+seis <- dbinom(6, size = 6, prob = 0.5)
+x_machos <- c(0, 1, 2, 3, 4, 5, 6)
+p_x <- c(cero, uno, dos, tres, cuatro, cinco, seis)
+binomial <- data.frame(x_machos, p_x)
+# producir tabla
+binomial %>%
+kbl(caption = "Tabla 2. Probabilidad binomial de un número x de cerditos machos en camadas de 6 cerditos.") %>%
+kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+```{r}
+library(ggplot2)
+# gráfica de columnas
+graf_binom <- ggplot(x=x_machos, y=p_x, binomial) +
+  geom_col(aes(x = x_machos, y = p_x))
+graf_binom
+```
+__Figura 3__.  Distribución binomial de probabilidades, para la ocurrencia de camadas de cerdo silvestre con cantidades de machos entre 0 y 6. 
+
+Asumimos que la probabilidad de los cerditos de ser macho o hembra es 0.5.  En un sitio de cria de estos cerditos, examinaron el número de machos por camada de seis, y encontraron que de 100 camadas 20 tuvieron 5 o más machos.  Queremos saber si esta cantidad se ajusta a la distribución binomial y es un resultado aleatorio o no.  
+
+Primero vamos a calcular las __frecuencias esperadas__, ($E(x) = n*p(x)$) a apartir de las probabilidades binomiales y el número de ensayos (camadas).  
+```{r}
+# frecuencia esperada
+f_esp <- p_x * 100
+frec_esp <- data.frame(x_machos, p_x, f_esp)
+# tabla
+frec_esp %>%
+kbl(caption = "Tabla 3. Probabilidad binomial de un número x de cerditos machos en camadas de 6 cerditos y la frecuencia esperada en 100 camadas.") %>%
+kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+En la tabla anterior observamos que la frecuencia de camadas (usando la regla de la adición de eventos excluyentes) con 5 o 6 cerditos en 100 casos (camadas) es aproximadamente 11.  Obtener 20 camadas con 5 o 6 cerditos, parece no ajustarse a un proceso aleatorio, y es posible que algún factor no aleatorio determina el sexo en las camadas.  
 
 
+\
 
-[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)  
 
+### La Distribución de Poisson  
+Otra distribución de probabilidades de eventos discretos, muy utilizada en biología, es la __distribución de Poisson__.  Una aplicación común de esta distribución de probabilidades, es en el estudio de eventos con frecuencia muy baja, y tratar de probar si su ocurrencia es independiente con respecto a otras.  En teoría esta distribución no tiene un límite superior, pero su límite inferior es la no ocurrencia del evento.  
+
+Usualmente las frecuencias (o proporciones de un total) de las ocurrencias se miden en función del espacio (distancias) y en el tiempo.  
+
+### Ecuación de la distribución de Poisson  
+La distribución de proporciones (frecuencias) o probabilidades de ocurrencia, de eventos independientes, sin límite teórico de ocurrencias, se puede definir con la siguiente ecuación:  
+$$p(x) = \frac{\mu^{x}e^{-\mu}}{x!}$$
+donde $\mu$ es la media de la población de ocurrencias del evento por unidad de muestreo o caso, $e$ es la base de los logaritmos naturales, y $p(x)$ es la probabilidad de ocurrencia de $x$ eventos en una unidad de muestreo o caso.  Sin embargo, usualmente no conocemos la media de la población, y usamos la media de la muestra:  
+$$p(x) = \frac{\bar x^{x}e^{-\mu}}{x!}$$  
+
+#### __Ejemplo__  
+(Example 5.9 Havel _et al._ 2019) La distribución del número de plántulas de arce _(maple)_ en 100 parcelas cuadradas de 1 $m^2$, en teoría puede seguir una distribución de Poisson.  La media de la muestra, llamada también lambda ($\lambda$) en la distribución de Poisson, es 1.41 plántulas de arce por parcela.  La siguiente gráfica compara los valores teóricos con los reales.  
+```{r}
+# datos reales de arce
+arce <- read.csv("data/Table 3.3.csv")
+# función Poisson
+# pois <- dpois(0:5, lambda = 1.41)
+pois <- dpois(0:5, lambda = 1.41) * 100
+# gráficas
+hist(arce$Seedlings, right = FALSE, breaks = seq(0, 5, 1), las = 1, col = "green", xaxt = "n", main = "", xlab = "Número de plántulas en parcelas")
+axis(1, at = seq(0.5, 4.5, 1), labels = seq(0,4,1))
+lines(pois ~ c(0:5 + 0.5), lwd = 2)
+points(pois ~ c(0:5 + 0.5), lwd = 2)
+```
+  
+__Figura 4__ Distribución de frecuencias del número de plantas por parcela (barras), y la frecuencia esperada de la distribución de Poisson (puntos y línea), con $\lambda = 1.41$. 
+
+
+\
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html) 
