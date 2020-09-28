@@ -1,23 +1,31 @@
 ---
-title:
+title:  "Inferencia Estadística y Pruebas de Hipótesis"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
 ```
 
-# 2.1.Inferencia Estadística y Prueba de Hipótesis
+# 2.1.Inferencia Estadística y Prueba de Hipótesis  
+Ver definiciones en el libro, y las siguientes entradas en el glosario del curso:  
 
-blabla
+* [ __Inferencia Estadística__](https://online.upr.edu/mod/glossary/showentry.php?eid=5523)  
+* [ __Estimación Estadística__](https://online.upr.edu/mod/glossary/showentry.php?eid=6376)  
+* [ __Prueba de Hipótesis__](https://online.upr.edu/mod/glossary/showentry.php?eid=7510)  
 
-## 2.1.1.Inferencia e Hipótesis Estadísticas
 
-bla  
-chunk 
+## 2.1.1.Hipótesis Estadísticas  
+#### Objetivos  
+__Construir hipótesis que puedan ser probadas estadísticamente__  
+
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
