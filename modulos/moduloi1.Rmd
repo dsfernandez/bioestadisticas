@@ -13,7 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 options("yaml.eval.expr" = TRUE)
 ```
 
-# 2.1.Inferencia Estadística y Prueba de Hipótesis  
+# 2.1.Inferencia Estadística y Prueba de Hipótesis 
+
+#### __Definiciones__ 
 Ver definiciones en el libro, y las siguientes entradas en el glosario del curso:  
 
 * [ __Inferencia Estadística__](https://online.upr.edu/mod/glossary/showentry.php?eid=5523)  
@@ -25,21 +27,39 @@ Ver definiciones en el libro, y las siguientes entradas en el glosario del curso
 #### Objetivos  
 __Construir hipótesis que puedan ser probadas estadísticamente__  
 
+La observación de un fenómeno en el mundo biológico es usualmente muy interesante, pero cuando tratamos de explicarlo es cuando realmente estamos haciendo un trabajo científico.  Es aquí donde interviene la formulación de una hipótesis adecuada.  
 
+#### __Definiciones__  
+
+* [ __Hipótesis__](https://online.upr.edu/mod/glossary/showentry.php?eid=7541)  
+* [ __Teoría__](https://online.upr.edu/mod/glossary/showentry.php?eid=7542) 
+
+#### __Ejercicios__  
+Elaborar hipótesis formales sobre un tema asignado, partiendo de una pregunta y planteando una premisa y una predicción, y que pueda ser comprobada mediante observaciones y/o experimentación.
+
+### Hipótesis Estadísticas  
+Para probar una hipótesis de manera estadística, debemos primero convertir la hipótesis formal en un par de hipótesis mutualmente excluyentes: la __hipótesis nula__, que se representa $H_0$, y la __hipótesis alterna__, que se representa $H_a$ (o con un número, $H_1$).  Solamente la $H_0$ es la que se prueba directamente mediante estadísticas, y en un experimento representa la falta de efecto por parte de los tratamientos o condiciones experimentales; también puede representar lo esperado según un modelo probabilístico (Normal, Poisson, et c.).  
+
+#### __Ejemplos__  
+En el libro de Havel _et al._ (2019): Table 6.2 Some Examples of Null and Alternative Hypotheses.  
+Toda hipótesis nula genera una distribución de probabilidades, y cualquiera que sea esta distribución, está asociada a la hipótesis nula.  La hipótesis alterna es todo aquello que no sea la hipótesis nula, y son mutuamente excluyentes.  Es decir si una es correcta la otra no puede serlo, y entre ambas se cubren todas las posibilidades.  
+
+#### __Ejemplos__
+Ver ejemplos anteriores para la distribución binomial y de Poisson.
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.1.2.Errores en Decisiones
+## 2.1.2.Decisiones Estadísticas y Potenciales Errores   
 
-bla  
-chunk  
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.1.3.Pruebas de Hipótesis
 
-bla  
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
