@@ -41,7 +41,8 @@ Elaborar hipótesis formales sobre un tema asignado, partiendo de una pregunta y
 Para probar una hipótesis de manera estadística, debemos primero convertir la hipótesis formal en un par de hipótesis mutualmente excluyentes: la __hipótesis nula__, que se representa $H_0$, y la __hipótesis alterna__, que se representa $H_a$ (o con un número, $H_1$).  Solamente la $H_0$ es la que se prueba directamente mediante estadísticas, y en un experimento representa la falta de efecto por parte de los tratamientos o condiciones experimentales; también puede representar lo esperado según un modelo probabilístico (Normal, Poisson, et c.).  
 
 #### __Ejemplos__  
-En el libro de Havel _et al._ (2019): Table 6.2 Some Examples of Null and Alternative Hypotheses.  
+En el libro de Havel _et al._ (2019): Table 6.2 Some Examples of Null and Alternative Hypotheses.   
+
 Toda hipótesis nula genera una distribución de probabilidades, y cualquiera que sea esta distribución, está asociada a la hipótesis nula.  La hipótesis alterna es todo aquello que no sea la hipótesis nula, y son mutuamente excluyentes.  Es decir si una es correcta la otra no puede serlo, y entre ambas se cubren todas las posibilidades.  
 
 #### __Ejemplos__
