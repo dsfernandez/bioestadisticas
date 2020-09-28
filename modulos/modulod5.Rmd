@@ -333,12 +333,12 @@ $$p(x) = \frac{\bar x^{x}e^{-\mu}}{x!}$$
 arce <- read.csv("data/Table 3.3.csv")
 # función Poisson
 # pois <- dpois(0:5, lambda = 1.41)
-pois <- dpois(0:5, lambda = 1.41) * 100
+pois <- dpois(0:6, lambda = 1.41) * 100
 # gráficas
-hist(arce$Seedlings, right = FALSE, breaks = seq(0, 5, 1), las = 1, col = "green", xaxt = "n", main = "", xlab = "Número de plántulas en parcelas")
-axis(1, at = seq(0.5, 4.5, 1), labels = seq(0,4,1))
-lines(pois ~ c(0:5 + 0.5), lwd = 2)
-points(pois ~ c(0:5 + 0.5), lwd = 2)
+hist(arce$Seedlings, right = FALSE, breaks = seq(0, 6, 1), las = 1, col = "green", xaxt = "n", main = "", xlab = "Número de plántulas en parcelas")
+axis(1, at = seq(0.5, 5.5, 1), labels = seq(0,5,1))
+lines(pois ~ c(0:6 + 0.5), lwd = 2)
+points(pois ~ c(0:6 + 0.5), lwd = 2)
 ```
   
 __Figura 4__ Distribución de frecuencias del número de plantas por parcela (barras), y la frecuencia esperada de la distribución de Poisson (puntos y línea), con $\lambda = 1.41$. 
