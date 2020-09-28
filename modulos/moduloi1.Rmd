@@ -43,6 +43,7 @@ Para probar una hipótesis de manera estadística, debemos primero convertir la 
 #### __Ejemplos__  
 En el libro de Havel _et al._ (2019): Table 6.2 Some Examples of Null and Alternative Hypotheses.   
 \
+
 Toda hipótesis nula genera una distribución de probabilidades, y cualquiera que sea esta distribución, está asociada a la hipótesis nula.  La hipótesis alterna es todo aquello que no sea la hipótesis nula, y son mutuamente excluyentes.  Es decir si una es correcta la otra no puede serlo, y entre ambas se cubren todas las posibilidades.  
 
 #### __Ejemplos__
