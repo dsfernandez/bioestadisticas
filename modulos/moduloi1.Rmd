@@ -105,7 +105,7 @@ Cuando se rechaza la $H_0$ y esta es verdadera, cometemos un __error Tipo I__, y
 A continuación un ejemplo más concreto de lo que estamos describiendo, para el caso de una __hipótesis nula de negatividad__ para un ensayo clínico:  
 
 ![tomado de https://www.statisticssolutions.com/](./imagenes/ho-negative-test.jpg)  
-__Figura 1.__  Ilustración de los errores Tipo I y Tipo II, para una $H_0$:prueba negativa de embarazo.
+__Figura 1.__  Ilustración de los errores Tipo I y Tipo II, para una $H_0$: prueba negativa de embarazo.
 
 ### Poder de la Prueba  
 
