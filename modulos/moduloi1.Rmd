@@ -104,7 +104,8 @@ Cuando se rechaza la $H_0$ y esta es verdadera, cometemos un __error Tipo I__, y
 
 A continuación un ejemplo más concreto de lo que estamos describiendo, para el caso de una __hipótesis nula de negatividad__ para un ensayo clínico:  
 
-![tomado de https://www.statisticssolutions.com/](./imagenes/ho-negative-test.jpg)
+![tomado de https://www.statisticssolutions.com/](./imagenes/ho-negative-test.jpg)  
+__Figura 1.__  Ilustración de los errores Tipo I y Tipo II, para una $H_0$:prueba negativa de embarazo.
 
 ### Poder de la Prueba  
 
@@ -112,7 +113,10 @@ Se denomina __poder de la prueba__ a la probabilidad de poder rechazar una hipó
 
 1. el error Tipo I $(\alpha)$    
 2. la diferencia entre los estadísticos (media por ejemplo) que queremos discriminar; a esta diferencia también se la conoce como __tamaño del efecto__ $(\delta)$; y  
-3. el tamaño de la muestra
+3. el tamaño de la muestra  
+
+![Tomado de Havel et al. 2019](./imagenes/Test Power.jpg)  
+__Figura 2.__  Ilustración de cómo al variar $\alpha$ cambia el valor de $\beta$, y el poder de la prueba, $1 - \beta$.   
 
 \
 
