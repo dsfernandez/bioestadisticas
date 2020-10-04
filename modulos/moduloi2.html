@@ -1327,6 +1327,17 @@ h6 {
 }
 </style>
 
+<style type="text/css">
+body{
+font-family: Helvetica;
+font-size: 14pt;
+}
+code.r{
+font-size: 14pt;
+}
+pre {
+font-size: 14pt
+}</style>
 
 
 
@@ -1514,22 +1525,118 @@ div.tocify {
 
 <div id="hipótesis-sobre-frecuencias" class="section level1">
 <h1>2.2.Hipótesis sobre Frecuencias</h1>
-<p>blabla</p>
+<p>En las investigaciones biológicas, muchas veces determinamos las frecuencias con la que ocurren ciertos eventos, que están clasificados en ciertas categorías.</p>
+<div id="ejemplos" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<ul>
+<li>La razón o proporción de los sexos en las poblaciones.<br />
+</li>
+<li>La frecuencia de ciertos fenotipos.<br />
+</li>
+<li>La incidencia de ciertas enfermedades.</li>
+</ul>
+<p>En esta sección estaremos conociendo sobre dos tipos de problemas:</p>
+<ol style="list-style-type: decimal">
+<li>Probar la <strong>bondad de ajuste</strong> de frecuencias observadas, a ciertas expectativas.<br />
+</li>
+<li>Probar la <strong>asociación</strong> entre dos variables categóricas.</li>
+</ol>
+</div>
 <div id="prueba-de-bondad-de-ajuste" class="section level2">
 <h2>2.2.1.Prueba de Bondad de Ajuste</h2>
-<p>bla<br />
-chunk</p>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Aplicar la prueba de Chi-cuadrado a problemas de frecuencias en los datos observados</strong></p>
+<p>La hipótesis nula de (<span class="math inline">\(H_0\)</span>) para una <strong>prueba de bondad de ajuste</strong> es que la distribución de frecuencias observadas en los datos no es diferencte de una distribución de frecuencias especificada con anterioridad (binomial, Poisson). Si <span class="math inline">\(H_0\)</span> no se puede rechazar, quiere decir que cualquier alejamiento de la distribución esperada, es debido al azar.</p>
+</div>
+<div id="supuestos-de-la-prueba" class="section level3">
+<h3>Supuestos de la prueba</h3>
+<blockquote>
+<p>Para revisar antes de realizar la prueba</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li>Los datos son frecuencias en <strong>categorías mutuamente excluyentes</strong>.<br />
+</li>
+<li>Las <strong>observaciones son independientes</strong> una de otra.<br />
+</li>
+<li>Cada categoría debe que tener un <strong>número mínimo de datos</strong>. En general, las categorías esperadas no deberían tener frecuencias de menos de 5.</li>
+</ol>
+</div>
+<div id="el-estadístico-chi-cuadrado-chi2" class="section level3">
+<h3>El estadístico Chi-cuadrado (<span class="math inline">\(\chi^2\)</span>)</h3>
+<blockquote>
+<p>Midiendo las discrepancias entre frecuencias observadas y frecuencias esperadas</p>
+</blockquote>
+<p>La pregunta que nos hacemos: ¿es la diferencia entre los resultados (frecuencias) observadas, y los esperados estadísticamente significativa?</p>
+<p>Es estadístico <strong>Chi-cuadrado (<span class="math inline">\(\chi^2\)</span>)</strong> se utiliza para esa pregunta, y su fórmula es la siguiente:</p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^k\frac{(f_o - f_e)^2}{f_e}\]</span> donde:</p>
+<blockquote>
+<p><span class="math inline">\(f_o\)</span> es la frecuencia observada en la categoría <em>i</em><br />
+<span class="math inline">\(f_e\)</span> es la frecuencia esperada en la categoría <em>i</em><br />
+<em>k</em> es el número de categorías</p>
+</blockquote>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Un geneticista de plantas evalúa el resultado de cruces en una población de plantas con flores amarillas y flores verdes: de un total de 100 semillas que sembró, obtuvo 84 plantas con flores amarillas y 16 con flores verdes. ¿Se ajusta este resultado a un sistema dominante-recesivo, 3:1?</p>
+<p>Podemos establecer las siguientes hipótesis, asumiendo que esperamos una distribución según un sistema dominante-recesivo:<br />
+<span class="math inline">\(H_0\)</span>: la muestra proviene de una población con una proporción 3:1 de flores amarillas a flores verdes.<br />
+<span class="math inline">\(H_A\)</span>: la muestra proviene de una población que no tiene la proporción 3:1.</p>
+<p>Tabla de frecuencias</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>amarillas</th>
+<th>verdes</th>
+<th>n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(f_o\)</span></td>
+<td>84</td>
+<td>16</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(f_e\)</span></td>
+<td>75</td>
+<td>25</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Primero debemos verificar si se cumplen los supuestos. Luego procedemos al cálculo del estadístico usando la fórmula anterior.</p>
+<pre class="r"><code>#calculo de chi-cuadrado
+fo &lt;- c(84,16)
+fe &lt;- c(75,25)
+chicu &lt;- sum(((fo - fe)^2)/fe)
+sprintf(&quot;Chi-cuadrado calculado = %.2f&quot;, chicu)</code></pre>
+<pre><code>## [1] &quot;Chi-cuadrado calculado = 4.32&quot;</code></pre>
+<p>Ahora debemos comprobar si el valor del estadístico calculado (<span class="math inline">\(\chi^2{_c}\)</span>) nos indica si podemos o no rechazar <span class="math inline">\(H_0\)</span>. Esto lo podemos hacer de dos maneras:</p>
+<ol style="list-style-type: decimal">
+<li><p>Calculando un <strong>valor crítico</strong> de <span class="math inline">\(\chi^2\)</span>, para el valor de <span class="math inline">\(\alpha\)</span> previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico <span class="math inline">\(\chi^2\)</span>, <a href="https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing">Chi-square Distribution Table</a>, la cual tiene en la parte superior los valores de <span class="math inline">\(\alpha\)</span> y en la columna de la izquierda los valores de <strong>grados de libertad</strong> <em>(degrees of freedom, df)</em>, que en el caso de esta prueba se calculan como: <span class="math inline">\(df = número\ de\ categorías - 1\)</span>. Si el <span class="math inline">\(\chi^2{_c}\)</span> es <strong>mayor</strong> que el valor crítico, podemos decir que rechazamos la <span class="math inline">\(H_0\)</span> con alguna <span class="math inline">\(p \leq \alpha\)</span>.</p></li>
+<li><p>Calculando el valor de la probabilidad <em>(p-value)</em>, y si este es menor que el valor de <span class="math inline">\(\alpha\)</span> podemos rechazar <span class="math inline">\(H_0\)</span> con ese nivel de probabilidad calculado. Este cálculo lo podemos hacer utilizando R.</p></li>
+</ol>
+<pre class="r"><code>chisq.test(fo, p=fe, rescale.p = TRUE, correct = TRUE)</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  fo
+## X-squared = 4.32, df = 1, p-value = 0.03767</code></pre>
+<p>En resumen, el valor calculado de <span class="math inline">\(\chi^2\)</span> resultó mayor que el valor crítico (3.84), y el valor de <em>p</em> (0.037) fue menor que <span class="math inline">\(\alpha\)</span> = 0.05, por lo tanto podemos rechazar <span class="math inline">\(H_0\)</span> y decir que es muy probable que los valores observados no se ajustan a un sistema dominante-recesivo.</p>
+<p><br />
+</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
 </div>
 <div id="prueba-de-asociación" class="section level2">
 <h2>2.2.2.Prueba de Asociación</h2>
-<p>bla chunk</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 <div id="prueba-de-probabilidad-exacta-de-fisher" class="section level2">
 <h2>2.2.3.Prueba de Probabilidad Exacta de Fisher</h2>
-<p>bla<br />
-chunk</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 </div>

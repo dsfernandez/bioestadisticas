@@ -16,8 +16,8 @@ Curso introductorio de estadísticas aplicadas a la biología.  El diseño del c
 
 ### Textos principales:  
 
-* __Havel, J.E., Hampton, R.E., Meiners, S.J.__, 2019. _Introductory biological statistics_, Fourth ed. Waveland Press, Inc., Long Grove, Illinois.
-
+* __Havel, J.E., Hampton, R.E., Meiners, S.J.__, 2019. _Introductory biological statistics_, Fourth ed. Waveland Press, Inc., Long Grove, Illinois.  
+* __Lepš, J., Šmilauer, P.__, 2020. _Biostatistics with R: An Introductory Guide for Field Biologists_, 1st ed. Cambridge University Press.  
 * __Whitlock, M.C., Schluter, D.__, 2019. _The analysis of biological data_, Third ed. Macmillan Learning, New York.
 
 

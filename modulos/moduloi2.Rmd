@@ -2,36 +2,106 @@
 title:
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
 ```
 
-# 2.2.Hipótesis sobre Frecuencias
+# 2.2.Hipótesis sobre Frecuencias  
+En las investigaciones biológicas, muchas veces determinamos las frecuencias con la que ocurren ciertos eventos, que están clasificados en ciertas categorías.  
 
-blabla
+#### __Ejemplos__
 
-## 2.2.1.Prueba de Bondad de Ajuste
+* La razón o proporción de los sexos en las poblaciones.  
+* La frecuencia de ciertos fenotipos.  
+* La incidencia de ciertas enfermedades.  
 
-bla  
-chunk  
+En esta sección estaremos conociendo sobre dos tipos de problemas:  
+
+1. Probar la __bondad de ajuste__ de frecuencias observadas, a ciertas expectativas.  
+2. Probar la __asociación__ entre dos variables categóricas.
+
+## 2.2.1.Prueba de Bondad de Ajuste  
+#### Objetivos  
+__Aplicar la prueba de Chi-cuadrado a problemas de frecuencias en los datos observados__  
+
+La hipótesis nula de ($H_0$) para una __prueba de bondad de ajuste__ es que la distribución de frecuencias observadas en los datos no es diferencte de una distribución de frecuencias especificada con anterioridad (binomial, Poisson).  Si $H_0$ no se puede rechazar, quiere decir que cualquier alejamiento de la distribución esperada, es debido al azar.  
+
+### Supuestos de la prueba  
+> Para revisar antes de realizar la prueba  
+
+1. Los datos son frecuencias en __categorías mutuamente excluyentes__.  
+2. Las __observaciones son independientes__ una de otra.  
+3. Cada categoría debe que tener un __número mínimo de datos__.  En general, las categorías esperadas no deberían tener frecuencias de menos de 5.
+
+### El estadístico Chi-cuadrado ($\chi^2$)    
+> Midiendo las discrepancias entre frecuencias observadas y frecuencias esperadas  
+
+La pregunta que nos hacemos: ¿es la diferencia entre los resultados (frecuencias) observadas, y los esperados estadísticamente significativa?  
+
+Es estadístico __Chi-cuadrado ($\chi^2$)__ se utiliza para esa pregunta, y su fórmula es la siguiente:  
+
+$$\chi^2 = \sum_{i=1}^k\frac{(f_o - f_e)^2}{f_e}$$
+donde:  
+
+> $f_o$ es la frecuencia observada en la categoría _i_  
+> $f_e$ es la frecuencia esperada en la categoría _i_  
+> _k_ es el número de categorías  
+
+#### __Ejemplo__  
+Un geneticista de plantas evalúa el resultado de cruces en una población de plantas con flores amarillas y flores verdes: de un total de 100 semillas que sembró, obtuvo 84 plantas con flores amarillas y 16 con flores verdes. ¿Se ajusta este resultado a un sistema dominante-recesivo, 3:1?  
+
+Podemos establecer las siguientes hipótesis, asumiendo que esperamos una distribución según un sistema dominante-recesivo:  
+$H_0$: la muestra proviene de una población con una proporción 3:1 de flores amarillas a flores verdes.  
+$H_A$: la muestra proviene de una población que no tiene la proporción 3:1.  
+
+Tabla de frecuencias  
+
+|    |amarillas| verdes | n |
+|----|---------|--------|---|
+|$f_o$|84|16|100|
+|$f_e$|75|25| |  
+
+Primero debemos verificar si se cumplen los supuestos.  Luego procedemos al cálculo del estadístico usando la fórmula anterior.  
+```{r chi}
+#calculo de chi-cuadrado
+fo <- c(84,16)
+fe <- c(75,25)
+chicu <- sum(((fo - fe)^2)/fe)
+sprintf("Chi-cuadrado calculado = %.2f", chicu)
+```
+Ahora debemos comprobar si el valor del estadístico calculado ($\chi^2{_c}$) nos indica si podemos o no rechazar $H_0$.  Esto lo podemos hacer de dos maneras:  
+
+1. Calculando un __valor crítico__ de $\chi^2$, para el valor de $\alpha$ previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico $\chi^2$,  [Chi-square Distribution Table](https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing), la cual tiene en la parte superior los valores de $\alpha$ y en la columna de la izquierda los valores de __grados de libertad__ _(degrees of freedom, df)_, que en el caso de esta prueba se calculan como: $df = número\ de\ categorías - 1$. Si el $\chi^2{_c}$ es __mayor__ que el valor crítico, podemos decir que rechazamos la $H_0$ con alguna $p \leq \alpha$.  
+
+2. Calculando el valor de la probabilidad _(p-value)_, y si este es menor que el valor de $\alpha$ podemos rechazar $H_0$ con ese nivel de probabilidad calculado.  Este cálculo lo podemos hacer utilizando R.  
+
+```{r chi2r}
+chisq.test(fo, p=fe, rescale.p = TRUE, correct = TRUE)
+```  
+
+En resumen, el valor calculado de $\chi^2$ resultó mayor que el valor crítico (3.84), y el valor de _p_ (0.037) fue menor que $\alpha$ = 0.05, por lo tanto podemos rechazar $H_0$ y decir que es muy probable que los valores observados no se ajustan a un sistema dominante-recesivo. 
+
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.2.2.Prueba de Asociación
 
-bla
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.2.3.Prueba de Probabilidad Exacta de Fisher
 
-bla  
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
