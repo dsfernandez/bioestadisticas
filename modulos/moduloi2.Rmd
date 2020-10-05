@@ -77,9 +77,9 @@ fe <- c(75,25)
 chicu <- sum(((fo - fe)^2)/fe)
 sprintf("Chi-cuadrado calculado = %.2f", chicu)
 ```
-Ahora debemos comprobar si el valor del estadístico calculado ($\chi^2{_c}$) nos indica si podemos o no rechazar $H_0$.  Esto lo podemos hacer de dos maneras:  
+Ahora debemos comprobar si el valor del estadístico calculado ($\chi^2_{c}$) nos indica si podemos o no rechazar $H_0$.  Esto lo podemos hacer de dos maneras:  
 
-1. Calculando un __valor crítico__ de $\chi^2$, para el valor de $\alpha$ previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico $\chi^2$,  [Chi-square Distribution Table](https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing), la cual tiene en la parte superior los valores de $\alpha$ y en la columna de la izquierda los valores de __grados de libertad__ _(degrees of freedom, df)_, que en el caso de esta prueba se calculan como: $df = número\ de\ categorías - 1$. Si el $\chi^2{_c}$ es __mayor__ que el valor crítico, podemos decir que rechazamos la $H_0$ con alguna $p \leq \alpha$.  
+1. Calculando un __valor crítico__ de $\chi^2$, para el valor de $\alpha$ previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico $\chi^2$,  [Chi-square Distribution Table](https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing), la cual tiene en la parte superior los valores de $\alpha$ y en la columna de la izquierda los valores de __grados de libertad__ _(degrees of freedom, df)_, que en el caso de esta prueba se calculan como: $df = número\ de\ categorías - 1$. Si el $\chi^2_{c}$ es __mayor__ que el valor crítico, podemos decir que rechazamos la $H_0$ con alguna $p \leq \alpha$.  
 
 2. Calculando el valor de la probabilidad _(p-value)_, y si este es menor que el valor de $\alpha$ podemos rechazar $H_0$ con ese nivel de probabilidad calculado.  Este cálculo lo podemos hacer utilizando R.  
 
@@ -133,14 +133,149 @@ y observamos que el valor de p es menor que $\alpha$, por lo que podemos rechaza
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html) 
 
 ## 2.2.2.Prueba de Asociación
+#### Objetivos  
+__Determinar si las frecuencias en dos variables categóricas son independientes__   
 
- 
+La __prueba de asociación de Chi-cuadrado__ permite evaluar si dos variables categóricas están asociadas.  En esta prueba, los mismos datos generan la hipótesis nula a probar.  Los supuestos para esta prueba son similares a los de la prueba de bondad de ajuste.  
+
+ En esta prueba se utiliza el estadístico $\chi^2$ y la forma más común de calcularlo es:
+$$\chi^2 = \sum_{i=1}^r \sum_{j=1}^c \frac{(f_{ij} - E_{ij})^2}{E_{ij}}$$  
+donde:
+
+> $f_{ij}$ es la frecuencia observada de la fila _i_, columna _j_  
+> $E_{ij}$ es la frecuencia esperada de la fila _i_, columna _j_  
+> _c_ es el número de columnas  
+> _r_ es el número de filas ('rows')  
+
+#### __Ejemplo__   
+Queremos probar la independencia entre la característica color de pelo y sexo, en 300 humanos, seleccionando al azar 100 hombres y 200 mujeres.  En primer lugar, creamos lo que se conoce como una __tabla de contingencia__:
+
+| |color de pelo| | | | |
+|--|:--:|:--:|:--:|:--:|--|  
+|__sexo__|NEGRO|MARRON|RUBIO|ROJO|__total__|    
+|HOMBRE|32|43|16|9|100|    
+|MUJER|55|65|64|16|200|    
+|__total__|87|108|80|25|300|  
+
+La forma más general de plantear las hipótesis es:  
+$H_0$: _el color del pelo es independiente del sexo en la población muestreada_, y  
+$H_A$: _el color del pelo no es independiente del sexo en la población muestreada_.  
+
+### Cálculo de frecuencias esperadas  
+
+Para calcular el estadístico $\chi^2$, necesitamos primero calcular las frecuencias esperadas de cada categoría _ij_:
+$$E_{ij} = \frac{R_i*C_j}{n}$$
+donde:
+$$R_i = \sum_{j=1}^c f_{ij}$$
+
+$$C_j = \sum_{i=1}^r f_{ij}$$  
+_c_ es el número de columnas y _r_ es el número de filas.
+
+Calculamos las frecuencias esperadas:
+```{r fect}
+library(kableExtra)
+Ri <- c(100,200)
+Ci <- c(87,108,80,25)
+mfe <- (Ri%*%t(Ci))/300
+fe <- as.data.frame(mfe)
+sexo <- c("Hombre","Mujer")
+colnames(fe) <- c("Negro","Marrón","Rubio","Rojo")
+tablafe <- cbind(sexo,fe)
+kable(tablafe, format = "markdown", caption = "Frecuencias Esperadas")
+```
+y construimos nuestra tabla de contingencia completa, con los valores esperados entre paréntesis:  
+
+| |color de pelo| | | | |  
+|--|:--:|:--:|:--:|:--:|--|  
+|__sexo__|NEGRO|MARRON|RUBIO|ROJO|__total__|    
+|HOMBRE|32(29)|43(36)|16(26.7)|9(8.3)|100 = $R_1$|    
+|MUJER|55(58)|65(72)|64(53.3)|16(16.7)|200 = $R_2$|    
+|__total__|87 = $C_1$|108 = $C_2$|80 = $C_3$|25 = $C_4$|300 = $n$|
+
+### Cálculo de $\chi^2$, valor crítico y resultado 
+
+Con los valores de la tabla de contingencia completa, podemos calcular $\chi^2$ usando la fórmula a mano, o mediante R:  
+```{r chitc}
+#matriz de frecuencia esperada es mfe
+#definimos matriz frecuencias observadas
+mfo <- matrix(c(32,43,16,9,55,65,64,16), ncol = 4, byrow = TRUE)
+#cálculo de chi-cuadrado
+chicu2 = 0
+for(i in 1:2){
+  for(j in 1:4){
+    chicu1 = sum(((mfo[i,j] - mfe[i,j])^2)/mfe[i,j])
+      chicu2 = chicu2 + chicu1
+  }
+}
+sprintf("Chi-cuadrado calculado = %.2f", chicu2)
+```
+Utilizamos la tabla para encontrar el valor crítico para un $\alpha$ = 0.05, y grados de libertad:
+$$df = (filas - 1)*(columnas - 1)$$
+el cual resulta ser:
+$$\chi^2_{0.05,3} = 7.81$$  
+El valor calculado es mayor que el valor crítico, por lo cual podemos rechazar la $H_0$ de independencia, y por lo tanto parece existir alguna asociación entre tener algún color del pelo y el sexo de la persona.  
+
+A continuación la prueba mediante R:
+```{r}
+#data frame desde matriz de datos
+fo <- as.data.frame(mfo)
+chisq.test(fo)
+```
+
+### Gráfica de mosaico para tablas de contingencia
+Ahora bien, la prueba estadística solo nos indica si se acepta o rechaza la hipótesis nula, pero no nos específica dónde están las principales discrepancias entre las frecuencias, por efecto de la no-independencia entre los variables nominales.  Una __gráfica de mosaico__ puede ayudarnos a identificar las categorías entre las que se producen las mayores discrepancias.  
+
+```{r mosaic, message=FALSE, warning=FALSE}
+library(vcd)
+mosaic(mfo, shade = TRUE, legend = FALSE, labeling_args = list(set_varnames = c(A = "Sexo", B = "Color Pelo")), set_labels = list(A = c("Hombre","Mujer"), B = c("Negro","Marrón","Rubio","Rojo")))
+```
+
+\ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.2.3.Prueba de Probabilidad Exacta de Fisher
+## 2.2.3.Prueba de Probabilidad Exacta de Fisher  
+#### Objetivos  
+__Utilizar una prueba de asociación cuando no se cumple uno de los supuestos de $\chi^2$__  
 
- 
+Cuando se tiene una tabla de contingencia 2 x 2, y alguna de las frecuencias esperadas es menor que 5, no debemos utilizar la prueba de $chi^2$; una alternativa es la prueba de __probabilidad exacta de Fisher__.
+
+Para esta prueba se calcula directamente un valor de probabilidad _p_ que se contrasta con el nivel de probabilidad escogido $\alpha$, usualmente 0.05.  La siguiente tabla muestra la estructura de los datos:  
+
+|    |categoría 1| categoría 2| Totales |
+|----|:---------:|:--------:|---|
+|grupo 1|A|B|A+B|
+|grupo 2|C|D|C+D|
+|Totales|A+C|B+D|A+B+C+D|  
+
+La fórmula para la probabilidad es la siguiente:
+$$p = \frac{(A+B)!*(C+D)!*(A+C)!*(B+D)!}{n!*A!*B!*C!*D!}$$
+
+#### __Ejemplo__  
+En un experimento con la especie de serpiente _Thamnophis sirtalis_ se estudió la respuesta de escape de individuos recieen nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos.  Los resultados fueron los siguientes:  
+
+|    |Escape| No escape| Totales |
+|----|:---------:|:--------:|---|
+|Estimulo arriba|6|1|7|
+|Estimulo lateral|1|6|7|
+|Totales|7|7|14|  
+
+Calculamos el valor de _p_ para la $H_0$ de no asociación.  
+```{r}
+# matriz de datos
+matx <- matrix(c(6, 1, 1, 6), ncol = 2, byrow = TRUE)
+# calculo de p
+pf <- (factorial(matx[1,1]+matx[1,2])*factorial(matx[2,1]+matx[2,2])*factorial(matx[1,1]+matx[2,1])*factorial(matx[2,1]+matx[2,2]))/(factorial(sum(matx))*factorial(matx[1,1])*factorial(matx[1,2])*factorial(matx[2,1])*factorial(matx[2,2]))
+sprintf("Probabilidad exacta de Fisher = %.4f", pf)
+```
+
+El valor de la _p_ nos indica que la probabilidad de que los datos observados se ajusten a la $H_0$ es menor que $\alpha$, y por lo tanto podemos rechazar la $H_0$ de que la respuesta es independiente del estímulo.
+
+R posee una función para realizar la prueba:  
+```{r}
+fisher.test(matx, alternative = "g", conf.int = FALSE)
+```
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
