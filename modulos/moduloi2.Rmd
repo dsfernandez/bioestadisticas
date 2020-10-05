@@ -79,7 +79,7 @@ sprintf("Chi-cuadrado calculado = %.2f", chicu)
 ```
 Ahora debemos comprobar si el valor del estadístico calculado ($\chi^2_{c}$) nos indica si podemos o no rechazar $H_0$.  Esto lo podemos hacer de dos maneras:  
 
-1. Calculando un __valor crítico__ de $\chi^2$, para el valor de $\alpha$ previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico $\chi^2$,  [Chi-square Distribution Table](https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing), la cual tiene en la parte superior los valores de $\alpha$ y en la columna de la izquierda los valores de __grados de libertad__ _(degrees of freedom, df)_, que en el caso de esta prueba se calculan como: $df = número\ de\ categorías - 1$. Si el $\chi^2_{c}$ es __mayor__ que el valor crítico, podemos decir que rechazamos la $H_0$ con alguna $p \leq \alpha$.  
+1. Buscacndo un __valor crítico__ de $\chi^2$, para el valor de $\alpha$ previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico $\chi^2$,  [Chi-square Distribution Table](https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing), la cual tiene en la parte superior los valores de $\alpha$ y en la columna de la izquierda los valores de __grados de libertad__ _(degrees of freedom, df)_, que en el caso de esta prueba se calculan como: $df = número\ de\ categorías - 1$. Si el $\chi^2_{c}$ es __mayor__ que el valor crítico, podemos decir que rechazamos la $H_0$ con alguna $p \leq \alpha$.  
 
 2. Calculando el valor de la probabilidad _(p-value)_, y si este es menor que el valor de $\alpha$ podemos rechazar $H_0$ con ese nivel de probabilidad calculado.  Este cálculo lo podemos hacer utilizando R.  
 
@@ -102,15 +102,33 @@ library(kableExtra)
 # datos y frecuencias esperadas (Poisson)
 n_plant <- c("0", "1", "2", "3", "4", "5 o más")
 f_obs <- c(35, 28, 15, 10, 7, 5)
-f_esp <- dpois(0:5, lambda = 1.41)
+f_esp <- (dpois(0:5, lambda = 1.41))*100
 # tabla de datos
 bondad_poisson <- data.frame(n_plant, f_obs, f_esp)
 bondad_poisson <- setNames(bondad_poisson, c("# plant./parcela", "frec. observada", "frec. esperada"))
 bondad_poisson %>% 
-  kable(caption = "Tabla 2. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado") %>%
+  kable(caption = "Tabla 2a. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado") %>%
   kable_classic(full_width = F, html_font =
                   "Cambria")
 ```
+
+Observando la tabla anterior podemos notar que las dos últimas categorías tienen valores de frecuencia esperada menores que 5, por lo que se está violando uno de los supuestos; podemos superar esta situación agrupando estos dos últimos valores.  
+
+```{r}
+# datos y frecuencias esperadas (Poisson)
+n_plant <- c("0", "1", "2", "3", "4 o más")
+f_obs <- c(35, 28, 15, 10, 12)
+f_esp <- (dpois(0:4, lambda = 1.41))*100
+f_esp[5] <- 5.1
+# tabla de datos
+bondad_poisson <- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson <- setNames(bondad_poisson, c("# plant./parcela", "frec. observada", "frec. esperada"))
+bondad_poisson %>% 
+  kable(caption = "Tabla 2b. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
 
 Vamos a calcular el estadístico $\chi^2$ para esta prueba, y encontrar el valor crítico usando la tabla, para $\alpha$ = 0.05, y grados de libertad:
 $df = num. categorías - 1 - num. parámetros\ de\ la\ distribución$, 5 - 1 - 1 = 3
@@ -252,7 +270,7 @@ La fórmula para la probabilidad es la siguiente:
 $$p = \frac{(A+B)!*(C+D)!*(A+C)!*(B+D)!}{n!*A!*B!*C!*D!}$$
 
 #### __Ejemplo__  
-En un experimento con la especie de serpiente _Thamnophis sirtalis_ se estudió la respuesta de escape de individuos recieen nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos.  Los resultados fueron los siguientes:  
+En un experimento con la especie de serpiente _Thamnophis sirtalis_ se estudió la respuesta de escape de individuos recién nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos.  Los resultados fueron los siguientes:  
 
 |    |Escape| No escape| Totales |
 |----|:---------:|:--------:|---|

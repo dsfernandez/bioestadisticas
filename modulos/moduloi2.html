@@ -1813,7 +1813,7 @@ sprintf(&quot;Chi-cuadrado calculado = %.2f&quot;, chicu)</code></pre>
 <pre><code>## [1] &quot;Chi-cuadrado calculado = 4.32&quot;</code></pre>
 <p>Ahora debemos comprobar si el valor del estadístico calculado (<span class="math inline">\(\chi^2_{c}\)</span>) nos indica si podemos o no rechazar <span class="math inline">\(H_0\)</span>. Esto lo podemos hacer de dos maneras:</p>
 <ol style="list-style-type: decimal">
-<li><p>Calculando un <strong>valor crítico</strong> de <span class="math inline">\(\chi^2\)</span>, para el valor de <span class="math inline">\(\alpha\)</span> previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico <span class="math inline">\(\chi^2\)</span>, <a href="https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing">Chi-square Distribution Table</a>, la cual tiene en la parte superior los valores de <span class="math inline">\(\alpha\)</span> y en la columna de la izquierda los valores de <strong>grados de libertad</strong> <em>(degrees of freedom, df)</em>, que en el caso de esta prueba se calculan como: <span class="math inline">\(df = número\ de\ categorías - 1\)</span>. Si el <span class="math inline">\(\chi^2_{c}\)</span> es <strong>mayor</strong> que el valor crítico, podemos decir que rechazamos la <span class="math inline">\(H_0\)</span> con alguna <span class="math inline">\(p \leq \alpha\)</span>.</p></li>
+<li><p>Buscacndo un <strong>valor crítico</strong> de <span class="math inline">\(\chi^2\)</span>, para el valor de <span class="math inline">\(\alpha\)</span> previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico <span class="math inline">\(\chi^2\)</span>, <a href="https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing">Chi-square Distribution Table</a>, la cual tiene en la parte superior los valores de <span class="math inline">\(\alpha\)</span> y en la columna de la izquierda los valores de <strong>grados de libertad</strong> <em>(degrees of freedom, df)</em>, que en el caso de esta prueba se calculan como: <span class="math inline">\(df = número\ de\ categorías - 1\)</span>. Si el <span class="math inline">\(\chi^2_{c}\)</span> es <strong>mayor</strong> que el valor crítico, podemos decir que rechazamos la <span class="math inline">\(H_0\)</span> con alguna <span class="math inline">\(p \leq \alpha\)</span>.</p></li>
 <li><p>Calculando el valor de la probabilidad <em>(p-value)</em>, y si este es menor que el valor de <span class="math inline">\(\alpha\)</span> podemos rechazar <span class="math inline">\(H_0\)</span> con ese nivel de probabilidad calculado. Este cálculo lo podemos hacer utilizando R.</p></li>
 </ol>
 <pre class="r"><code>chisq.test(fo, p=fe, rescale.p = TRUE, correct = TRUE)</code></pre>
@@ -1838,17 +1838,17 @@ library(kableExtra)
 # datos y frecuencias esperadas (Poisson)
 n_plant &lt;- c(&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5 o más&quot;)
 f_obs &lt;- c(35, 28, 15, 10, 7, 5)
-f_esp &lt;- dpois(0:5, lambda = 1.41)
+f_esp &lt;- (dpois(0:5, lambda = 1.41))*100
 # tabla de datos
 bondad_poisson &lt;- data.frame(n_plant, f_obs, f_esp)
 bondad_poisson &lt;- setNames(bondad_poisson, c(&quot;# plant./parcela&quot;, &quot;frec. observada&quot;, &quot;frec. esperada&quot;))
 bondad_poisson %&gt;% 
-  kable(caption = &quot;Tabla 2. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado&quot;) %&gt;%
+  kable(caption = &quot;Tabla 2a. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado&quot;) %&gt;%
   kable_classic(full_width = F, html_font =
                   &quot;Cambria&quot;)</code></pre>
 <table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-Tabla 2. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado
+Tabla 2a. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado
 </caption>
 <thead>
 <tr>
@@ -1872,7 +1872,7 @@ frec. esperada
 35
 </td>
 <td style="text-align:right;">
-0.2441433
+24.414328
 </td>
 </tr>
 <tr>
@@ -1883,7 +1883,7 @@ frec. esperada
 28
 </td>
 <td style="text-align:right;">
-0.3442420
+34.424203
 </td>
 </tr>
 <tr>
@@ -1894,7 +1894,7 @@ frec. esperada
 15
 </td>
 <td style="text-align:right;">
-0.2426906
+24.269063
 </td>
 </tr>
 <tr>
@@ -1905,7 +1905,7 @@ frec. esperada
 10
 </td>
 <td style="text-align:right;">
-0.1140646
+11.406460
 </td>
 </tr>
 <tr>
@@ -1916,7 +1916,7 @@ frec. esperada
 7
 </td>
 <td style="text-align:right;">
-0.0402078
+4.020777
 </td>
 </tr>
 <tr>
@@ -1927,7 +1927,95 @@ frec. esperada
 5
 </td>
 <td style="text-align:right;">
-0.0113386
+1.133859
+</td>
+</tr>
+</tbody>
+</table>
+<p>Observando la tabla anterior podemos notar que las dos últimas categorías tienen valores de frecuencia esperada menores que 5, por lo que se está violando uno de los supuestos; podemos superar esta situación agrupando estos dos últimos valores.</p>
+<pre class="r"><code># datos y frecuencias esperadas (Poisson)
+n_plant &lt;- c(&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4 o más&quot;)
+f_obs &lt;- c(35, 28, 15, 10, 12)
+f_esp &lt;- (dpois(0:4, lambda = 1.41))*100
+f_esp[5] &lt;- 5.1
+# tabla de datos
+bondad_poisson &lt;- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson &lt;- setNames(bondad_poisson, c(&quot;# plant./parcela&quot;, &quot;frec. observada&quot;, &quot;frec. esperada&quot;))
+bondad_poisson %&gt;% 
+  kable(caption = &quot;Tabla 2b. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado&quot;) %&gt;%
+  kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2b. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+# plant./parcela
+</th>
+<th style="text-align:right;">
+frec. observada
+</th>
+<th style="text-align:right;">
+frec. esperada
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+24.41433
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+34.42420
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+24.26906
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+11.40646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4 o más
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+5.10000
 </td>
 </tr>
 </tbody>
@@ -2190,7 +2278,7 @@ mosaic(mfo, shade = TRUE, legend = FALSE, labeling_args = list(set_varnames = c(
 </div>
 <div id="ejemplo-3" class="section level4">
 <h4><strong>Ejemplo</strong></h4>
-<p>En un experimento con la especie de serpiente <em>Thamnophis sirtalis</em> se estudió la respuesta de escape de individuos recieen nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos. Los resultados fueron los siguientes:</p>
+<p>En un experimento con la especie de serpiente <em>Thamnophis sirtalis</em> se estudió la respuesta de escape de individuos recién nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos. Los resultados fueron los siguientes:</p>
 <table>
 <thead>
 <tr class="header">
