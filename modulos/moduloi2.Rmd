@@ -45,7 +45,7 @@ La hipótesis nula de ($H_0$) para una __prueba de bondad de ajuste__ es que la 
 
 La pregunta que nos hacemos: ¿es la diferencia entre los resultados (frecuencias) observadas, y los esperados estadísticamente significativa?  
 
-Es estadístico __Chi-cuadrado ($\chi^2$)__ se utiliza para esa pregunta, y su fórmula es la siguiente:  
+El estadístico __Chi-cuadrado ($\chi^2$)__ se utiliza para esa pregunta, y su fórmula es la siguiente:  
 
 $$\chi^2 = \sum_{i=1}^k\frac{(f_o - f_e)^2}{f_e}$$
 donde:  
@@ -54,6 +54,7 @@ donde:
 > $f_e$ es la frecuencia esperada en la categoría _i_  
 > _k_ es el número de categorías  
 
+### Ajuste a frecuencias teóricas  
 #### __Ejemplo__  
 Un geneticista de plantas evalúa el resultado de cruces en una población de plantas con flores amarillas y flores verdes: de un total de 100 semillas que sembró, obtuvo 84 plantas con flores amarillas y 16 con flores verdes. ¿Se ajusta este resultado a un sistema dominante-recesivo, 3:1?  
 
@@ -61,7 +62,7 @@ Podemos establecer las siguientes hipótesis, asumiendo que esperamos una distri
 $H_0$: la muestra proviene de una población con una proporción 3:1 de flores amarillas a flores verdes.  
 $H_A$: la muestra proviene de una población que no tiene la proporción 3:1.  
 
-Tabla de frecuencias  
+Tabla 1. frecuencias observadas y esperadas de colores de flores.  
 
 |    |amarillas| verdes | n |
 |----|---------|--------|---|
@@ -88,10 +89,48 @@ chisq.test(fo, p=fe, rescale.p = TRUE, correct = TRUE)
 
 En resumen, el valor calculado de $\chi^2$ resultó mayor que el valor crítico (3.84), y el valor de _p_ (0.037) fue menor que $\alpha$ = 0.05, por lo tanto podemos rechazar $H_0$ y decir que es muy probable que los valores observados no se ajustan a un sistema dominante-recesivo. 
 
+\
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)  
+
+### Ajuste a una distribución de frecuencias  
+#### __Ejemplo__  
+En los datos de número de plántulas de arce por parcela de muestreo de 1 $m^2$, (ver 1.5.5 Distribución de Poisson, Figura 4) esperamos una distribución de frecuencias de Poisson $(H_0)$, si las plántulas se encuentran distribuidas al azar en un bosque.  Vamos a realizar la prueba de bondad de ajuste con el estadístico Chi-cuadrado:  
+```{r tabla, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+# datos y frecuencias esperadas (Poisson)
+n_plant <- c("0", "1", "2", "3", "4", "5 o más")
+f_obs <- c(35, 28, 15, 10, 7, 5)
+f_esp <- dpois(0:5, lambda = 1.41)
+# tabla de datos
+bondad_poisson <- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson <- setNames(bondad_poisson, c("# plant./parcela", "frec. observada", "frec. esperada"))
+bondad_poisson %>% 
+  kable(caption = "Tabla 2. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+Vamos a calcular el estadístico $\chi^2$ para esta prueba, y encontrar el valor crítico usando la tabla, para $\alpha$ = 0.05, y grados de libertad:
+$df = num. categorías - 1 - num. parámetros\ de\ la\ distribución$, 5 - 1 - 1 = 3
+
+```{r chip}
+#calculo de chi-cuadrado
+f_obsc <- c(35, 28, 15, 10, 12)
+f_espc <- c(24.4, 34.4, 24.3, 11.4, 5.1)
+chicup <- sum(((f_obsc - f_espc)^2)/f_espc)
+sprintf("Chi-cuadrado calculado = %.2f", chicup)
+```
+Al comparar el $\chi^2$ calculado con el valor de la tabla, 7.81, vemos que es mayor, por lo tanto podemos rechazar la $H_0$ con una probabilidad menor de $\alpha$.  A continuación la prueba en R:
+```{r}
+chisq.test(f_obsc, p=f_espc, rescale.p = TRUE, correct = TRUE)
+```
+y observamos que el valor de p es menor que $\alpha$, por lo que podemos rechazar la $H_0$ de que las plántulas están distribuidas al azar en el bosque.
 
 \
 
-[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html) 
 
 ## 2.2.2.Prueba de Asociación
 
