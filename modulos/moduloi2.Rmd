@@ -238,7 +238,7 @@ mosaic(mfo, shade = TRUE, legend = FALSE, labeling_args = list(set_varnames = c(
 #### Objetivos  
 __Utilizar una prueba de asociación cuando no se cumple uno de los supuestos de $\chi^2$__  
 
-Cuando se tiene una tabla de contingencia 2 x 2, y alguna de las frecuencias esperadas es menor que 5, no debemos utilizar la prueba de $chi^2$; una alternativa es la prueba de __probabilidad exacta de Fisher__.
+Cuando se tiene una tabla de contingencia 2 x 2, y alguna de las frecuencias esperadas es menor que 5, no debemos utilizar la prueba de $\chi^2$; una alternativa es la prueba de __probabilidad exacta de Fisher__.
 
 Para esta prueba se calcula directamente un valor de probabilidad _p_ que se contrasta con el nivel de probabilidad escogido $\alpha$, usualmente 0.05.  La siguiente tabla muestra la estructura de los datos:  
 
