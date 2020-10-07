@@ -1,51 +1,106 @@
 ---
-title:
+title: "Distribución Normal"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
 ```
 
-# 2.3.La Distribución Normal
+# 2.3.La Distribución Normal  
 
-blabla
+La __distribución normal__ es una distribución de frecuencias de variables continuas, que tiene forma de campana y muchas aplicaciones en pruebas estadísticas, que estaremos estudiando más adelante (prueba t, ANOVA, análisis de regresión).  También la podemos aplicar directamente para estimar la probabilidad de que ocurran ciertos valores en las medidas de una muestra.
 
-## 2.3.1.Propiedades de la Distribución Normal
+## 2.3.1.Propiedades de la Distribución Normal  
+#### Objetivos  
+__Conocer las características y propiedades de la distribución normal__  
 
-bla  
-chunk  
+La distribución normal formalmente se especifica por medio de una __curva de densidad normal__ (o de Gauss) que describe la densidad de probabilidades en la distribución de valores de observaciones (muestra) de una variable aleatoria, cuando el número de observaciones es grande (> 30, usualmente).  Se aplica a muchas de las variables usualmente medidas en biología, aunque hay otras curvas de distribución de densidad, con formas parecidas a la normal (tipo campana), por ejemplo la __t de Student__.  
+
+La curva de densidad normal se expresa formalmente como:  
+$$f(x) = \frac{1}{\sigma \sqrt{2 \pi}}e^{(\frac{-(x - \mu)^2}{2\sigma^2})}$$ 
+dónde $\mu$ es la media poblacional (o su estimado), y $\sigma$ la desviación estándar.  En realidad a un valor puntual de _x_ no le corresponde un valor de probabilidad, ya que ésta está definida como el área bajo la curva (densidad x $\Delta x$), y un solo punto no determina un área, sino una línea.  
+
+![tomada de: alevelmaths.co.uk](./imagenes/The-Normal-Distribution_1.png)  
+
+### La curva normal y datos reales  
+Cuando realizamos mediciones de una variable continua, como longitud y masa, usualmente esperamos una distribución de frecuencias de valores que se asemeje a la distribución normal, especialmente si es una muestra grande, y no tenemos evidencia de algún sesgo en la medición.  
+
+#### __Ejemplo__  
+Tenemos datos de la masa de 487 semillas de la especie _Thespesia populnea_ (emajagüilla), y a continuación podemos ver el histograma de la variable masa, en gramos:  
+```{r norm, message=FALSE, warning=FALSE}
+#histograma para masa de semillas de Thespesia populnea
+# datos
+library(readxl)
+library(dplyr)
+library(ggplot2)
+semillas <- read_excel("data/masa_semilla_thepol.xlsx", 
+    sheet = "masa")
+# gráfica de histograma
+m_sd <- semillas %>%
+  summarise(means = mean(masa_g), sd=sd(masa_g))
+ggplot(semillas, aes(x=masa_g)) +
+  geom_histogram(aes(y=..count..), position="identity", binwidth=.02, color="blue", fill="gray") +
+  labs(x="Masa de semilla, g", y="frecuencia")
+```    
+__Figura 1__. Histograma de frecuencias de valores de masa (g) de semillas de _T. populnea_ (_n_ = 487).  
+
+A continuación podemos observar si la distribución de frecuencias de los datos se ajustan a la curva de densidad normal con los valores de media (0.224) y desviación estándar (0.052) de la muestra.  
+
+```{r}
+# gráfica con curva de densidad normal
+m_sd <- semillas %>%
+  summarise(means = mean(masa_g), sd=sd(masa_g))
+ggplot(semillas, aes(x=masa_g)) +
+  geom_histogram(aes(y=..density..), position="identity", binwidth=.02, color="blue", fill="gray") +
+  stat_function(fun = dnorm, color="red", size=1, args=list(mean=m_sd$means, sd=m_sd$sd)) +
+  labs(x="Masa de semilla, g", y="densidad")
+```  
+__Figura 2__.  Histograma de frecuencias de valores de masa (g) y curva de densidad normal con $\mu$ = 0.224 y $\sigma$ = 0.052, de semillas de _T. populnea_ (_n_ = 487).  
+
+La correspondencia entre datos y la curva no es exacta; más adelante estaremos realizando pruebas para determinar si la desviación de los datos con respecto a la distribución normal es significativa con cierto nivel de probabilidad.   
+
+### Area bajo la curva - proporción y probabilidad  
+
+Como pudimos observar en la función de densidad normal, la curva está definida por la media ($\mu$) y la desviación estándar ($\sigma$), lo cual determina que exista una relación fija entre la desviación estándar y la proporción de área bajo la curva, que ocurre entre $\mu$ y un valor de $\sigma$, o entre valores de $\sigma$.  A continuación podemos observar valores notables de probabilidades (o proporción de la muestra) para ciertos valores de $\sigma$:  
+
+![](imagenes/8-3 Normal Distribution Areas.jpg)  
+
+__Figura 3__.  Areas de probabilidad o proporción bajo la curva de __distribución normal estándar__ ($\mu = 0, \sigma = 1$), para algunos valores de $\sigma$.
+
+
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.3.2.Transformación Z
 
-bla
-chunk  
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.3.3.Distribución de la Muestra
 
-bla  
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.3.4.Pruebas de Normalidad
 
-bla  
-cunk  
+  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.3.5.Aproximación a la Distribución Binomial
 
-bla  
-chunk  
+  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
