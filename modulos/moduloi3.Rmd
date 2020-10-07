@@ -15,7 +15,7 @@ options("yaml.eval.expr" = TRUE)
 
 # 2.3.La Distribución Normal  
 
-La __distribución normal__ es una distribución de frecuencias de variables continuas, que tiene forma de campana y muchas aplicaciones en pruebas estadísticas, que estaremos estudiando más adelante (prueba t, ANOVA, análisis de regresión).  También la podemos aplicar directamente para estimar la probabilidad de que ocurran ciertos valores en las medidas de una muestra.
+La __distribución normal__ es una distribución de frecuencias de variables continuas, que tiene forma de campana (simétrica) y muchas aplicaciones en pruebas estadísticas, que estaremos estudiando más adelante (prueba t, ANOVA, análisis de regresión).  También la podemos aplicar directamente para estimar la probabilidad de que ocurran ciertos valores en las medidas de una muestra.
 
 ## 2.3.1.Propiedades de la Distribución Normal  
 #### Objetivos  
@@ -72,21 +72,45 @@ Como pudimos observar en la función de densidad normal, la curva está definida
 
 ![](imagenes/8-3 Normal Distribution Areas.jpg)  
 
-__Figura 3__.  Areas de probabilidad o proporción bajo la curva de __distribución normal estándar__ ($\mu = 0, \sigma = 1$), para algunos valores de $\sigma$.
+__Figura 3__.  Areas de probabilidad o proporción bajo la curva de distribución normal estándar ($\mu = 0, \sigma = 1$), para algunos valores de $\sigma$.  
 
+La imagen anterior nos muestra la proporción de valores o probabilidades de ocurrencia (área) que hay debajo de la curva y entre 1 y 2 veces la desviación estándar.  Por ser una función simétrica, podemos decir que entre la media y 1 o 2 veces la desviación estándar, tendremos la mitad de la probabilidad o proporción de valores.  
+
+#### __Ejercicio__  
+¿Cuál es la proporción de valores entre +1$\sigma$ y -2$\sigma$?
+
+\
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.3.2.Transformación Z y Aplicaciones  
+#### Objetivos  
+__Aplicar la distribución normal estándar a problemas de probabilidades y proporciones de una muestra__
+
+En la Figura 3 se indica que se trata de una curva de __distribución normal estándar__ porque tiene una media de 0 y una desviación estándar de 1.  Esta curva sirve de referencia para el cálculo de las probabilidades o proporción de valores entre puntos de $x$ o valores de $\sigma$, mediante tablas que tienen los cómputos del área (proporción) entre esos valores.  Pero para usar esas tablas debemos antes convertir nuestra supuesta distribución normal, con su valor de media y desviación estándar, a una distribución normal estándar, para esto transformamos los valores incluidos en nuestra distribución ($x$) a valores denominados _z-scores_ (puntuación z), mediante la siguiente fórmula:  
+$$z = \frac{x - \mu}{\sigma}$$  
+dónde $\mu$ y $\sigma$ son las media y desviación estándar de nuestra muestra, y asumiendo que ésta es representativa de la población de valores.    
+
+Con el _z-score_ podemos calcular las probabilidades o proporciones (áreas) antes o después de algún valor de _z_, o entre la media y _z_, o entre dos valores de _z_.  
+
+![](./imagenes/zscore_left.png)  
+
+__Figura 4__.  Probabilidad o proporción de valores, antes (a la izquierda) del valor _z_ calculado a partir de nuestra muestra.  
+
+![](./imagenes/zscore_mean.gif)  
+
+__Figura 5__.  Probabilidad o proporción de valores a la izquierda y derecha de la media, para los correspondientes valores de _z_.  
+
+Para obtener las áreas bajo la curva (probabilidad o proporción de valores) a la izquierda de valores de _z_ podemos utilizar la tabla disponible en los recursos de la clase: [Tabla distribución normal izquierda z-score](https://drive.google.com/file/d/1oyh1qDsng2BEVe01tkkOWHfkQoPmPj9O/view?usp=sharing).  Para obtener las áreas bajo la curva desde la media a valores de _z_ podemos utilizar la tabla que trae el libro de Havel _et al._ (2019), _Appendiz A, Table A.1_.  
+
+#### __Ejemplo__  
 
 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.3.2.Transformación Z
-
-
-
-[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
-
-## 2.3.3.Distribución de la Muestra
+## 2.3.3.Distribución y Error Estándar de la Media
 
  
 
