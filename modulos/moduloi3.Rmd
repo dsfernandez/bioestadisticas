@@ -101,10 +101,10 @@ __Figura 4__.  Probabilidad o proporción de valores, antes (a la izquierda) del
 
 __Figura 5__.  Probabilidad o proporción de valores a la izquierda y derecha de la media, para los correspondientes valores de _z_.  
 
-Para obtener las áreas bajo la curva (probabilidad o proporción de valores) a la izquierda de valores de _z_ podemos utilizar la tabla disponible en los recursos de la clase: [Tabla distribución normal izquierda z-score](https://drive.google.com/file/d/1oyh1qDsng2BEVe01tkkOWHfkQoPmPj9O/view?usp=sharing).  Para obtener las áreas bajo la curva desde la media a valores de _z_ podemos utilizar la tabla que trae el libro de Havel _et al._ (2019), _Appendiz A, Table A.1_.  
+Para obtener las áreas bajo la curva (probabilidad o proporción de valores) a la izquierda de valores de _z_ podemos utilizar la tabla disponible en los recursos de la clase: [Tabla distribución normal izquierda z-score](https://drive.google.com/file/d/1oyh1qDsng2BEVe01tkkOWHfkQoPmPj9O/view?usp=sharing).  Para obtener las áreas bajo la curva desde la media a valores de _z_ podemos utilizar la tabla que trae el libro de Havel _et al._ (2019), _Appendix A, Table A.1_.  
 
 #### __Ejemplo__  
-
+Para una muestra de 487 semillas de la especie _Thespesia populnea_ la longitud ápice-base de las semillas tiene una $\mu$ = 10.15 mm y una $\sigma$ = 1.60 mm.  Asumiendo una distribución normal, ¿cuántas semillas tienen una longitud mayor de 11 mm?
 
 \
 
