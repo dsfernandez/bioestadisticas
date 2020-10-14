@@ -99,32 +99,141 @@ __Figura 4__.  Probabilidad o proporción de valores, antes (a la izquierda) del
 
 ![](./imagenes/zscore_mean.gif)  
 
-__Figura 5__.  Probabilidad o proporción de valores a la izquierda y derecha de la media, para los correspondientes valores de _z_.  
+__Figura 5__.  Probabilidad o proporción de valores a la izquierda y derecha de la media, para los correspondientes valores de _z_. 
+
+### Tablas para la Distribución Normal Estándar  
+> Para obtener valores de _z_ o de _P_
 
 Para obtener las áreas bajo la curva (probabilidad o proporción de valores) a la izquierda de valores de _z_ podemos utilizar la tabla disponible en los recursos de la clase: [Tabla distribución normal izquierda z-score](https://drive.google.com/file/d/1oyh1qDsng2BEVe01tkkOWHfkQoPmPj9O/view?usp=sharing).  Para obtener las áreas bajo la curva desde la media a valores de _z_ podemos utilizar la tabla que trae el libro de Havel _et al._ (2019), _Appendix A, Table A.1_.  
 
 #### __Ejemplo__  
-Para una muestra de 487 semillas de la especie _Thespesia populnea_ la longitud ápice-base de las semillas tiene una $\mu$ = 10.15 mm y una $\sigma$ = 1.60 mm.  Asumiendo una distribución normal, ¿cuántas semillas tienen una longitud mayor de 11 mm?
+Para una muestra de 487 semillas de la especie _Thespesia populnea_ la longitud ápice-base de las semillas tiene una $\mu$ = 10.15 mm y una $\sigma$ = 1.60 mm.  Asumiendo una distribución normal, ¿cuántas semillas tienen una longitud mayor de 11 mm?  
+
+Para poder consultar la tabla de proporciones de la distribución normal estándar, primero debemos calcular el valor de _z_ para 11 mm:  
+$$z = \frac{11 - 10.15}{1.60} = 0.53125$$  
+
+Consultando la tabla podemos obtener un valor de probabilidad o proporción _P_ a la izquierda de 11; como la tabla solo provee dos decimales para el valor _z_, podemos interpolar utilizando la siguiente fórmula:
+$$P_{interp.} = \frac{(z_{calc.} - z_{abajo})(P_{arriba} - P_{abajo})}{z_{arriba} - z_{abajo}} + P_{abajo}$$
+El valor de _P_ interpolado es de 0.70237, es decir que el 70.237% de las semillas son de una longitud menor o igual a 11 mm; como el problema nos pide la proporción mayor de 11 mm, debemos calcular 1 - 0.70237 = 0.29763, es decir: 29.763 % de las semillas tienen una longitud mayor de 11 mm.  
+
+Utilizando R podemos trabajar el problema de la siguiente manera:
+```{r zprob}
+# proporción para media y desviación estándar conocidas
+psem <- pnorm(11, mean = 10.15, sd = 1.60, lower.tail= FALSE)
+sprintf("Proporción de semillas con longitud mayor de 11 mm = %.3f", psem)
+```  
+Para calcular el valor de _z_ (y de la variable estudiada) que corresponde a una probabilidad o proporción _P_, podemos utilizar la tabla y realizar la interpolación correspondiente.  Luego utilizamos la fórmula de _z_ y calculamos el valor _x_ de nuestra variable.  
+
+Otra alternativa, mediante R:  
+```{r pz}
+# valor correspondiente a a una P de la distr. normal
+valor <- qnorm(0.29763, mean = 10.15, sd = 1.60, lower.tail = FALSE)
+sprintf("Longitud de semillas para separar el 29.76%% más grandes = %.3f", valor)
+```
 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.3.3.Distribución y Error Estándar de la Media
+## 2.3.3.Distribución y Error Estándar de la Media Muestral  
+#### Objetivos
+__Reconocer algunas propiedades de las muestras de una población__  
 
- 
+En la __Figura 2.__ observamos la distribución de la variable masa de 487 semillas de _T. populnea_, y encontramos que no parece ajustarse a la distribución normal correspondiente a $\bar X = 0.224$ y $s = 0.052$.  Vamos a tomar muestras aleatorias (1000) de esta "población" de semillas, y observar cómo se distribuyen las medias de cada muestra, para diferentes tamaños de muestra.  Calcularemos la media y la desviación estándar en cada caso.      
+
+
+```{r centralt}
+# 1000 muestras de n = 4
+samples <- replicate(1000, sample(semillas$masa_g, 4, replace = TRUE))
+# media y suma de columnas (muestras)
+sample_means <- colMeans(samples)
+sample_sums <- colSums(samples)
+# media y sd de las medias muestrales
+mx <- mean(sample_means)
+smx <- sd(sample_means)
+# data frame para ggplot
+sample_stats <- data.frame(sample_means, sample_sums)
+# histograma y curva normal ajustada
+ggplot(sample_stats, aes(x=sample_means)) +
+  geom_histogram(aes(y=..density..), position="identity", binwidth=.01, color="blue", fill="gray") +
+  stat_function(fun = dnorm, color="red", size=1, args=list(mean=mx, sd=smx)) +
+  labs(x="Masa de semilla, g", y="densidad")
+sprintf("Media de las muestras (n = 4) = %.4f", mx)
+sprintf("Desv. Est. de la media muestral (n = 4) = %.4f", smx)
+```  
+__Figura 6a.__ Histograma de frecuencias de valores de masa (g) de semillas y curva de densidad normal de las medias muestrales para n = 4.  
+
+```{r centraltt, echo=FALSE}
+# 1000 muestras de n = 12
+samples <- replicate(1000, sample(semillas$masa_g, 12, replace = TRUE))
+# media y suma de columnas (muestras)
+sample_means <- colMeans(samples)
+sample_sums <- colSums(samples)
+# media y sd de las medias muestrales
+mx <- mean(sample_means)
+smx <- sd(sample_means)
+# data frame para ggplot
+sample_stats <- data.frame(sample_means, sample_sums)
+# histograma y curva normal ajustada
+ggplot(sample_stats, aes(x=sample_means)) +
+  geom_histogram(aes(y=..density..), position="identity", binwidth=.006, color="blue", fill="gray") +
+  stat_function(fun = dnorm, color="red", size=1, args=list(mean=mx, sd=smx)) +
+  labs(x="Masa de semilla, g", y="densidad")
+sprintf("Media de las muestras (n = 12) = %.4f", mx)
+sprintf("Desv. Est. de la media muestral (n = 12) = %.4f", smx)
+```
+  
+__Figura 6b.__ Histograma de frecuencias de valores de masa (g) de semillas y curva de densidad normal de las medias muestrales para n = 12.  
+
+```{r centralttt, echo=FALSE}
+# 1000 muestras de n = 30
+samples <- replicate(1000, sample(semillas$masa_g, 30, replace = TRUE))
+# media y suma de columnas (muestras)
+sample_means <- colMeans(samples)
+sample_sums <- colSums(samples)
+# media y sd de las medias muestrales
+mx <- mean(sample_means)
+smx <- sd(sample_means)
+# data frame para ggplot
+sample_stats <- data.frame(sample_means, sample_sums)
+# histograma y curva normal ajustada
+ggplot(sample_stats, aes(x=sample_means)) +
+  geom_histogram(aes(y=..density..), position="identity", binwidth=.004, color="blue", fill="gray") +
+  stat_function(fun = dnorm, color="red", size=1, args=list(mean=mx, sd=smx)) +
+  labs(x="Masa de semilla, g", y="densidad")
+sprintf("Media de las muestras (n = 30) = %.4f", mx)
+sprintf("Desv. Est. de la media muestral (n = 30) = %.4f", smx)
+```  
+
+__Figura 6c.__ Histograma de frecuencias de valores de masa (g) de semillas y curva de densidad normal de las medias muestrales para n = 30.
+
+Como podemos observar en todas la gráficas __(Figuras 6a-6c)__ la distribución de las medias de las muestras tiene una distribución más cercana a la curva normal, que los datos totales de las semillas, conservándose el valor de la media.  Por otra parte, la desviación estándar disminuye al aumentar el tamaño de la muestra _(n)_.  
+
+### Teorema del Límite Central  
+
+Las observaciones anteriores se corresponden con lo que se denomina en estadísticas el __Teorema del Límite Central__, que se puede resumir como:  
+"En una población de valores (con o sin distribución normal), si los tamaños de las muestras son suficientemente grandes, sus medias tienden a una distribución normal"  
+
+### El Error Estándar de la Media  
+La otra observación importante tiene que ver con la disminución de la desviación estándar de la media muestral, con el aumento del tamaño de la muestra.  Podemos comprobar, con los datos obtenidos anteriormente, que se ajusta a la definición matemática del __error estándar de la media__:  
+$$\sigma_{\bar X} = \frac{\sigma}{\sqrt n}$$
+dónde:  
+
+> $\sigma_{\bar X}$: error estándar de la media  
+> $\sigma$: desviación estándar de la población  
+> $n$: tamaño de la muestra  
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.3.4.Pruebas de Normalidad
+## 2.3.4.Pruebas de Normalidad  
+
+
 
   
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.3.5.Aproximación a la Distribución Binomial
 
-  
-
-[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
