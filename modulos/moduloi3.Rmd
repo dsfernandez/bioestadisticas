@@ -228,10 +228,64 @@ dónde:
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.3.4.Pruebas de Normalidad  
+#### Objetivos  
+__Probar si una variable tiene una distribución aproximada a la normal__  
 
+Muchas de las pruebas de hipótesis que estaremos realizando, asumen una distribución normal de las variables.  
 
+### Sesgo y Curtosis
+> Medidas de la simetría y agrupamiento de los datos  
 
-  
+En la __Figura 2__ de los datos de masa de las semillas de _T. populnea_ observamos que la distribución de valores parece corrida hacia la derecha, es decir asimétricos.  Además las frecuencias alrededor de la media parecen más elevadas que lo esperado para la distribución normal.  Las desviaciones de la simetría en una distribución de frecuencias, se mide mediante el estadístico __sesgo__ _(skewness)_; en una distribución simétrica, el sesgo es 0, negativo si la distribucioón presenta una cola más larga hacia la izquierda, y positivo si la cola es a la derecha.  Las desviaciones en la altura y amplitud de los valores de frecuencia de la distribución se miden con el estadístico __curtosis__ _(kurtosis)_.  La curtosis de la distribución normal es 0; si los valores se agrupan en exceso en la parte central (media), la curtosis es positiva, de lo contrario (valores más expandidos alrededor de la media) es negativa.  
+
+Para el cálculo del sesgo ($g_1$) hay varias fórmulas, una de ellas es:
+
+$$g_1=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{3}}{(n-1) s^{3}}$$
+Igualmente, para la curtosis ($g_2$) hay diferentes fórmulas, una de ellas:
+$$g_2=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{4}}{(n-1) s^{4}} - 3$$
+En ambas:  
+
+> $n$: tamaño de la muestra  
+> $x_i$: valores de la variable  
+> $\bar x$: media de la muestra  
+> $s$: desviación estándar de la muestra  
+
+Usando R podemos calcular ambos estadísticos:  
+```{r skewkurt}
+library(moments)
+sk <- skewness(semillas$masa_g)
+ku <- kurtosis(semillas$masa_g) - 3
+sprintf("Sesgo en distribución valores de masa = %.3f", sk)
+sprintf("Curtosis en distribución valores de masa = %.3f", ku)
+```
+
+Los valores calculados confirman las observaciones anteriores sobre el histograma de la __Figura 2__.  En general se acepta que si los valores de sesgo y curtosis se encuentran entre -1 y 1, la desviación de la normalidad no es muy grande.  A continuación estudiaremos otras pruebas más concretas sobre esta afirmación.  
+
+### Gráficas Q-Q  
+> Observando el ajuste de los datos a los valores de z
+
+Si se grafican los datos crudos y los transformados mediante la fórmula de _z_, deberíamos obtener una línea recta que pasa por los puntos de la gráfica, si los valores de la variable poseen una distribución normal.  Si los puntos están separados de la recta identidad, especialmente en la parte central, podemos sospechar de una desviación importante de la distribución normal.  
+
+```{r qqplot, message=FALSE, warning=FALSE}
+library(car)
+car::qqPlot(semillas$masa_g, id = FALSE, xlab = "valores de z", ylab = "masa de semilla, g")
+```
+
+Podemos observar desviación de la recta de distribución normal, particularmente en los extremos.  
+
+### Prueba de hipótesis de Shapiro y Wilk  
+> La prueba definitiva para decidir sobre la normalidad de la variable  
+
+La prueba de hipótesis de __normalidad de Shapiro-Wilk__ nos permite decidir con una probabilidad establecida ($\alpha$) si aceptamos o rechazamos la $H_0$:los datos se distribuyen de forma normal.  
+
+```{r shapwilk, message=FALSE, warning=FALSE}
+sw <- shapiro.test(semillas$masa_g)
+sw
+```
+
+Los resultados de la prueba indican que podemos rechazar la $H_0$, por lo tanto los valores de la variable masa de las semillas no presentan una distribución normal.  Mediante diversos métodos podemos realizar __transformaciones__ para ajustar los datos a una distribución normal.
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
