@@ -39,7 +39,9 @@ curve(dt(x, df = 12), add = TRUE)
 __Figura 1.__  Distribución normal estándar (roja) y distribución _t_ para grados de libertad = 2 (azul), 6, 12.
 
 ### Valores de la Distribución _t_  
-> Valores de _t_ mediante tabla y las funciones __pt__ y __qt__  
+> Valores de _t_ mediante tabla y las funciones __pt__ y __qt__ 
+
+Usualmente la distribución _t_ se utiliza para encontrar valores críticos para un determinado valor de $\alpha$ (error tipo I), por ejemplo 0.05.  En la tabla [_t Table_](https://drive.google.com/file/d/1_em5NreF48RjHKJk0TUsoEhbrgeIroZC/view?usp=sharing) podemos encontrar valores de _t_ para algunos valores representativos de $\alpha$.  
 
 
 
