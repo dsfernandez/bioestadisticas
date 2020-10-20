@@ -2,6 +2,8 @@
 name: "Bioestadísticas"
 navbar:
   left:
+  title: "Bioestadística"
+  href: index.html
     - 
       menu:
         - text: "Estadísticas"
@@ -47,8 +49,6 @@ navbar:
         - text: "Otros Recursos"
           href: modulos/modelos.html
       text: "Modelos"
-  title: "Bioestadística"
-  href: index.html
 output:
   html_document:
     toc: true
