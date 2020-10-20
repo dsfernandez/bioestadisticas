@@ -1,0 +1,44 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 2.5.Inferencias acerca de la Media de Dos Poblaciones
+
+blabla  
+
+## 2.5.1.Prueba t para Dos Muestras Independientes
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.5.2.Intervalo de Confianza para las Medias
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.5.3.Supuestos y Pruebas No-paramétricas
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.5.4.Poder de la Prueba
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+

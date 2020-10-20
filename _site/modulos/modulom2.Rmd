@@ -1,0 +1,44 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 3.2.Análisis de Correlación
+
+blabla  
+
+## 3.2.1.Asociación o Modelo
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.2.2.Coeficiente de Correlación de Pearson
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.2.3.Matriz de Correlación
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.2.4.Correlación No-paramétrica
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+

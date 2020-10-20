@@ -2,9 +2,7 @@
 name: "Bioestadísticas"
 navbar:
   left:
-  title: "Bioestadística"
-  href: index.html
-    - 
+    - text: "Datos"
       menu:
         - text: "Estadísticas"
           href: modulos/modulod1.html
@@ -18,8 +16,8 @@ navbar:
           href: modulos/modulod5.html
         - text: "Otros Recursos"
           href: modulos/datos.html
-      text: "Datos"
-    -
+      
+    - text: "Inferencias"
       menu:
         - text: "Inferencia Estadística - Prueba de Hipótesis"
           href: modulos/moduloi1.html
@@ -33,8 +31,8 @@ navbar:
           href: modulos/moduloi5.html
         - text: "Otros Recursos"
           href: modulos/inferencia.html
-      text: "Inferencias"
-    - 
+      
+    - text: "Modelos"
       menu:
         - text: "Análisis de Varianza"
           href: modulos/modulom1.html
@@ -48,9 +46,10 @@ navbar:
           href: modulos/modulom5.html
         - text: "Otros Recursos"
           href: modulos/modelos.html
-      text: "Modelos"
+     
+  title: "Bioestadística"
+  href: index.html
 output:
   html_document:
     toc: true
     toc_float: true
-output_dir: "."

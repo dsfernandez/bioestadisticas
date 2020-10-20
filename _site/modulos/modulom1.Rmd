@@ -1,0 +1,51 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 3.1.Análisis de Varianza
+
+blablabla  
+
+## 3.1.1.Fundamentos y Supuestos del ANOVA
+
+bla  
+chunk
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.1.2.ANOVA de Una Vía con Efectos Fijos
+
+bla
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.1.3.Comparaciones Múltiples
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.1.4.Supuestos para el ANOVA y Remedios
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.1.5.Otros Diseños de ANOVA
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+

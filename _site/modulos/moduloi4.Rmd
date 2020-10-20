@@ -1,0 +1,80 @@
+---
+title:  "Inferencias con Una Población"
+output:
+  html_document:
+    css: !expr here::here("styles/styles.css")
+    toc: true
+    toc_depth:  3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
+```
+
+# 2.4.Inferencias acerca de la Media de Una Población
+
+Es usual preguntarnos sobre el valor de la media de una población, a partir de una muestra: ¿cuál es la concentración de nitrógeno en este lago? ¿cuál es el nivel de azúcar en la sangre de la población de Humacao?  En esta sección estaremos realizando pruebas de hipótesis acerca de la media y su intervalo de confianza, en una sola muestra.
+
+## 2.4.1.La distribución t de Student   
+#### Objetivos  
+__Conocer la distribución _t_ y sus aplicaciones__  
+
+Cuando no conocemos la desviación estándar de la población estudiada, la distribución de la media de las muestras, se desvía de la normalidad, especialmente cuando el tamaño de la muestra es pequeño.  En estos casos se utiliza la __distribución _t_ __, también conocida como ___t_ de Student.__  
+
+### Grados de Libertad  
+> Observaciones necesarias para determinar un parámetro estadístico
+
+La distribución _t_ es similar a la distribución normal, excepto que está determinada por los __grados de libertad__(_gl_).  Los grados de libertad indican el número de observaciones independientes que pueden usarse para estimar un parámetro estadístico.  Un ejemplo es el cálculo de la media: el cálculo de la media incluye la suma de todos los valores de una muestra, por lo tanto si conocemos _n - 1_ valores y la media de los valores valores, podemos conocer el _enésimo_ valor desconocido, por lo tanto en cualquier cálculo de un estadístico que requiera la media de una muestra, debemos rebajar 1 al tamaño de la muestra para obtener los grados de libertad de ese estadístico.  
+
+La siguiente gráfica nos muestra la dependencia de la distribución _t_ en el tamaño de la muestra, por lo tanto los valores de _t_ dependen de los grados de libertad _(n - 1)_ y de la probabilidad $\alpha$.  
+
+```{r normal-t}
+curve(dnorm(x), -4, 4, col = "red", ylab = "Densidad")
+curve(dt(x, df = 2), col = "blue", add = TRUE)
+curve(dt(x, df = 6), add = TRUE)
+curve(dt(x, df = 12), add = TRUE)
+```  
+__Figura 1.__  Distribución normal estándar (roja) y distribución _t_ para grados de libertad = 2 (azul), 6, 12.
+
+### Valores de la Distribución _t_  
+> Valores de _t_ mediante tabla y las funciones __pt__ y __qt__  
+
+
+
+En esta sección utilizaremos la distribución _t_ para calcular __intervalos de confianza__ y pruebas de hipótesis sobre la media de una población.
+
+
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.4.2.Intervalo de Confianza para la Media
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.4.3.Hipótesis para la Media de una Muestra
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.4.4.Prueba t Pareada
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.4.5.Supuestos y Pruebas No-paramétricas
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+

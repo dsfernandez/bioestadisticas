@@ -1,0 +1,50 @@
+---
+title:
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 3.3.Análisis de Regresión
+
+blabla  
+
+## 3.3.1.Fundamentos de la Regresión Lineal Simple
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.3.2.Parámetros de la Regresión
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.3.3.Pruebas de Hipótesis para la Regresión
+
+bla
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.3.4.Predicción de y a partir de x
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.3.5.Otras Técnicas de Regresión
+
+bla  
+chunk  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
