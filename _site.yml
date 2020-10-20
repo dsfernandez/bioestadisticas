@@ -1,55 +1,69 @@
 ---
 name: "Bioestadísticas"
-title: "Bioestadísticas"
-href: index.html
 navbar:
   left:
-    - text: "Datos"
+    - 
       menu:
-        - text: "Estadísticas"
+        - 
+          text: "Estadísticas"
           href: modulos/modulod1.html
-        - text: "Variables - Manejo de Datos"
+        - 
+          text: "Variables - Manejo de Datos"
           href: modulos/modulod2.html
-        - text: "Tablas y Gráficas"
+        - 
+          text: "Tablas y Gráficas"
           href: modulos/modulod3.html
-        - text: "Estadísticas Descriptivas"
+        - 
+          text: "Estadísticas Descriptivas"
           href: modulos/modulod4.html
-        - text: "Probabilidades - Distribuciones Discretas"
+        - 
+          text: "Probabilidades - Distribuciones Discretas"
           href: modulos/modulod5.html
-        - text: "Otros Recursos"
+        - 
+          text: "Otros Recursos"
           href: modulos/datos.html
-      
-    - text: "Inferencias"
+      text: "Datos"
+    -
       menu:
-        - text: "Inferencia Estadística - Prueba de Hipótesis"
+        - 
+          text: "Inferencia Estadística - Prueba de Hipótesis"
           href: modulos/moduloi1.html
-        - text: "Hipótesis sobre Frecuencias"
+        - 
+          text: "Hipótesis sobre Frecuencias"
           href: modulos/moduloi2.html
-        - text: "Distribución Normal"
+        - 
+          text: "Distribución Normal"
           href: modulos/moduloi3.html
-        - text: "Inferencias: Una Población"
+        - 
+          text: "Inferencias: Una Población"
           href: modulos/moduloi4.html
-        - text: "Inferencias: Dos Poblaciones"
+        - 
+          text: "Inferencias: Dos Poblaciones"
           href: modulos/moduloi5.html
-        - text: "Otros Recursos"
+        - 
+          text: "Otros Recursos"
           href: modulos/inferencia.html
-      
-    - text: "Modelos"
+      text: "Inferencias"
+    -
       menu:
-        - text: "Análisis de Varianza"
+        - 
+          text: "Análisis de Varianza"
           href: modulos/modulom1.html
-        - text: "Análisis de Correlación"
+        - 
+          text: "Análisis de Correlación"
           href: modulos/modulom2.html
-        - text: "Análisis de Regresión"
+        - 
+          text: "Análisis de Regresión"
           href: modulos/modulom3.html
-        - text: "Otros Modelos"
+        - 
+          text: "Otros Modelos"
           href: modulos/modulom4.html
-        - text: "Diseño Experimental"
+        - 
+          text: "Diseño Experimental"
           href: modulos/modulom5.html
-        - text: "Otros Recursos"
+        - 
+          text: "Otros Recursos"
           href: modulos/modelos.html
-
-output:
-  html_document:
-    toc: true
-    toc_float: true
+      text: "Modelos"
+  title: "Bioestadísticas"
+output_dir: "."
