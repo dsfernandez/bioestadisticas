@@ -1,5 +1,5 @@
+---
 name: "Bioestadísticas"
-output_dir: "."
 navbar:
   left:
     - 
@@ -53,3 +53,4 @@ output:
   html_document:
     toc: true
     toc_float: true
+output_dir: "."
