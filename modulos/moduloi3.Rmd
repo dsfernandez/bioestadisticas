@@ -126,7 +126,7 @@ Para calcular el valor de _z_ (y de la variable estudiada) que corresponde a una
 
 Otra alternativa, mediante R:  
 ```{r pz}
-# valor correspondiente a a una P de la distr. normal
+# valor correspondiente a una P de la distr. normal
 valor <- qnorm(0.29763, mean = 10.15, sd = 1.60, lower.tail = FALSE)
 sprintf("Longitud de semillas para separar el 29.76%% más grandes = %.3f", valor)
 ```
