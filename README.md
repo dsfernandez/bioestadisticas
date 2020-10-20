@@ -1,2 +1,2 @@
 # bioestadisticas
-materiales curso biometria uprh
+materiales curso biometria UPRH
