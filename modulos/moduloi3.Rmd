@@ -38,7 +38,7 @@ Tenemos datos de la masa de 487 semillas de la especie _Thespesia populnea_ (ema
 #histograma para masa de semillas de Thespesia populnea
 # datos
 library(readxl)
-library(dplyr)
+library(tidyverse)
 library(ggplot2)
 semillas <- read_excel("data/masa_semilla_thepol.xlsx", 
     sheet = "masa")
