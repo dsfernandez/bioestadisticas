@@ -90,23 +90,49 @@ Se colectó una muestra de 20 individuos de _Gambusia affinis_ (_mosquito fish_)
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.4.3.Hipótesis para la Media de una Muestra
+## 2.4.3.Hipótesis para la Media de una Muestra  
+#### Objetivos  
+__Realizar pruebas de hipótesis sobre una sola media__  
+
+En general, una __prueba t para una muestra__ se utiliza para probar la hipótesis nula:  
+$$H_0 : \mu = \mu_0$$
+donde $\mu_0$ es algún número específico, pre-establecido, y una hipótesis alterna puede ser:  
+$$H_a : \mu \neq \mu_0$$
+Para probar la $H_0$ se utiliza el estadístico _t_, calculado ($t_s$) de la siguiente manera:  
+$$t_s = \frac{\bar x - \mu_0}{\frac{s}{\sqrt n}}$$
+Utilizando la tabla o funciones de R, calculamos el valor crítico de t ($t_{\alpha,n-1}$) para un valor establecido de $\alpha$, usualmente 0.05.  Si el valor $t_s$ excede al valor crítico, podemos rechazar $H_0$, para una probabilidad (error tipo I) igual o menor de $\alpha$. Por el contrario, un valor de $t_s$ menor que el valor crítico, no nos permite rechazar la $H_0$ para nuestro nivel de $\alpha$.  
+
+### Pruebas de una o dos colas  
+> Depende de nuestras hipótesis  
+
+Les indiqué anteriormente que al usar la tabla de la distribución _t_, debemos escoger una cola o dos colas para ubicar el valor crítico.  La selección de una o dos colas, y en el caso de una cola, la parte de la curva, depende de las hipótesis establecidas.  Si las hipótesis no indican una tendencia (mayor o menor) en particular para el valor de la media, como se formularon anteriormente, entonces debemos utilizar una prueba de dos colas, y el valor de $\alpha$ se reparte entre los dos extremos como $\alpha / 2$.  Si por el contrario las hipótesis tienen esta forma:  
+$$H_0 : \mu \geq \mu_0\quad ó\quad H_0 : \mu \leq \mu_0$$
+$$H_a : \mu < \mu_0\quad ó\quad H_a : \mu > \mu_0$$
+entonces debemos usar una prueba de una cola.
+
+#### __Ejemplo__  
+![tomado de Havel _et al_., 2019](./imagenes/9-4 Comparison t-distribution 1 and 2-tailed.jpg)
+
+__Figura 2.__  Ejemplo para ilustrar la selección de prueba de una o dos colas.
+
+#### __Ejercicio__  
+
+Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándares de contenido de las sustancias activas de los mismos.  Para un suplemento vitamínico está establecido que el contenido de vitamina X sea de un promedio de 100 unidades por píldora.  Una bioquímica de la farmaceútica que las produce, toma una muestra de 50 píldoras de un lote de miles de píldoras. En su análisis encontró que la muestra tiene un contenido promedio de 100.5 unidades de vitamina X por píldora, con una desviación estándar de 2.16 unidades.  Desea comprobar si la muestra se tomo de una población (el lote completo) con una media de 100 unidades. 
 
 
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.4.4.Prueba t Pareada
 
-bla  
-chunk  
+  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.4.5.Supuestos y Pruebas No-paramétricas
 
-bla  
-chunk  
+  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
