@@ -125,8 +125,72 @@ Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándar
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.4.4.Prueba t Pareada
+#### Objetivos  
+__Probar hipótesis en experimentos de comparaciones pareadas__  
 
-  
+En el diseño de __comparaciones pareadas__ un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le un tratamiento y al otro no o uno diferente.   El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.  
+
+### Supuestos de la prueba  
+
+* Las mediciones son continuas, o si son discretas tienen un ámbito amplio de valores.  
+* La distribución de la variable de las diferencias entre los pares es normal.   
+* Los datos son una muestra aleatoria de una población de interés.  
+
+#### __Ejemplo__  
+Vamos a analizar datos del tiempo de curación de quemaduras (días) utilizando dos preparaciones de un medicamento.  Los sujetos (_n_ = 20) fueron tratados de quemaduras en ambos brazos, un brazo con la versión O y el otro con la versión N del medicamento.
+```{r datos-tpar, echo=FALSE}
+library(kableExtra)
+# datos
+curacion <- read.csv("data/Table 9.2.csv")
+names(curacion) <- c("paciente", "versión O", "versión N", "diferencia")
+curacion %>%
+  kbl(caption = "Tabla 1. Tiempo de curación (días) de quemaduras en brazos de pacientes (n = 20), tratados con sendas versiones (O y N) de un medicamento y la diferencia entre ambos") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+En primer lugar debemos formular las hipótesis de trabajo; en este experimento esperamos que la versión N del medicamento sea mejor que la versión O, por lo tanto el tiempo de curación debe ser menor y la diferencia N - O debe ser un número positivo. 
+$$H_0 : \mu_{diferencia}  \leq 0$$  
+$$H_0 : \mu_{diferencia}  > 0$$  
+
+A partir de los datos anteriores podemos calcular la media de las diferencias y su desviación estándar: 
+```{r echo=FALSE}
+xdif <- mean(curacion$diferencia)
+dedif <- sd(curacion$diferencia)
+sprintf("Media de las diferencias (días) = %.3f", xdif)
+sprintf("Desviación estándar de las diferencias (días) = %.3f", dedif)
+```
+
+Ahora calcularemos el valor del estadístico _t_ para nuestra muestra:  
+$$t = \frac{2.685}{2.362\sqrt{20}} = 5.08$$
+
+Utilizando la tabla de la _t_ de Student calculamos el valor crítico (umbral) de _t_ para un $\alpha$ = 0.05, y _n_ - 1 = 19 grados de libertad.  De acuerdo a nuestras hipótesis, la prueba debe ser de una cola.    También podemos utilizar la función correspondiente en R.  
+```{r tumbral}
+tumbral <- qt(0.05, 19, lower.tail = FALSE)
+```
+
+$t_{0.05,19} =$ `r tumbral`
+
+El estadístico _t_ calculado es mayor que el valor crítico de _t_, por lo tanto rechazamos la $H_0$ con una probabilidad menor de 0.05 de equivocarnos (error tipo I).  La versión N del medicamento cura más rápidamente las quemaduras.
+
+Utilizando R podemos realizar un análisis gráfico del experimento.
+```{r grafpar, message=FALSE, warning=FALSE}
+library(PairedData)
+versionO <- curacion$`versión O`
+versionN <- curacion$`versión N`
+pd <- paired(versionO,versionN)
+plot(pd, type = "profile") + ylab("Tiempo de curación, días")
+```
+
+__Figura 3.__  Tiempo de curación (días) para dos versiones de un medicamento.  Box-plot de los valores de cada versión y líneas de conexión de los sujetos pareados.  
+
+La prueba _t_ pareada también se puede hacer a partir de los datos originales:
+```{r pairt}
+res <- t.test(versionO, versionN, paired = TRUE, alternative = "greater")
+res
+```
+
+
+\  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
