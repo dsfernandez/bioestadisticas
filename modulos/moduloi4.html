@@ -1552,21 +1552,58 @@ curve(dt(x, df = 12), add = TRUE)</code></pre>
 <blockquote>
 <p>Valores de <em>t</em> mediante tabla y las funciones <strong>pt</strong> y <strong>qt</strong></p>
 </blockquote>
-<p>Usualmente la distribución <em>t</em> se utiliza para encontrar valores críticos para un determinado valor de <span class="math inline">\(\alpha\)</span> (error tipo I), por ejemplo 0.05. En la tabla <a href="https://drive.google.com/file/d/1_em5NreF48RjHKJk0TUsoEhbrgeIroZC/view?usp=sharing"><em>t Table</em></a> podemos encontrar valores de <em>t</em> para algunos valores representativos de <span class="math inline">\(\alpha\)</span>.</p>
-<p>En esta sección utilizaremos la distribución <em>t</em> para calcular <strong>intervalos de confianza</strong> y pruebas de hipótesis sobre la media de una población.</p>
+<p>Usualmente la distribución <em>t</em> se utiliza para encontrar valores críticos para un determinado valor de <span class="math inline">\(\alpha\)</span> (error tipo I), por ejemplo 0.05. En la tabla <a href="https://drive.google.com/file/d/1_em5NreF48RjHKJk0TUsoEhbrgeIroZC/view?usp=sharing"><em>t Table</em></a> podemos encontrar valores de <em>t</em> para algunos valores representativos de <span class="math inline">\(\alpha\)</span>. En esta tabla podemos determinar el valor crítico para una probabilidad a un lado u otro de la curva (<strong>una cola</strong>), o repartir la probabilidad entre ambos extremos de la curva (<strong>dos colas</strong>).</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Encontrar en la tabla el valor de <em>t</em> para un <span class="math inline">\(\alpha\)</span> de 0.10 de dos colas, y para un <span class="math inline">\(\alpha\)</span> de 0.05 en la cola izquierda, para una muestra de 10 observaciones.</p>
+<p>Ahora utilizaremos las funciones que provee R:</p>
+<pre class="r"><code># valor de t alfa = 0.05 izquierda
+qt(0.05, 9, lower.tail = TRUE)</code></pre>
+<pre><code>## [1] -1.833113</code></pre>
+<pre class="r"><code># valor de t alfa = 0.05 derecha
+qt(0.05, 9, lower.tail = FALSE)</code></pre>
+<pre><code>## [1] 1.833113</code></pre>
+<pre class="r"><code># probabilidad con valor de t
+pt(1.83311, 9,lower.tail = FALSE)</code></pre>
+<pre><code>## [1] 0.05000023</code></pre>
+<p>En las próximas secciones utilizaremos la distribución <em>t</em> para calcular <strong>intervalos de confianza</strong> y pruebas de hipótesis sobre la media de una población.</p>
+<p><br />
+</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
 </div>
 </div>
 <div id="intervalo-de-confianza-para-la-media" class="section level2">
 <h2>2.4.2.Intervalo de Confianza para la Media</h2>
-<p>bla<br />
-chunk</p>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Calcular intervalos de confianza para la media</strong></p>
+<p>Con una muestra, obtenida de una población que asumimos tiene una distribución normal de valores de alguna variable, podemos calcular el <strong>intervalo de confianza</strong>, dentro del cual tenemos cierto nivel de confianza (dado por la probabilidad establecida) de que se encuentra la media poblacional (<span class="math inline">\(\mu\)</span>).</p>
+<p>A partir de una muestra obtenemos la media muestral (<span class="math inline">\(\bar x\)</span>) y la desviación estándar de la muestra (<span class="math inline">\(s\)</span>), y el error estándar de la media muestral (<span class="math inline">\(s_{\bar x} = s / \sqrt n\)</span>). Ahora podemos calcular el intervalo de confianza mediante las siguientes fórmulas:<br />
+<span class="math display">\[LS_{Pr} = \bar x + (t_{\alpha,n-1}*s_{\bar x})\]</span><br />
+<span class="math display">\[LI_{Pr} = \bar x - (t_{\alpha,n-1}*s_{\bar x})\]</span><br />
+Donde:</p>
+<blockquote>
+<p><span class="math inline">\(LS\)</span>: límite superior del intervalo de confianza<br />
+<span class="math inline">\(LI\)</span>: límite inferior del intervalo de confianza<br />
+<span class="math inline">\(Pr\)</span>: probabilidad dentro del intervalo de confianza<br />
+<span class="math inline">\(\bar x\)</span>: media de la muestra<br />
+<span class="math inline">\(t\)</span>: valor del estadístico t<br />
+<span class="math inline">\(\alpha\)</span>: probabilidad fuera del intervalo (1 - Pr)<br />
+<span class="math inline">\(n - 1\)</span>: grados de libertad (n, tamaño de la muestra)<br />
+<span class="math inline">\(s_{\bar x}\)</span>: error estándar de la media muestral</p>
+</blockquote>
+</div>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Se colectó una muestra de 20 individuos de <em>Gambusia affinis</em> (<em>mosquito fish</em>), y se les midió la longitud a cada uno. La longitud media de la muestra (<span class="math inline">\(\bar x\)</span>) fue 21.0 mm, y la desviación estándar de la muestra (<em>s</em>) fue 1.76 mm. Queremos encontrar el intervalo de 95% de confianza para la media poblacional. Asumimos que la longitud de los peces es una variable con distribución normal y que la muestra fue tomada al azar.</p>
+<p><br />
+</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
 </div>
 <div id="hipótesis-para-la-media-de-una-muestra" class="section level2">
 <h2>2.4.3.Hipótesis para la Media de una Muestra</h2>
-<p>bla<br />
-chunk</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 <div id="prueba-t-pareada" class="section level2">

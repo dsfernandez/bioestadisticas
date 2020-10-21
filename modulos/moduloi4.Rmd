@@ -41,27 +41,58 @@ __Figura 1.__  Distribución normal estándar (roja) y distribución _t_ para gr
 ### Valores de la Distribución _t_  
 > Valores de _t_ mediante tabla y las funciones __pt__ y __qt__ 
 
-Usualmente la distribución _t_ se utiliza para encontrar valores críticos para un determinado valor de $\alpha$ (error tipo I), por ejemplo 0.05.  En la tabla [_t Table_](https://drive.google.com/file/d/1_em5NreF48RjHKJk0TUsoEhbrgeIroZC/view?usp=sharing) podemos encontrar valores de _t_ para algunos valores representativos de $\alpha$.  
+Usualmente la distribución _t_ se utiliza para encontrar valores críticos para un determinado valor de $\alpha$ (error tipo I), por ejemplo 0.05.  En la tabla [_t Table_](https://drive.google.com/file/d/1_em5NreF48RjHKJk0TUsoEhbrgeIroZC/view?usp=sharing) podemos encontrar valores de _t_ para algunos valores representativos de $\alpha$.  En esta tabla podemos determinar el valor crítico para una probabilidad a un lado u otro de la curva (__una cola__), o repartir la probabilidad entre ambos extremos de la curva (__dos colas__).  
 
+#### __Ejemplo__  
+Encontrar en la tabla el valor de _t_ para un $\alpha$ de 0.10 de dos colas, y para un $\alpha$ de 0.05 en la cola izquierda, para una muestra de 10 observaciones.  
 
+Ahora utilizaremos las funciones que provee R:
+```{r ptqt}
+# valor de t alfa = 0.05 izquierda
+qt(0.05, 9, lower.tail = TRUE)
+# valor de t alfa = 0.05 derecha
+qt(0.05, 9, lower.tail = FALSE)
+# probabilidad con valor de t
+pt(1.83311, 9,lower.tail = FALSE)
+```
 
-En esta sección utilizaremos la distribución _t_ para calcular __intervalos de confianza__ y pruebas de hipótesis sobre la media de una población.
+En las próximas secciones utilizaremos la distribución _t_ para calcular __intervalos de confianza__ y pruebas de hipótesis sobre la media de una población.
 
-
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.4.2.Intervalo de Confianza para la Media
+## 2.4.2.Intervalo de Confianza para la Media  
+#### Objetivos  
+__Calcular intervalos de confianza para la media__  
 
-bla  
-chunk  
+Con una muestra, obtenida de una población que asumimos tiene una distribución normal de valores de alguna variable, podemos calcular el __intervalo de confianza__, dentro del cual tenemos cierto nivel de confianza (dado por la probabilidad establecida) de que se encuentra la media poblacional ($\mu$).  
+
+A partir de una muestra obtenemos la media muestral ($\bar x$) y la desviación estándar de la muestra ($s$), y el error estándar de la media muestral ($s_{\bar x} = s / \sqrt n$).  Ahora podemos calcular el intervalo de confianza mediante las siguientes fórmulas:  
+$$LS_{Pr} = \bar x + (t_{\alpha,n-1}*s_{\bar x})$$  
+$$LI_{Pr} = \bar x - (t_{\alpha,n-1}*s_{\bar x})$$  
+Donde: 
+
+> $LS$: límite superior del intervalo de confianza  
+> $LI$: límite inferior del intervalo de confianza  
+> $Pr$: probabilidad dentro del intervalo de confianza  
+> $\bar x$: media de la muestra  
+> $t$: valor del estadístico t  
+> $\alpha$: probabilidad fuera del intervalo (1 - Pr)  
+> $n - 1$: grados de libertad (n, tamaño de la muestra)  
+> $s_{\bar x}$: error estándar de la media muestral
+
+#### __Ejercicio__  
+Se colectó una muestra de 20 individuos de _Gambusia affinis_ (_mosquito fish_), y se les midió la longitud a cada uno.  La longitud media de la muestra ($\bar x$) fue 21.0 mm, y la desviación estándar de la muestra (_s_) fue 1.76 mm.  Queremos encontrar el intervalo de 95% de confianza para la media poblacional.  Asumimos que la longitud de los peces es una variable con distribución normal y que la muestra fue tomada al azar.  
+
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.4.3.Hipótesis para la Media de una Muestra
 
-bla  
-chunk  
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
