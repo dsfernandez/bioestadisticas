@@ -85,6 +85,27 @@ Donde:
 #### __Ejercicio__  
 Se colectó una muestra de 20 individuos de _Gambusia affinis_ (_mosquito fish_), y se les midió la longitud a cada uno.  La longitud media de la muestra ($\bar x$) fue 21.0 mm, y la desviación estándar de la muestra (_s_) fue 1.76 mm.  Queremos encontrar el intervalo de 95% de confianza para la media poblacional.  Asumimos que la longitud de los peces es una variable con distribución normal y que la muestra fue tomada al azar.  
 
+A continuación el cálculo de los intervalos de confianza utilizando R; para el cálculo de la _t_ se usa una probabilidad de error $\alpha / 2$ debido a que por definición el intervalo de confianza es a ambos lados de la curva de distribución y es simétrico con respecto a la media.
+```{r intconf}
+# media de la muestra
+media <- 21
+# desviación estándar de la muestra
+de <- 1.76
+# tamaño de la muestra
+n <- 20
+# cálculo del error para el intervalo con alfa/2
+# grados de libertad = n - 1
+# error estándar = de/raíz cuadrada de n
+error <- qt(0.025,df = n-1, lower.tail = FALSE)*de / sqrt(n)
+# límite inferior (izquierdo) del intervalo
+left <- media - error
+# límite superior (derecho) del intervalo
+right <- media + error
+sprintf("Límite Inferior = %.2f", left)
+sprintf("Límite Superior = %.2f", right)
+```
+La media de la población de encuentra dentro del intervalo 20.18 - 21.82, con una confianza de 95 %.  
+
 
 \
 
@@ -117,8 +138,20 @@ __Figura 2.__  Ejemplo para ilustrar la selección de prueba de una o dos colas.
 
 #### __Ejercicio__  
 
-Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándares de contenido de las sustancias activas de los mismos.  Para un suplemento vitamínico está establecido que el contenido de vitamina X sea de un promedio de 100 unidades por píldora.  Una bioquímica de la farmaceútica que las produce, toma una muestra de 50 píldoras de un lote de miles de píldoras. En su análisis encontró que la muestra tiene un contenido promedio de 100.5 unidades de vitamina X por píldora, con una desviación estándar de 2.16 unidades.  Desea comprobar si la muestra se tomo de una población (el lote completo) con una media de 100 unidades. 
+Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándares de contenido de las sustancias activas de los mismos.  Para un suplemento vitamínico está establecido que el contenido de vitamina X sea de un promedio de 100 unidades por píldora.  Una bioquímica de la farmaceútica que las produce, toma una muestra de 50 píldoras de un lote de miles de píldoras. En su análisis encontró que la muestra tiene un contenido promedio de 100.5 unidades de vitamina X por píldora, con una desviación estándar de 2.19 unidades.  Desea comprobar si la muestra se tomo de una población (el lote completo) con una media de 100 unidades.  
 
+Mediante R podemos calcular el valor del estadístico _t_ y compararlo con el de la distribución _t_ correspondiente para realizar la prueba de hipótesis $H_0:\mu=100$:
+```{r infmedia}
+# cálculo de t
+tcalc <- (100.5 - 100) / (2.19 / sqrt(50))
+# t de la distribución para alfa = 0.05 (dos colas) y gl = 49
+ttab <- qt(0.025, 49, lower.tail = FALSE)
+# mostrar valores
+sprintf("t calculado para la muestra = %.3f", tcalc)
+sprintf("t para la distribución con 49 g.l. = %.3f", ttab)
+```
+
+Por lo tanto, para nuestras condiciones, no podemos rechazar la hipótesis nula.  
 
 \
 
@@ -131,6 +164,7 @@ __Probar hipótesis en experimentos de comparaciones pareadas__
 En el diseño de __comparaciones pareadas__ un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le un tratamiento y al otro no o uno diferente.   El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.  
 
 ### Supuestos de la prueba  
+> Normalidad y muestra aleatoria  
 
 * Las mediciones son continuas, o si son discretas tienen un ámbito amplio de valores.  
 * La distribución de la variable de las diferencias entre los pares es normal.   
@@ -166,9 +200,10 @@ $$t = \frac{2.685}{2.362\sqrt{20}} = 5.08$$
 Utilizando la tabla de la _t_ de Student calculamos el valor crítico (umbral) de _t_ para un $\alpha$ = 0.05, y _n_ - 1 = 19 grados de libertad.  De acuerdo a nuestras hipótesis, la prueba debe ser de una cola.    También podemos utilizar la función correspondiente en R.  
 ```{r tumbral}
 tumbral <- qt(0.05, 19, lower.tail = FALSE)
+tcrit <- sprintf("%.2f", tumbral)
 ```
 
-$t_{0.05,19} =$ `r tumbral`
+$t_{0.05,19} =$ `r tcrit`
 
 El estadístico _t_ calculado es mayor que el valor crítico de _t_, por lo tanto rechazamos la $H_0$ con una probabilidad menor de 0.05 de equivocarnos (error tipo I).  La versión N del medicamento cura más rápidamente las quemaduras.
 
@@ -194,9 +229,56 @@ res
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 2.4.5.Supuestos y Pruebas No-paramétricas
+## 2.4.5.Supuestos y Pruebas No-paramétricas  
+#### Objetivos  
+__Conocer las alternativas cuando no se cumplen los supuestos para usar una prueba _t_ __  
 
-  
+Los supuestos principales para las __pruebas paramétricas__ (basadas en la distribución normal y sus parámetros, $\mu$ y $\sigma$) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos.  Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar __pruebas no_paramétricas__.  
+
+### Prueba de Wilcoxon (_Wilcoxon Signed Rank Test_)    
+> Alternativa a la prueba _t_ pareada  
+
+Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no_paramétricas como sustituto a la prueba _t_ pareada.  La __prueba de Wilcoxon__ es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados.  Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:  
+$$W = \sum_{i=1}^{N_r}[sgn(x_{2,i} - x_{1,i})*R_i]$$
+dónde:  
+
+> $W$: estadístico de Wilcoxon  
+> $N_r$: tamaño de la muestra, excluyendo parejas con valores iguales  
+> $sgn$: función signo (extrae el signo de la diferencia)  
+> $x_{2,i} - x_{1,i}$: diferencia entre parejas de valores 
+> $R_i$: rango (orden) de las diferencias  
+
+El valor calculado se compara con un valor crítico de W para una probabilidad establecida.
+
+Los cálculos para usar la fórmula y realizar la prueba correspondiente son algo engorrosos, pero disponemos de procedimientos computacionales, como R, para realizarlos.  
+
+#### __Ejemplo__  
+Se piensa que las gatas se vuelven más agresivas al tener gatitos.  En un experimento se evaluó la agresividad de 7 gatas antes y después de que parieran.  La agresividad se midió mediante una escala entre 1 y 10, con 10 representando la mayor agresividad.  Estos datos no cumplen con la distribución normal y son pocos para obviar este requerimiento.  Queremos probar la hipótesis de si hay un aumento de la agresividad ($H_a:diferencia\ en\ agresividad > 0$).  
+
+```{r gatas}
+library(kableExtra)
+# vector agresividad x1
+x1 <- c(3,2,5,6,5,1,8)
+# vector agresividad x2
+x2 <- c(7,8,4,9,10,9,9)
+# vector diferencia x2 - x1
+dif <- x2 - x1
+# tabla de datos
+gatas <- data.frame(x1,x2,dif)
+# ver tabla
+names(gatas) <- c("Agresividad antes", "Agresividad después", "Diferencia")
+gatas %>%
+  kbl(caption = "Tabla 2. Agresividad antes y después de parir en gatas (n = 7) y la diferencia después - antes") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+Realizaremos la prueba para una $H_0 : diferencia \leq 0$ mediante R:
+```{r wilcsgn, message=FALSE, warning=FALSE}
+# prueba Wilcoxon (estado final x2, estado inicial x1)
+res <- wilcox.test(x2, x1, paired = TRUE, alternative = "greater")
+res
+```
+
+Podemos concluir de la prueba que podemos rechazar la $H_0$ con un error tipo I de 0.021, y que las gatas son más agresivas después de parir. 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 

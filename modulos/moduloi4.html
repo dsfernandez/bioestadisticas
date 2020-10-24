@@ -1792,6 +1792,26 @@ Donde:</p>
 <div id="ejercicio" class="section level4">
 <h4><strong>Ejercicio</strong></h4>
 <p>Se colectó una muestra de 20 individuos de <em>Gambusia affinis</em> (<em>mosquito fish</em>), y se les midió la longitud a cada uno. La longitud media de la muestra (<span class="math inline">\(\bar x\)</span>) fue 21.0 mm, y la desviación estándar de la muestra (<em>s</em>) fue 1.76 mm. Queremos encontrar el intervalo de 95% de confianza para la media poblacional. Asumimos que la longitud de los peces es una variable con distribución normal y que la muestra fue tomada al azar.</p>
+<p>A continuación el cálculo de los intervalos de confianza utilizando R; para el cálculo de la <em>t</em> se usa una probabilidad de error <span class="math inline">\(\alpha / 2\)</span> debido a que por definición el intervalo de confianza es a ambos lados de la curva de distribución y es simétrico con respecto a la media.</p>
+<pre class="r"><code># media de la muestra
+media &lt;- 21
+# desviación estándar de la muestra
+de &lt;- 1.76
+# tamaño de la muestra
+n &lt;- 20
+# cálculo del error para el intervalo con alfa/2
+# grados de libertad = n - 1
+# error estándar = de/raíz cuadrada de n
+error &lt;- qt(0.025,df = n-1, lower.tail = FALSE)*de / sqrt(n)
+# límite inferior (izquierdo) del intervalo
+left &lt;- media - error
+# límite superior (derecho) del intervalo
+right &lt;- media + error
+sprintf(&quot;Límite Inferior = %.2f&quot;, left)</code></pre>
+<pre><code>## [1] &quot;Límite Inferior = 20.18&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;Límite Superior = %.2f&quot;, right)</code></pre>
+<pre><code>## [1] &quot;Límite Superior = 21.82&quot;</code></pre>
+<p>La media de la población de encuentra dentro del intervalo 20.18 - 21.82, con una confianza de 95 %.</p>
 <p><br />
 </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
@@ -1824,7 +1844,18 @@ Donde:</p>
 </div>
 <div id="ejercicio-1" class="section level4">
 <h4><strong>Ejercicio</strong></h4>
-<p>Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándares de contenido de las sustancias activas de los mismos. Para un suplemento vitamínico está establecido que el contenido de vitamina X sea de un promedio de 100 unidades por píldora. Una bioquímica de la farmaceútica que las produce, toma una muestra de 50 píldoras de un lote de miles de píldoras. En su análisis encontró que la muestra tiene un contenido promedio de 100.5 unidades de vitamina X por píldora, con una desviación estándar de 2.16 unidades. Desea comprobar si la muestra se tomo de una población (el lote completo) con una media de 100 unidades.</p>
+<p>Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándares de contenido de las sustancias activas de los mismos. Para un suplemento vitamínico está establecido que el contenido de vitamina X sea de un promedio de 100 unidades por píldora. Una bioquímica de la farmaceútica que las produce, toma una muestra de 50 píldoras de un lote de miles de píldoras. En su análisis encontró que la muestra tiene un contenido promedio de 100.5 unidades de vitamina X por píldora, con una desviación estándar de 2.19 unidades. Desea comprobar si la muestra se tomo de una población (el lote completo) con una media de 100 unidades.</p>
+<p>Mediante R podemos calcular el valor del estadístico <em>t</em> y compararlo con el de la distribución <em>t</em> correspondiente para realizar la prueba de hipótesis <span class="math inline">\(H_0:\mu=100\)</span>:</p>
+<pre class="r"><code># cálculo de t
+tcalc &lt;- (100.5 - 100) / (2.19 / sqrt(50))
+# t de la distribución para alfa = 0.05 (dos colas) y gl = 49
+ttab &lt;- qt(0.025, 49, lower.tail = FALSE)
+# mostrar valores
+sprintf(&quot;t calculado para la muestra = %.3f&quot;, tcalc)</code></pre>
+<pre><code>## [1] &quot;t calculado para la muestra = 1.614&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;t para la distribución con 49 g.l. = %.3f&quot;, ttab)</code></pre>
+<pre><code>## [1] &quot;t para la distribución con 49 g.l. = 2.010&quot;</code></pre>
+<p>Por lo tanto, para nuestras condiciones, no podemos rechazar la hipótesis nula.</p>
 <p><br />
 </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
@@ -1840,6 +1871,9 @@ Donde:</p>
 </div>
 <div id="supuestos-de-la-prueba" class="section level3">
 <h3>Supuestos de la prueba</h3>
+<blockquote>
+<p>Normalidad y muestra aleatoria</p>
+</blockquote>
 <ul>
 <li>Las mediciones son continuas, o si son discretas tienen un ámbito amplio de valores.<br />
 </li>
@@ -2161,8 +2195,9 @@ diferencia
 <p>Ahora calcularemos el valor del estadístico <em>t</em> para nuestra muestra:<br />
 <span class="math display">\[t = \frac{2.685}{2.362\sqrt{20}} = 5.08\]</span></p>
 <p>Utilizando la tabla de la <em>t</em> de Student calculamos el valor crítico (umbral) de <em>t</em> para un <span class="math inline">\(\alpha\)</span> = 0.05, y <em>n</em> - 1 = 19 grados de libertad. De acuerdo a nuestras hipótesis, la prueba debe ser de una cola. También podemos utilizar la función correspondiente en R.</p>
-<pre class="r"><code>tumbral &lt;- qt(0.05, 19, lower.tail = FALSE)</code></pre>
-<p><span class="math inline">\(t_{0.05,19} =\)</span> 1.7291328</p>
+<pre class="r"><code>tumbral &lt;- qt(0.05, 19, lower.tail = FALSE)
+tcrit &lt;- sprintf(&quot;%.2f&quot;, tumbral)</code></pre>
+<p><span class="math inline">\(t_{0.05,19} =\)</span> 1.73</p>
 <p>El estadístico <em>t</em> calculado es mayor que el valor crítico de <em>t</em>, por lo tanto rechazamos la <span class="math inline">\(H_0\)</span> con una probabilidad menor de 0.05 de equivocarnos (error tipo I). La versión N del medicamento cura más rápidamente las quemaduras.</p>
 <p>Utilizando R podemos realizar un análisis gráfico del experimento.</p>
 <pre class="r"><code>library(PairedData)
@@ -2193,7 +2228,154 @@ res</code></pre>
 </div>
 <div id="supuestos-y-pruebas-no-paramétricas" class="section level2">
 <h2>2.4.5.Supuestos y Pruebas No-paramétricas</h2>
+<div id="objetivos-4" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer las alternativas cuando no se cumplen los supuestos para usar una prueba <em>t</em> </strong></p>
+<p>Los supuestos principales para las <strong>pruebas paramétricas</strong> (basadas en la distribución normal y sus parámetros, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos. Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar <strong>pruebas no_paramétricas</strong>.</p>
+</div>
+<div id="prueba-de-wilcoxon-wilcoxon-signed-rank-test" class="section level3">
+<h3>Prueba de Wilcoxon (<em>Wilcoxon Signed Rank Test</em>)</h3>
+<blockquote>
+<p>Alternativa a la prueba <em>t</em> pareada</p>
+</blockquote>
+<p>Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no_paramétricas como sustituto a la prueba <em>t</em> pareada. La <strong>prueba de Wilcoxon</strong> es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados. Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:<br />
+<span class="math display">\[W = \sum_{i=1}^{N_r}[sgn(x_{2,i} - x_{1,i})*R_i]\]</span> dónde:</p>
+<blockquote>
+<p><span class="math inline">\(W\)</span>: estadístico de Wilcoxon<br />
+<span class="math inline">\(N_r\)</span>: tamaño de la muestra, excluyendo parejas con valores iguales<br />
+<span class="math inline">\(sgn\)</span>: función signo (extrae el signo de la diferencia)<br />
+<span class="math inline">\(x_{2,i} - x_{1,i}\)</span>: diferencia entre parejas de valores <span class="math inline">\(R_i\)</span>: rango (orden) de las diferencias</p>
+</blockquote>
+<p>El valor calculado se compara con un valor crítico de W para una probabilidad establecida.</p>
+<p>Los cálculos para usar la fórmula y realizar la prueba correspondiente son algo engorrosos, pero disponemos de procedimientos computacionales, como R, para realizarlos.</p>
+<div id="ejemplo-3" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Se piensa que las gatas se vuelven más agresivas al tener gatitos. En un experimento se evaluó la agresividad de 7 gatas antes y después de que parieran. La agresividad se midió mediante una escala entre 1 y 10, con 10 representando la mayor agresividad. Estos datos no cumplen con la distribución normal y son pocos para obviar este requerimiento. Queremos probar la hipótesis de si hay un aumento de la agresividad (<span class="math inline">\(H_a:diferencia\ en\ agresividad &gt; 0\)</span>).</p>
+<pre class="r"><code>library(kableExtra)
+# vector agresividad x1
+x1 &lt;- c(3,2,5,6,5,1,8)
+# vector agresividad x2
+x2 &lt;- c(7,8,4,9,10,9,9)
+# vector diferencia x2 - x1
+dif &lt;- x2 - x1
+# tabla de datos
+gatas &lt;- data.frame(x1,x2,dif)
+# ver tabla
+names(gatas) &lt;- c(&quot;Agresividad antes&quot;, &quot;Agresividad después&quot;, &quot;Diferencia&quot;)
+gatas %&gt;%
+  kbl(caption = &quot;Tabla 2. Agresividad antes y después de parir en gatas (n = 7) y la diferencia después - antes&quot;) %&gt;%
+  kable_classic(full_width = F, html_font = &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2. Agresividad antes y después de parir en gatas (n = 7) y la diferencia después - antes
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Agresividad antes
+</th>
+<th style="text-align:right;">
+Agresividad después
+</th>
+<th style="text-align:right;">
+Diferencia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Realizaremos la prueba para una <span class="math inline">\(H_0 : diferencia \leq 0\)</span> mediante R:</p>
+<pre class="r"><code># prueba Wilcoxon (estado final x2, estado inicial x1)
+res &lt;- wilcox.test(x2, x1, paired = TRUE, alternative = &quot;greater&quot;)
+res</code></pre>
+<pre><code>## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  x2 and x1
+## V = 26.5, p-value = 0.02108
+## alternative hypothesis: true location shift is greater than 0</code></pre>
+<p>Podemos concluir de la prueba que podemos rechazar la <span class="math inline">\(H_0\)</span> con un error tipo I de 0.021, y que las gatas son más agresivas después de parir.</p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
 </div>
 </div>
 
