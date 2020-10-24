@@ -245,7 +245,7 @@ dónde:
 > $W$: estadístico de Wilcoxon  
 > $N_r$: tamaño de la muestra, excluyendo parejas con valores iguales  
 > $sgn$: función signo (extrae el signo de la diferencia)  
-> $x_{2,i} - x_{1,i}$: diferencia entre parejas de valores 
+> $x_{2,i} - x_{1,i}$: diferencia entre parejas de valores  
 > $R_i$: rango (orden) de las diferencias  
 
 El valor calculado se compara con un valor crítico de W para una probabilidad establecida.
