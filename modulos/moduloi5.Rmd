@@ -1,44 +1,48 @@
 ---
-title:
+title:  "Inferencias de las Medias de Dos Poblaciones"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
 ```
 
-# 2.5.Inferencias acerca de la Media de Dos Poblaciones
+# 2.5.Inferencias acerca de la Media de Dos Poblaciones  
 
-blabla  
+Una de las preguntas más comunes en biología es si dos poblaciones (o grupos) difieren de alguna manera.  En esta sección nos interesa saber si hay diferencias entre las medias de esas problaciones.  Un requisito para esta comparación es que las muestras de las poblaciones sean __independientes__, al contrario de lo que estudiamos en la sección anterior en el tema de las __muestras pareadas__.  
 
-## 2.5.1.Prueba t para Dos Muestras Independientes
+Estaremos examinando un procedimiento estadístico basado en la __prueba _t___, pero para muestras independientes, y su análogo no-paramétrico, la __prueba U de Mann-Whitney__.  También volveremos a calcular los intervalos de confianza para la diferencia entre dos medias, y exploraremos el __poder de una prueba__, aplicado a la prueba _t_.  
 
-bla  
-chunk  
+## 2.5.1.Prueba t para Dos Muestras Independientes  
+#### Objetivos  
+__Utilizar la prueba _t_ para probar hipótesis sobre la diferencia entre muestras independientes__  
+
+
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.5.2.Intervalo de Confianza para las Medias
 
-bla  
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.5.3.Supuestos y Pruebas No-paramétricas
 
-bla  
-chunk  
+  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 2.5.4.Poder de la Prueba
 
-bla  
-chunk  
+ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
