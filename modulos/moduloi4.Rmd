@@ -195,7 +195,7 @@ sprintf("Desviación estándar de las diferencias (días) = %.3f", dedif)
 ```
 
 Ahora calcularemos el valor del estadístico _t_ para nuestra muestra:  
-$$t = \frac{2.685}{2.362\sqrt{20}} = 5.08$$
+$$t = \frac{2.685 - 0}{\frac{2.362}{\sqrt{20}}} = 5.08$$
 
 Utilizando la tabla de la _t_ de Student calculamos el valor crítico (umbral) de _t_ para un $\alpha$ = 0.05, y _n_ - 1 = 19 grados de libertad.  De acuerdo a nuestras hipótesis, la prueba debe ser de una cola.    También podemos utilizar la función correspondiente en R.  
 ```{r tumbral}
