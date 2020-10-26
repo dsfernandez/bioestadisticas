@@ -161,7 +161,7 @@ Por lo tanto, para nuestras condiciones, no podemos rechazar la hipótesis nula.
 #### Objetivos  
 __Probar hipótesis en experimentos de comparaciones pareadas__  
 
-En el diseño de __comparaciones pareadas__ un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le un tratamiento y al otro no o uno diferente.   El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.  
+En el diseño de __comparaciones pareadas__ un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le da un tratamiento y al otro no o uno diferente.   El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.  
 
 ### Supuestos de la prueba  
 > Normalidad y muestra aleatoria  
@@ -233,12 +233,12 @@ res
 #### Objetivos  
 __Conocer las alternativas cuando no se cumplen los supuestos para usar una prueba _t_ __  
 
-Los supuestos principales para las __pruebas paramétricas__ (basadas en la distribución normal y sus parámetros, $\mu$ y $\sigma$) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos.  Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar __pruebas no_paramétricas__.  
+Los supuestos principales para las __pruebas paramétricas__ (basadas en la distribución normal y sus parámetros, $\mu$ y $\sigma$) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos.  Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar __pruebas no-paramétricas__.  
 
 ### Prueba de Wilcoxon (_Wilcoxon Signed Rank Test_)    
 > Alternativa a la prueba _t_ pareada  
 
-Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no_paramétricas como sustituto a la prueba _t_ pareada.  La __prueba de Wilcoxon__ es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados.  Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:  
+Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no-paramétricas como sustituto a la prueba _t_ pareada.  La __prueba de Wilcoxon__ es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados.  Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:  
 $$W = \sum_{i=1}^{N_r}[sgn(x_{2,i} - x_{1,i})*R_i]$$
 dónde:  
 

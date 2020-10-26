@@ -1944,7 +1944,7 @@ sprintf(&quot;t calculado para la muestra = %.3f&quot;, tcalc)</code></pre>
 <div id="objetivos-3" class="section level4">
 <h4>Objetivos</h4>
 <p><strong>Probar hipótesis en experimentos de comparaciones pareadas</strong></p>
-<p>En el diseño de <strong>comparaciones pareadas</strong> un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le un tratamiento y al otro no o uno diferente. El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.</p>
+<p>En el diseño de <strong>comparaciones pareadas</strong> un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le da un tratamiento y al otro no o uno diferente. El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.</p>
 </div>
 <div id="supuestos-de-la-prueba" class="section level3">
 <h3>Supuestos de la prueba</h3>
@@ -2308,14 +2308,14 @@ res</code></pre>
 <div id="objetivos-4" class="section level4">
 <h4>Objetivos</h4>
 <p><strong>Conocer las alternativas cuando no se cumplen los supuestos para usar una prueba <em>t</em> </strong></p>
-<p>Los supuestos principales para las <strong>pruebas paramétricas</strong> (basadas en la distribución normal y sus parámetros, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos. Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar <strong>pruebas no_paramétricas</strong>.</p>
+<p>Los supuestos principales para las <strong>pruebas paramétricas</strong> (basadas en la distribución normal y sus parámetros, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos. Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar <strong>pruebas no-paramétricas</strong>.</p>
 </div>
 <div id="prueba-de-wilcoxon-wilcoxon-signed-rank-test" class="section level3">
 <h3>Prueba de Wilcoxon (<em>Wilcoxon Signed Rank Test</em>)</h3>
 <blockquote>
 <p>Alternativa a la prueba <em>t</em> pareada</p>
 </blockquote>
-<p>Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no_paramétricas como sustituto a la prueba <em>t</em> pareada. La <strong>prueba de Wilcoxon</strong> es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados. Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:<br />
+<p>Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no-paramétricas como sustituto a la prueba <em>t</em> pareada. La <strong>prueba de Wilcoxon</strong> es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados. Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:<br />
 <span class="math display">\[W = \sum_{i=1}^{N_r}[sgn(x_{2,i} - x_{1,i})*R_i]\]</span> dónde:</p>
 <blockquote>
 <p><span class="math inline">\(W\)</span>: estadístico de Wilcoxon<br />

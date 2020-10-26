@@ -1816,7 +1816,7 @@ div.tocify {
 <span class="math inline">\(n_a,\ n_b\)</span>: son los tamaños de las muestras</p>
 </blockquote>
 <p>Para encontrar el valor crítico de <em>t</em>, para un <span class="math inline">\(\alpha\)</span> establecido, necesitamos conocer los grados de libertad. Para la distribución <em>t</em> a partir de dos muestras, y si las varianzas de las poblaciones son iguales (más adelante veremos una prueba para esto), los grados de libertad están dados por:<br />
-<span class="math display">\[gl = n_a + n_b -2\]</span> Usualmente no estamos segura/os de la igualdad de las varianzas, y en ese caso los grados de libertad se calculan mediante una fórmula compleja (no es problema al trabajar con R), pero una aproximación a la misma es la siguiente: <span class="math display">\[gl = menor\ \{n_a - 1, n_b - 1\}\]</span></p>
+<span class="math display">\[gl = n_a + n_b -2\]</span> Usualmente no estamos segura/os de la igualdad de las varianzas, y en ese caso los grados de libertad se calculan mediante una fórmula compleja (no es problema al trabajar con R), pero una aproximación a la misma es la siguiente: <span class="math display">\[gl \approx menor\ \{n_a - 1, n_b - 1\}\]</span></p>
 <p><br />
 </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
@@ -1864,9 +1864,9 @@ div.tocify {
 </tr>
 </tbody>
 </table>
-<p>Usualmente se debe comprobar antes la normalidad de la variable, pero en este caso la asumimos por información previa. Aantes de examinar los datos, debemos formular nuestra hipótesis para no sesgar la prueba:<br />
+<p>Usualmente se debe comprobar antes la normalidad de la variable, pero en este caso la asumimos por información previa. Antes de examinar los datos, debemos formular nuestra hipótesis para no sesgar la prueba:<br />
 <span class="math display">\[H_0 : \mu_A = \mu_B\]</span><br />
-<span class="math display">\[H_0 : \mu_A \neq \mu_B\]</span><br />
+<span class="math display">\[H_A : \mu_A \neq \mu_B\]</span><br />
 Vamos ahora a calcular el estadístico <em>t</em>:<br />
 <span class="math display">\[t = \frac{1.28 - 4.43}{\sqrt{\frac{0.112}{12} + \frac{7.072}{18}}} = -4.967\]</span><br />
 Dado que la distribución <em>t</em> es simétrica podemos usar el valor absoluto del estadístico calculado (4.967). Utilizando la tabla de la distribución <em>t</em> (o la función <strong>qt</strong> en R) obtenemos el valor crítico (umbral) de <em>t</em>; pero antes debemos decidir como calcular los grados de libertad. Dado que las varianzas parecen ser muy diferentes, utilizaremos la aproximación del menor valor de n - 1, en este caso 11.<br />

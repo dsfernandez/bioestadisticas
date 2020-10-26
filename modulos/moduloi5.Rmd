@@ -40,7 +40,7 @@ donde:
 Para encontrar el valor crítico de _t_, para un $\alpha$ establecido, necesitamos conocer los grados de libertad.  Para la distribución _t_ a partir de dos muestras, y si las varianzas de las poblaciones son iguales (más adelante veremos una prueba para esto), los grados de libertad están dados por:  
 $$gl = n_a + n_b -2$$
 Usualmente no estamos segura/os de la igualdad de las varianzas, y en ese caso los grados de libertad se calculan mediante una fórmula compleja (no es problema al trabajar con R), pero una aproximación a la misma es la siguiente:
-$$gl = menor\ \{n_a - 1, n_b - 1\}$$
+$$gl \approx menor\ \{n_a - 1, n_b - 1\}$$
 
 \
 
@@ -66,9 +66,9 @@ Queremos comparar mediciones de la razón largo/ancho (RLA) de pelos radiculares
 |$\bar x$|1.28|4.43|
 |$s^2$|0.112|7.072|
 
-Usualmente se debe comprobar antes la normalidad de la variable, pero en este caso la asumimos por información previa.  Aantes de examinar los datos, debemos formular nuestra hipótesis para no sesgar la prueba:  
+Usualmente se debe comprobar antes la normalidad de la variable, pero en este caso la asumimos por información previa.  Antes de examinar los datos, debemos formular nuestra hipótesis para no sesgar la prueba:  
 $$H_0 : \mu_A = \mu_B$$  
-$$H_0 : \mu_A \neq \mu_B$$  
+$$H_A : \mu_A \neq \mu_B$$  
 Vamos ahora a calcular el estadístico _t_:  
 $$t = \frac{1.28 - 4.43}{\sqrt{\frac{0.112}{12} + \frac{7.072}{18}}} = -4.967$$  
 Dado que la distribución _t_ es simétrica podemos usar el valor absoluto del estadístico calculado (4.967).  Utilizando la tabla de la distribución _t_ (o la función __qt__ en R) obtenemos el valor crítico (umbral) de _t_; pero antes debemos decidir como calcular los grados de libertad.  Dado que las varianzas parecen ser muy diferentes, utilizaremos la aproximación del menor valor de n - 1, en este caso 11.  
