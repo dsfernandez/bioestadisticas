@@ -97,7 +97,8 @@ Este resultado nos indica que estamos 95% segura/os de que la diferencia entre l
 La plataforma RStudio provee funciones de R para realizar la prueba _t_, intervalo de confianza, y las visualizaciones y cálculos de estadísticas básicas de dos variables.  
 
 #### __Ejercicio__  
-Queremos comparar las medias de la masa de dos muestras de semillas de la especie _Thespesia populnea_ (emajagüilla), tomadas de dos árboles ubicados en ambientes diferentes.  
+Queremos comparar las medias de la masa de dos muestras de semillas de la especie _Thespesia populnea_ (emajagüilla), tomadas en dos años.
+
 
 \
 
