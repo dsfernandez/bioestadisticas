@@ -71,9 +71,9 @@ donde:
 
 > $MS_{dentro}$ = media de la suma de cuadrados dentro de grupos  
 
-Estos estadísticos son una medidad de las respectivas varianzas, y su cálculo se detalla más adelante.  La distribución de probabilidades de la razón anterior, se denomina __distribución _F_ __, y se utiliza para pruebas de hipótesis como se usan la distribución _t_ y $\chi^2$.   
+Estos estadísticos son una medida de las respectivas varianzas, y su cálculo se detalla más adelante.  La distribución de probabilidades de la razón anterior, se denomina __distribución _F_ __, y se utiliza para pruebas de hipótesis como se usan la distribución _t_ y $\chi^2$.   
 
-Cuando los tratamientos (grupos) no tienen efecto en la respuesta, la varianza en el conjunto de los datos será similar a la varinza dentro de cada grupo; en este caso la razón que se calcula para el estadístico _F_ será cercana a 1.0.  Por el contrario, cuando hay un efecto importante de uno o más tratamientos, entonces _F_ >> 1.
+Cuando los tratamientos (grupos) no tienen efecto en la respuesta, la varianza en el conjunto de los datos será similar a la varianza dentro de cada grupo; en este caso la razón que se calcula para el estadístico _F_ será cercana a 1.0, o menor que 1.  Por el contrario, cuando hay un efecto importante de uno o más tratamientos, entonces _F_ >> 1.
 
 ### Obtención del Valor Crítico de _F_  
 > A partir de la tabla o mediante R  
