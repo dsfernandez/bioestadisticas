@@ -67,7 +67,8 @@ Para evaluar la hipótesis nula ($H_0:\mu_A = \mu_B = \mu_C = et c.$), debemos c
 $$F = \frac{varianza\ entre\ grupos}{varianza\ dentro\ grupos} = \frac{MS_{entre}}{MS_{dentro}}$$  
 donde:  
 
-> $MS_{entre}$ = media de la suma de cuadrados entre grupos
+> $MS_{entre}$ = media de la suma de cuadrados entre grupos  
+
 > $MS_{dentro}$ = media de la suma de cuadrados dentro de grupos  
 
 Estos estadísticos son una medidad de las respectivas varianzas, y su cálculo se detalla más adelante.  La distribución de probabilidades de la razón anterior, se denomina __distribución _F_ __, y se utiliza para pruebas de hipótesis como se usan la distribución _t_ y $\chi^2$.   
@@ -88,12 +89,27 @@ __Figura 2.__ Diagrama de la distribución _F_, mostrando la región de rechazo 
 
 Con la [Tabla de la Distribución _F_](https://drive.google.com/file/d/1NAnlk4PMiPgof4suSOBxY58inOT1B2Kt/view?usp=sharing) podemos calcular el valor crítico de _F_ para un nivel $\alpha$ (o _p_), y los grados de libertad del numerador (_k - 1_), y del denominador (_n - k_) del estadístico _F_.  
 
+El valor crítico de _F_ lo podemos obtener utilizando la función __qf__, o podemos obtener la probabilidad para un valor de _F_ usando __pf__.  Las funciones calculan los valores de probabilidades a la izquierda del valor _F_.
+```{r F}
+# valor crítico de F para valores de alfa, glNum, glDenom
+alfa <- 0.05
+glnum <- 5
+glden <- 2
+fcrit <- qf(1 - alfa, df1=glnum, df2=glden)
+# probabilidad para un valor de F
+fval <- 19.3
+pizq <- pf(fval, df1=glnum, df2=glden)
+sprintf("Valor de F_alfa,gln,gld = %.3f", fcrit)
+sprintf("Probabilidad a la izquierda de F = %.3f", pizq)
+```
+
 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.1.2.ANOVA de Una Vía con Efectos Fijos
+## 3.1.2.ANOVA de Una Vía con Efectos Fijos  
+
 
 
 
@@ -105,7 +121,7 @@ Con la [Tabla de la Distribución _F_](https://drive.google.com/file/d/1NAnlk4PM
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.1.4.Supuestos para el ANOVA y Remedios
+## 3.1.4.Supuestos para el ANOVA y Alternativas
 
  
 
