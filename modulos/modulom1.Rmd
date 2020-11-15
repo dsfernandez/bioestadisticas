@@ -103,27 +103,313 @@ sprintf("Valor de F_alfa,gln,gld = %.3f", fcrit)
 sprintf("Probabilidad a la izquierda de F = %.3f", pizq)
 ```
 
-
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.1.2.ANOVA de Una Vía con Efectos Fijos  
+#### Objetivos
+__Realizar los cálculos para una prueba de ANOVA de Una Vía con Efectos Fijos__  
 
+Este es probablemente el tipo más común de ANOVA, en el cual el factor de agrupamiento o tratamiento (variable categórica) es un __efecto fijo__.  Una de las ventajas de este tipo de diseño es su repetibilidad de manera exacta.  
 
+#### __Ejemplo 1__ 
+En una investigación, 19 cerdos jóvenes fueron asignados, al azar, a cuatro grupos experimentales.  Cada grupo se alimentó con una dieta diferente (D1, D2, D3, D4).  Luego de ser criados hasta adultos, se midió la masa corporal (kg) de cada animal.  Queremos saber si la masa corporal resultó ser igual ($H_0$) para las cuatro dietas. (Tomado de Zar, 2014).
 
+$$H_0: \mu_1 = \mu_2 = \mu_3 = \mu_4$$
+$$H_A: la\ masa\ promedio\ de\ los\ cerdos\ no\ resultó\ igual\ en\ todas\ las\ dietas.$$  
+
+```{r tabla.ejemplo1, echo=FALSE}
+library(kableExtra)
+# datos
+D1 <- c(60.8,67,65,68.6,61.7)
+D2 <- c(68.7,67.7,75,73.3,71.8)
+D3 <- c(69.6,77.1,75.2,71.5)
+D4 <- c(61.9,64.2,63.1,66.7,60.3)
+# lista
+cerdos <- list(Dieta_1 = D1, Dieta_2 = D2, Dieta_3 = D3, Dieta_4 = D4)
+# data frame
+cerditos <- as.data.frame(lapply(cerdos, `length<-`, max(sapply(cerdos, length))))
+cerditos %>% 
+  kable(caption = "Tabla 1. Efecto de cuatro dietas en la masa corporal (kg) de cerdos") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+### Cálculo de la variabilidad en forma de Suma de Cuadrados (SS)  
+> Fórmulas generales y rápidas de los estadísticos para el cálculo final de _F_  
+
+Para propósitos de cálculo del estadístico _F_ a ser usado para la prueba de hipótesis, se calculan los siguientes estimadores de la variabilidad total, dentro de grupos, y entre grupos:
+
+#### __Suma Total de Cuadrados (Total SS)__
+$$\sum_{i=1}^{k} \sum_{j=1}^{n_i}(y_{ij} - \bar{\bar y})^2$$
+
+#### __Suma de Cuadrados Dentro de Grupos (Within SS)__
+$$\sum_{i=1}^{k} \sum_{j=1}^{n_i}(y_{ij} - \bar y_i)^2$$
+
+#### __Suma de Cuadrados Entre Grupos (Between SS)__
+$$\sum_{i=1}^{k} \sum_{j=1}^{n_i}(\bar y_i - \bar{\bar y})^2$$  
+
+### Cálculo "rápido" de 'Between SS' y 'Within SS'
+
+$$Between\ SS = \sum_{i=1}^k n_i \bar y_{i}^2 - \frac{y..^2}{n}$$
+$$Within\ SS = \sum_{i=1}^k (n_i - 1)s_i^2$$
+
+donde:
+
+> $y..$ es la suma de todas las observaciones de todos los grupos.  
+> $k$, es el número de grupos.  
+> $n$, el número total de observaciones de todos los grupos.     
+> $s_i^2$, la varianza ( de la muestra) de cada grupo.    
+
+### Cálculo del estadístico _F_  
+> Primero debemos calcular 'Between MS' y 'Within MS':
+
+$$Between\ MS = \frac{Between\ SS}{k - 1}$$
+
+$$Within\ MS = \frac{Within\ SS}{n - k}$$
+
+y el estadístico F calculado:
+
+$$F = \frac{Between\ MS}{Within\ MS}$$
+
+La siguiente tabla resume los cálculos necesarios para obtener el estadístico _F_:  
+![(tomado de Rosner, 2016)](./imagenes/onewayanovaresults.png) 
+
+Una vez obtenido el estadístico _F_ con los datos, procedemos a buscar el valor crítico de _F_ para el nivel de significancia $\alpha$ establecido, con 
+_k - 1_ grados de libertad en el numerados y _n - k_ grados de libertad del denominador.  
+
+### Cálculos con los datos del Ejemplo 1  
+> Cálculos manuales con R (también se pueden realizar con Excel o calculadora científica) 
+
+```{r}
+# datos
+D1 <- c(60.8,67,65,68.6,61.7)
+D2 <- c(68.7,67.7,75,73.3,71.8)
+D3 <- c(69.6,77.1,75.2,71.5)
+D4 <- c(61.9,64.2,63.1,66.7,60.3)
+# lista
+cerdos <- list(Dieta_1 = D1, Dieta_2 = D2, Dieta_3 = D3, Dieta_4 = D4)
+# data frame
+cerditos <- as.data.frame(lapply(cerdos, `length<-`, max(sapply(cerdos, length))))
+library(kableExtra)
+#tamaño de muestra n_i
+n1 <- length(D1)
+n2 <- length(D2)
+n3 <- length(D3)
+n4 <- length(D4)
+df.n <- data.frame(n1,n2,n3,n4)
+kable(df.n, format = "markdown")
+#sumatoria de grupos i
+sumX1j <- sum(D1)
+sumX2j <- sum(D2)
+sumX3j <- sum(D3)
+sumX4j <- sum(D4)
+df.sumX <- data.frame(sumX1j,sumX2j,sumX3j,sumX4j)
+kable(df.sumX, format = "markdown")
+#media por grupo i
+Xbar1 <- mean(D1)
+Xbar2 <- mean(D2)
+Xbar3 <- mean(D3)
+Xbar4 <- mean(D4)
+df.Xbar <- data.frame(Xbar1,Xbar2,Xbar3,Xbar4)
+kable(df.Xbar, format = "markdown")
+#suma de todas las mediciones
+sumXij <- sum(df.sumX[1,])
+#número total de mediciones
+N <- sum(df.n[1,])
+#media global
+TotalXbar <- sumXij/N
+df.Total <- data.frame(sumXij,N,TotalXbar)
+kable(df.Total, format = "markdown")
+#varianza de grupos i
+varX1j <- var(D1)
+varX2j <- var(D2)
+varX3j <- var(D3)
+varX4j <- var(D4)
+df.varX <- data.frame(varX1j,varX2j,varX3j,varX4j)
+#Total SS
+TotalSS <- sum((cerditos - TotalXbar)^2, na.rm = TRUE)
+#Group SS
+GroupSS <- sum(df.n[1,]*(df.Xbar[1,]^2)) - (sumXij^2)/N
+#Error SS
+ErrorSS <- sum((df.n[1,] - 1)*df.varX[1,])
+df.SS <- data.frame(TotalSS,GroupSS,ErrorSS)
+kable(df.SS, format = "markdown")
+#grados de libertad y MS y F
+v.groups <- length(df.n) - 1
+v.error <- N - length(df.n)
+GroupMS <- GroupSS/v.groups
+ErrorMS <- ErrorSS/v.error
+Fcalc <- GroupMS/ErrorMS
+Falfa <- qf(0.95,v.groups,v.error)
+Pr <- 1 - pf(Fcalc,v.groups,v.error)
+df.prueba <- data.frame(v.groups,v.error,GroupMS,ErrorMS,Fcalc,Falfa,Pr)
+kable(df.prueba, format = "markdown")
+```
+
+> Cálculos con la función __aov__ de R  
+
+```{r aov}
+#data frame con factor Dieta
+df.cerdos <- data.frame(Dieta=c(rep("D1", times=length(D1)),
+                        rep("D2", times=length(D2)),
+                        rep("D3", times=length(D3)),
+                        rep("D4", times=length(D4))),
+                   masa=c(D1, D2, D3, D4))
+analisis <- aov(masa ~ Dieta, df.cerdos)
+summary(analisis)
+```
+
+En conclusión, al resultar un valor de _F_ calculada mayor que el valor de _F_ crítico, para $\alpha = 0.05$, podemos rechazar la hipótesis nula de igualdad de medias entre los cuatro tratamientos.  Igualmente, la prueba con la función __aov__ en R, mostró una probabilidad de error tipo I menor que el nivel de significancia de $\alpha = 0.05$, por lo cual podemos rechazar la $H_0$.
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.1.3.Comparaciones Múltiples
+## 3.1.3.Comparaciones Múltiples  
+#### Objetivos  
+__Determinar el o los tratamientos que difieren entre sí__
 
+### Pruebas _post-hoc_
+El análisis de varianza nos indica, para cierto nivel de probabilidad, si un factor (o más de uno) produce desviaciones de un valor medio global; sin embargo no nos indica cuál o cuáles niveles del factor son los determinantes en la desviación.
 
+### Gráfica con intervalos de confianza  
+Mediante la siguiente gráfica, de medias e intervalos de confianza (95%), podemos hipotetizar cuáles dietas son diferentes entre sí y cuáles no.
+```{r icplot}
+library(plyr)
+library(ggplot2)
+ic.dietas <- ddply(df.cerdos, "Dieta", plyr::summarize,
+                   masa.mean=mean(masa), masa.sd=sd(masa),
+                   Lenght=NROW(masa),
+                   tfrac=qt(p=.95, df=Lenght-1),
+                   Lower=masa.mean - tfrac*masa.sd/sqrt(Lenght),
+                   Upper=masa.mean + tfrac*masa.sd/sqrt(Lenght)
+                   )
+ggplot(ic.dietas, aes(x=masa.mean, y=Dieta)) + geom_point() + geom_errorbarh(aes(xmin=Lower, xmax=Upper), height=.3)
+```
+
+### Prueba de Tukey
+
+Para poder determinar si las diferencias específicas entre los niveles de los factores son significativas, debemos utilizar las llamadas __pruebas _post-hoc_ __ o __procedimientos de comparaciones múltiples (MCP)__.
+
+Utilizaremos la __prueba de Tukey__ para probar cuáles son las dietas del Ejemplo que se diferencian entre si.
+```{r tukey, message=FALSE}
+library(agricolae)
+posthoc <- TukeyHSD(analisis)
+posthoc
+par(cex = 0.6)
+plot(posthoc)
+```
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.1.4.Supuestos para el ANOVA y Alternativas
+## 3.1.4.Supuestos para el ANOVA y Alternativas  
+#### Objetivos  
+__Determinar el cumplimiento de los supuestos para el ANOVA y conocer las alternativas de pruebas de hipótesis cuando no se cumplen__  
 
- 
+La prueba de ANOVA, al igual que la prueba t, asume una distribución normal de los datos, y _homocedasticidad_ (homogeneidad de varianzas).  Por lo tanto, antes de continuar con otras pruebas es importante primero determinar si los datos cumplen con estos supuestos.
+
+### Prueba de normalidad  
+> La conocida prueba de Shapiro-Wilk  
+
+A continuación examinaremos gráficamente si los datos tienen una distribución normal, usando una _gráfica de cuantiles-cuantiles_ ('Q-Q plot'):
+```{r qqplotanova, message=FALSE}
+library(EnvStats)
+qqPlot(df.cerdos$masa, add.line = TRUE, points.col = "blue", line.col = "red", )
+```
+
+A continuación la __prueba de Shapiro-Wilk__ para normalidad, con una hipótesis nula de que los datos se ajustan a la distribución normal:
+```{r SWnormal}
+shapiro.test(df.cerdos$masa)
+```
+
+No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos tienen una distribución normal.
+
+### Homogeneidad de varianza  
+> Prueba de Bartlett
+
+Para la homogeneidad de varianza realizamos la __prueba de Bartlett__, que tiene una hipótesis nula de varianzas iguales:
+```{r bartletthomogeneidad}
+bartlett.test(masa ~ Dieta, data=df.cerdos)
+```
+
+No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos por grupo tienen homogeneidad de varianza.
+
+### Remedios cuando no se cumplen los supuestos  
+> Transformaciones  
+
+Un posible remedio en el caso de que no se cumpla alguno de los supuestos anteriores, es el procedimiento de __transformación__, el cual envuelve realizar una operación matemática en todos y cada uno de los datos.  A continuación algunos ejemplos comunes de transformaciones; _x_ se refiere al valor a transformar, y _x'_ al valor transformado.  
+
+1. __Transformación Logarítmica__  
+Se usa a menudo en ANOVA y regresión (veremos más adelante) y puede servir para corregir cuando no se cumple la homogeneidad de varianza.  Se utilizan logaritmos naturales o base 10, y cuando hay ceros en los datos, se añade 1:  
+$$x' = log(x + 1)$$  
+
+2. __Transformación Raíz Cuadrada__  
+Utilizada cuando los datos son conteos (valores enteros), y puede corregir falta de cumplimiento con la normalidad y/o la homogeneidad de la varianza:  
+$$x' = \sqrt x$$  
+
+3. __Transformación Arcoseno de la Raíz Cuadrada__  
+Las proporciones o porcentajes tienden a ser no-normales, con colas comprimidas.  La función __arcoseno__ ($sin^{-1}$) se puede utilizar en ambos casos:  
+
+* para proporciones:  
+$$x' = arcsin(\sqrt{x})$$  
+
+* para porcentajes:  
+$$x' = arcsin(\sqrt{x/100})$$ 
+
+Luego de realizar la transformación que corresponda a los datos, se vuelven a realizar las pruebas de los supuestos, y si se cumplen se puede realizar el procedimiento de ANOVA y probar la hipótesis.  Si al final se quieren mostrar los valores en su escala original, se realiza una tranformación inversa.
+
+### Alternativa No-Paramétrica al ANOVA de Una Vía  
+> La prueba de Kruskal-Wallis  
+
+Cuando las transformaciones no proveen una solución a la falta de normalidad, ni a la heterogeneidad de varianzas de los grupos, existen alternativas no-paramétricas como la __prueba de Kruskal-Wallis__.  Al igual que otras pruebas no-paramétricas, como Wilcoxon o U-Mann-Whitney, los datos se ordenan de menor a mayor en cada grupo y se les asigna un rango empezando por uno, y cuando los valores son iguales, se les asigna un rango equivalente al promedio de los rangos que les correspondería si fueran diferentes.  
+
+__Ejemplo 2__  
+En la siguiente tabla se muestran los valores de tiempo de copulación (segundos) de parejas de saltamontes machos y hembras, sometidos a cuatro tratamientos (A, B, C, D).  Queremos determinar si los tratamientos determinan tiempos diferentes de copulación en los saltamontes; la $H_0$ sería que no hay ningún efecto diferencial de los tratamientos en los tiempos de copulación.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(kableExtra)
+library(dplyr)
+# leer datos
+saltam <- read.csv("./data/Table 11.10.csv")
+# seleccionar tratamientos
+tabla_salta <- saltam[ ,c("Treatment","time")]
+Trat_A <- subset(tabla_salta, Treatment == 'A', select=time)
+Trat_B <- subset(tabla_salta, Treatment == 'B', select=time)
+Trat_C <- subset(tabla_salta, Treatment == 'C', select=time)
+Trat_D <- subset(tabla_salta, Treatment == 'D', select=time)
+# crear tabla
+trat_salta <- data.frame(Trat_A,Trat_B,Trat_C,Trat_D)
+trat_salta <- setNames(trat_salta, c("Trat A", "Trat B", "Trat C", "Trat D"))
+trat_salta %>% 
+  kable(caption = "Tabla 2. Tiempo (segundos) de copulación de parejas de saltamontes en cuatro tratamientos") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+Estos datos no cumplen con los supuestos de normalidad ni homogeneidad de varianza, pero la hipótesis nula sobre la no diferencia entre los tratamientos puede ser probada con la prueba no-paramétrica Kruskal-Wallis.   Luego de ordenar los datos y asociarles un valor de rango, según las reglas indicadas, podemos calcular el estadístico de la prueba, conocido como _H_:  
+$$H = \frac{12}{n_t(n_t + 1)}(\sum \frac{(\sum R_i)^2}{n_i}) - 3(n_t + 1))$$
+
+donde:  
+
+> $R_i$: rango de cada valor en grupo _i_  
+> $n_t$: número total de mediciones  
+> $n_i$: número de mediciones en el grupo _i_  
+
+Para probar la significancia de _H_ se utiliza la distribución $\chi^2$ con un número de grados de libertad del número de grupos menos 1. 
+
+Con los datos del ejemplo se obtiene un valor de _H_ = 14.273, y el valor crítico de $\chi^2$ para $\alpha$ = 0.05, y grados de libertad = 4 - 1, es de 7.81, por lo tanto podemos rechazar la $H_0$.  Podemos concluir que el tiempo promedio (mediana) de cópula de las parejas de saltamonte resulto ser diferente en al menos uno de los tratamientos.
+
+Utilizando R podemos realizar la prueba mediante la función __kruskal.test__.
+
+```{r kruskal}
+kruskal.test(time ~ Treatment, data = tabla_salta)
+```
+
+\ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
