@@ -177,7 +177,7 @@ La siguiente tabla resume los cálculos necesarios para obtener el estadístico 
 ![(tomado de Rosner, 2016)](./imagenes/onewayanovaresults.png) 
 
 Una vez obtenido el estadístico _F_ con los datos, procedemos a buscar el valor crítico de _F_ para el nivel de significancia $\alpha$ establecido, con 
-_k - 1_ grados de libertad en el numerados y _n - k_ grados de libertad del denominador.  
+_k - 1_ grados de libertad en el numerador y _n - k_ grados de libertad del denominador.  
 
 ### Cálculos con los datos del Ejemplo 1  
 > Cálculos manuales con R (también se pueden realizar con Excel o calculadora científica) 
