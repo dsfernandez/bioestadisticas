@@ -1,44 +1,65 @@
 ---
-title:
+title:  "Análisis de Correlación"
 output:
   html_document:
+    css: !expr here::here("styles/styles.css")
     toc: true
+    toc_depth:  3
     toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
 ```
 
-# 3.2.Análisis de Correlación
+# 3.2.Análisis de Correlación  
+A partir de esta sección estaremos considerando relaciones entre variables de una muestra o población, mediciones de atributos diferentes en un mismo sujeto u objeto.  Ejemplos de estas relaciones:  
 
-blabla  
+* relación entre presión alta y riesgo de accidente cerebrovascular;  
+* tamaño de lagartijas hembras y la cantidad de huevos producidos;  
+* asociación entre presencia de compuestos tóxicos y la cantidad de descargas a cuerpos de agua.  
 
-## 3.2.1.Asociación o Modelo
+A modo de comparación con otras pruebas que ya hemos tratado:  
 
-bla  
-chunk  
+* en la prueba _t_ y el ANOVA, una variable es categórica (tratamientos, por ejemplo) y la otra es de mediciones (discreta o continua);  
+* en la prueba $\chi^2$, ambas variables son categóricas;  
+* en la correlación, ambas variables son mediciones continuas.  
+
+## 3.2.1.Asociación o Modelo  
+### Objetivos  
+__Distinguir entre una asociación entre variables y una relación causa-efecto.__  
+
+Al probar la posible relación entre variables, es importante distinguir entre dos métodos muy utilizados en el análisis estadístico: el análisis de correlación y el análisis de regresión.  
+
+En el __análisis de correlación__ solamente nos interesa conocer si existe una asociación entre dos variables de mediciones.  Con el __análisis de regresión__ queremos modelar la dependencia de una variable respuesta (dependiente) en una variable predictora (independiente).  
+
+En el análisis de correlación estamos interesado/as en investigar si existe un patrón de asociaciones entre variables, por lo tanto es mayormente una herramienta descriptiva.  Es muy útil para seleccionar variables a considerar en estudios que pudieran ser muy complejos si se consideran todas las variables desde un principio.  
+
+En el análisis de correlación nos hacemos las siguientes preguntas:  
+
+1. ¿Están dos variables de mediciones relacionadas de alguna manera consistente y lineal, y si es así, en cuál dirección?  
+2. ¿Qué tan fuerte es la relación? (La fuerza de una correlación está dada por cuán cerca el cambio en una variable covaría con la otra.)  
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.2.2.Coeficiente de Correlación de Pearson
 
-bla  
-chunk  
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.2.3.Matriz de Correlación
 
-bla  
-chunk  
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.2.4.Correlación No-paramétrica
 
-bla  
-chunk  
+\ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 

@@ -413,12 +413,14 @@ kruskal.test(time ~ Treatment, data = tabla_salta)
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.1.5.Otros Diseños de ANOVA
+## 3.1.5.Otros Diseños de ANOVA  
 
-efectos aleatorios
-ANOVA con dos factores
-ANOVA con repeticiones
-ANCOVA
+* Efectos Aleatorios  
+* Diseño de Bloques Aleatorizados  
+* ANOVA con dos factores  
+* ANOVA con repeticiones  
+* ANCOVA  
+* MANOVA
  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
