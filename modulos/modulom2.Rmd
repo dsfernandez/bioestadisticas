@@ -27,7 +27,7 @@ A modo de comparación con otras pruebas que ya hemos tratado:
 * en la correlación, ambas variables son mediciones continuas.  
 
 ## 3.2.1.Asociación o Modelo  
-### Objetivos  
+#### Objetivos  
 __Distinguir entre una asociación entre variables y una relación causa-efecto.__  
 
 Al probar la posible relación entre variables, es importante distinguir entre dos métodos muy utilizados en el análisis estadístico: el análisis de correlación y el análisis de regresión.  
@@ -39,20 +39,181 @@ En el análisis de correlación estamos interesado/as en investigar si existe un
 En el análisis de correlación nos hacemos las siguientes preguntas:  
 
 1. ¿Están dos variables de mediciones relacionadas de alguna manera consistente y lineal, y si es así, en cuál dirección?  
-2. ¿Qué tan fuerte es la relación? (La fuerza de una correlación está dada por cuán cerca el cambio en una variable covaría con la otra.)  
+2. ¿Qué tan fuerte es la relación? (La fuerza de una correlación está dada por cuán cerca el cambio en una variable covaría con la otra.)    
 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.2.2.Coeficiente de Correlación de Pearson
+## 3.2.2.Coeficiente de Correlación de Pearson  
+#### Objetivos  
+__Calcular el coeficiente de correlación de Pearson y probar su significancia__  
+
+La medida de la fuerza de la relación entre dos variables es el __coeficiente de correlación__.  El más comúnmente utilizado es el __coeficiente de correlación de Pearson__, representado por la letra griega $\rho$, cuando se trata del valor teórico de la población completa de datos.  Como usualmente no tenemos todos los valores de una población, sino una muestra, en este caso se usa la letra _r_.  
+
+### Supuestos para el Análisis de Correlación de Pearson  
+
+1. Es una __muestra aleatoria__ de la población.  
+2. Cada variable es de mediciones continuas y juntas poseen una __distribución normal bivariada__.  
+3. La relación entre las variables, si existe, es __lineal__.  
+
+```{r}
+library (bivariate)
+f <- nbvpdf (0, 0, 1, 1, 0)
+plot(f)
+```
+
+__Figura 1.__ Distribución Normal Bivariada.  
+
+\
+
+### El Coeficiente de Correlación de Pearson    
+
+La fórmula para calcular el coeficiente _r_ de una muestra con dos variables es la siguiente:   
+$$r = \frac{\sum xy - (\frac{\sum x \sum y}{n})}{\sqrt{(\sum x^2 - \frac{(\sum x)^2}{n})(\sum y^2 - \frac{(\sum y)^2}{n})}}$$
+
+dónde:  
+
+> $x$ y $y$ son los valores en pareja de las variables,  
+> $n$ es el número de pares $xy$  
+
+El numerador de la fórmula anterior es la __covarianza__ y puede ser positiva o negativa, mientras que el denominador, que es la raíz cuadrada de las suma de cuadrados de cada variable, es siempre positivo.  El valor de _r_ (estimador de $\rho$) puede estar entre 0 (no hay correlación) y +1 (perfecta correlación) cuando la relación es positiva y entre 0 y -1 cuando es negativa.  
+
+### Cálculo de _r_  
+> Método manual y usando R  
+
+__Ejemplo 1__  
+Vamos a calcular el coeficiente de correlación de Pearson, para la posible relación lineal entre la longitud del ala (cm) de un especie de ave, y el largo de su cola (cm).  
+
+```{r calculor}
+library(kableExtra)
+#datos
+ala <- c(10.4,10.8,11.1,10.2,10.3,10.2,
+         10.7,10.5,10.8,11.2,10.6,11.4)
+cola <- c(7.4,7.6,7.9,7.2,7.4,7.1,
+          7.4,7.2,7.8,7.7,7.8,8.3)
+#cálculos de sumatorias
+n <- length(ala)
+##X
+sumXi <- sum(ala)
+sumXi2 <- sum(ala^2)
+sumx2 <- sumXi2 - ((sumXi)^2)/n
+##Y
+sumYi <- sum(cola)
+sumYi2 <- sum(cola^2)
+sumy2 <- sumYi2 - ((sumYi)^2)/n
+#XY
+sumXiYi <- sum(ala*cola)
+sumxy <- sumXiYi - (sumXi*sumYi)/n
+#tablas de resultados parciales
+SumX <- data.frame(sumXi,sumYi2,sumx2)
+SumY <- data.frame(sumYi,sumYi2,sumy2)
+SumXY <- data.frame(sumXiYi,sumxy)
+kable(SumX, format = "markdown", col.names = c("Sumatoria  X","Sumatoria X^2", "Suma Cuadrados X"))
+kable(SumY, format = "markdown", col.names = c("Sumatoria  Y","Sumatoria Y^2", "Suma Cuadrados Y"))
+kable(SumXY, format = "markdown", col.names = c("Sumatoria XY", "Covarianza XY"))
+#Coeficiente de Correlación
+coefcorr <- sumxy/sqrt(sumx2*sumy2)
+sprintf("r = %.3f", coefcorr)
+```
+
+Mediante R podemos obtener una gráfica de la distribución bivariada de los datos de la muestra, con la elipse del intervalo de confianza conjunto.  La función __cor__ calcula el valor del coeficiente de correlación de Pearson (y otros).
+```{r graficapuntos}
+library(ggplot2)
+# datos
+ala <- c(10.4,10.8,11.1,10.2,10.3,10.2,
+         10.7,10.5,10.8,11.2,10.6,11.4)
+cola <- c(7.4,7.6,7.9,7.2,7.4,7.1,
+          7.4,7.2,7.8,7.7,7.8,8.3)
+# gráficas
+scatter <- data.frame(ala,cola)
+ggplot(scatter, aes(ala, cola)) +
+  geom_point() +
+  stat_ellipse(type = "t", level = 0.95, color = "blue") +
+  stat_ellipse(type = "norm", linetype = 2)
+```
+
+__Figura 2.__  Codistribución de las variables longitud del ala (cm) y longitud de la cola (cm) en una especie de ave.  La elipse azul indica el intervalo de confianza 95% multivariado con distribución _t_ y la línea cortada el intevalo de confianza 95% multivariado con distribución normal.
+
+```{r}
+# cálculo coeficiente correlación
+rpearson <- cor(ala, cola, method = "pearson")
+sprintf("Coeficiente de Correlación de Pearson: %.3f", rpearson)
+```
+
+### Probando la Significancia de _r_  
+
+El coeficiente de correlación, _r_, es un estimador del parámetro poblacional $\rho$.  Podemos preguntarnos si ciertamente existe una correlación entre los valores X y los valores Y de la población, y probar $H_0: \rho=0$.  
+
+Una manera directa de hacerlo es utilizando una [tabla de valores críticos de](https://drive.google.com/open?id=1Tl2dawvLUybhoX3ePY66snMhLeVU2yEY) _r_, con n - 2 grados de libertad ($\nu$).  Estos valores, en realidad, se basan en el estadístico _t_, mediante la fórmula:
+$$r_{\alpha,\nu} = \sqrt \frac{t_{\alpha,\nu}^2}{t_{\alpha,\nu}^2 + \nu}$$
+
+Para nuestro ejemplo el valor crítico de _r_ para $\alpha$ = 0.05 (dos colas, según nuestra hipótesis) y $\nu$ = 10, es 0.576.  Al compararlo con el valor estimado de _r_ = 0.876, podemos concluir que rechazamos la $H_0$ y decir que existe alguna relación entre las dos variables.  Debo resaltar que esta relación no es necesariamente una de causa y efecto o dependencia de una en particular en la otra.  
+
+Mediante R podemos calcular el valor crítico de _r_:  
+```{r rcritico}
+#valor crítico para r usando una función
+#basada en la fórmula r_alfa,nu
+critical.r <- function( n, alpha) {
+  df <- n - 2
+  critical.t <- qt(alpha/2, df, lower.tail = F)
+  critical.r <- sqrt( (critical.t^2) / ( (critical.t^2) + df ) )
+  return(critical.r)
+}
+#en nuestro caso n = 12, alfa = 0.05 (dos colas)
+rcrit <- critical.r(12,0.05)
+sprintf("valor crítico de r(0.05,10) = %.3f", rcrit)
+```
+
+También podemos realizar la prueba completa en R, utilizando la función __cor.test__:
+
+```{r corrtest}
+cor.test(ala, cola, method="pearson")
+```
 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.2.3.Matriz de Correlación
+## 3.2.3.Matriz de Correlación  
+#### Objetivos  
+__Producir una matriz de coeficientes de correlación entre múltiples variables y evaluar su significancia__  
 
+En muchos estudios exploratorios, con múltiples variables medidas al mismo tiempo, deseamos calcular todos los posibles valores de _r_ para probar la asociación entre las variables.  Esto se puede realizar utilizando programas o paquetes estadísticos que producen una matriz con los resultados del cálculo de todos los posibles valores de _r_.  
+
+__Ejemplo 2.__  
+Vamos a explorar la posible relación entre variables socio-económicas y de salud pública en 53 ciudades pequeñas de Estados Unidos.  Las variables a considerar son:  
+
+> _death1K_: mortalidad por 1000 habitantes  
+> _doctor100K_: cantidad de doctores por 100000 habitantes  
+> _hosp100K_: camas de hospitales por 100000 habitantes  
+> _income1K_: ingreso per capita en miles de dólares  
+> _density_: densidad poblacional, habitantes por milla cuadrada  
+
+Utilizando la función __cor__ aplicada a una matriz de datos (en realidad un _data.frame_) vamos a crear la matriz de correlaciones.  
+```{r matricorr}
+# leer datos desde Excel
+library(readxl)
+small_city <- read_excel("./data/death_small_cities.xlsx", 
+    sheet = "data")
+head(small_city)
+coef1 <- cor(small_city, method = "pearson")
+round(coef1, 2)
+```
+
+También podemos obtener el valor de _P_ (probabilidad) de cada coeficiente para comparar con el valor establecido de $\alpha$ y decidir si se acepta o no la $H_0$. Usamos en este caso la función __rcorr__ del paquete _Hmisc_. 
+```{r signifr, message=FALSE, warning=FALSE}
+library(Hmisc)
+coef2 <- rcorr(as.matrix(small_city), type = "pearson")
+coef2
+```
+
+Cuando se realizan múltiples pruebas independientes el error tipo I se incrementa según el número de pruebas.  Una manera de solucionar este problema es dividir $\alpha$ entre el número de pruebas independientes.  Para calcular este número usamos esta fórmula:  
+$$Num.\ pruebas\ independientes = \frac{(Num.\ variables)^2 - Num.\ variables}{2}$$
+
+En este caso el número de pruebas independientes es de:  
+$$Num.\ pruebas\ independientes = \frac{5^2 - 5}{2} = 10$$
+Por lo tanto el valor de $\alpha$ ajustado para este caso es: 0.05/10 = 0.005.  Revisando los resultados de la correlación múltiple, solo las variables ingreso _per capita_ y doctores por 100000 habitantes estean relacionadas significativamente. 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
