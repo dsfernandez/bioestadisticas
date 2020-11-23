@@ -1320,6 +1320,230 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>$(document).ready(function(){
+    if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+    if ($('[data-toggle="popover"]').popover === 'function') {
+        $('[data-toggle="popover"]').popover();
+    }
+});
+</script>
+<style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+border-bottom: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -1845,15 +2069,402 @@ coef2</code></pre>
 <p>Cuando se realizan múltiples pruebas independientes el error tipo I se incrementa según el número de pruebas. Una manera de solucionar este problema es dividir <span class="math inline">\(\alpha\)</span> entre el número de pruebas independientes. Para calcular este número usamos esta fórmula:<br />
 <span class="math display">\[Num.\ pruebas\ independientes = \frac{(Num.\ variables)^2 - Num.\ variables}{2}\]</span></p>
 <p>En este caso el número de pruebas independientes es de:<br />
-<span class="math display">\[Num.\ pruebas\ independientes = \frac{5^2 - 5}{2} = 10\]</span> Por lo tanto el valor de <span class="math inline">\(\alpha\)</span> ajustado para este caso es: 0.05/10 = 0.005. Revisando los resultados de la correlación múltiple, solo las variables ingreso <em>per capita</em> y doctores por 100000 habitantes estean relacionadas significativamente.<br />
+<span class="math display">\[Num.\ pruebas\ independientes = \frac{5^2 - 5}{2} = 10\]</span> Por lo tanto el valor de <span class="math inline">\(\alpha\)</span> ajustado para este caso es: 0.05/10 = 0.005. Revisando los resultados de la correlación múltiple, solo las variables ingreso <em>per capita</em> y doctores por 100000 habitantes están relacionadas significativamente.<br />
 </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
 </div>
 </div>
 <div id="correlación-no-paramétrica" class="section level2">
 <h2>3.2.4.Correlación No-paramétrica</h2>
+<div id="objetivos-3" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Realizar pruebas no-paramétricas de correlación, cuando no se cumple el supuesto de normalidad bivariada.</strong></p>
+<p>Cuando alguno de los datos se encuentra en una escala ordinal, o los supuestos de la correlación paramétrica (normalidad bivariada) no se cumplen, se puede usar una prueba no-paramétrica; la <strong>correlación de rangos de Spearman</strong>. La hipótesis nula es la misma que en la correlación de Pearson: no hay asociación entre las dos variables.</p>
+</div>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Tenemos los datos de la masa (g) de 13 tuataras (<em>Hatteria punctata</em>, reptil) adultos machos y del tamaño (<span class="math inline">\(m^2\)</span>) de sus respectivos territorios. Queremos saber si hay una asociación entre la masa de los reptiles y el territorio que ocupan, queremos probar la hipótesis de que animales meas grandes (masa) defienden territorios más grandes (área). Las mediciones de las variables no tienen distribución normal y no son muchos para obviar esta violación del supuesto.</p>
+</div>
+<div id="cálculo-del-coeficiente-de-correlación-de-spearman-n" class="section level3">
+<h3>Cálculo del Coeficiente de Correlación de Spearman (<em>n</em>)</h3>
+<blockquote>
+<p>Rango y diferencias de rango entre las variables</p>
+</blockquote>
+<p>Para calcular el <em>r</em> de Spearman:</p>
+<ol style="list-style-type: decimal">
+<li>Colocar un número de rango (<em>Rx</em> y <em>Ry</em>) para cada valor de las variables masa y territorio (cada una por separado).<br />
+</li>
+<li>Restar <em>Rx</em> - <em>Ry</em> (<em>d</em>) y elevarlo al cuadrado (<span class="math inline">\(d^2\)</span>).<br />
+</li>
+<li>Sumar los valores de <span class="math inline">\(d^2\)</span>, <span class="math inline">\(\sum d^2\)</span>.<br />
+</li>
+<li>Calcular la <em>r</em> de Spearman (<span class="math inline">\(r_s\)</span>):<br />
+<span class="math display">\[r_s = 1 - (\frac{6*\sum d^2}{n*(n^2 - 1)})\]</span></li>
+</ol>
+<pre class="r"><code>library(kableExtra)
+# datos
+tuatara &lt;- read.csv(&quot;./data/tuatara.txt&quot;, sep = &quot;&quot;)
+# tabla
+tuatara %&gt;% 
+  kable(caption = &quot;Tabla 1. Masa (g) de tuataras machos adultos (n = 13) y tamaño de su territorio (m2).  Rx y Ry representan el número de rango de los datos de cada variable ordenados de menor a mayor; d d.2 es la diferencia de rangos (Rx - Ry) para cada individuo y su cuadrado.&quot;) %&gt;%
+  kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Masa (g) de tuataras machos adultos (n = 13) y tamaño de su territorio (m2). Rx y Ry representan el número de rango de los datos de cada variable ordenados de menor a mayor; d d.2 es la diferencia de rangos (Rx - Ry) para cada individuo y su cuadrado.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+tuatara
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+Rx
+</th>
+<th style="text-align:right;">
+territory
+</th>
+<th style="text-align:right;">
+Ry
+</th>
+<th style="text-align:right;">
+d
+</th>
+<th style="text-align:right;">
+d.2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6.9
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+773
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+20.6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+840
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+17.2
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+505
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6.7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+765
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+20.0
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+780
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+24.1
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+-3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+235
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+790
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+13.8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+440
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+435
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+815
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+460
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+697
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+10.3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p>Para el ejemplo tenemos que:</p>
+<blockquote>
+<p><span class="math inline">\(\sum d^2\)</span> = 50<br />
+<span class="math inline">\(r_s\)</span> = 0.863</p>
+</blockquote>
+<p>Evaluamos la <span class="math inline">\(H_0:r_s = 0\)</span> utilizando la <a href="https://drive.google.com/file/d/1QySNDiwN4MvBE3hh0EUBZUuLdLpYKmMT/view?usp=sharing">Tabla de Valores Críticos para el Coeficiente de Correlación de Spearman</a>. El valor de <span class="math inline">\(r_{s,0.05,13}\)</span> es 0.560, por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span> para <span class="math inline">\(\alpha\)</span> = 0.05. En los tuataras macho la masa corporal está correlacionada con el área del territorio que ocupan.</p>
+</div>
+<div id="prueba-de-r_s-utilizando-r" class="section level3">
+<h3>Prueba de <span class="math inline">\(r_s\)</span> utilizando R</h3>
+<p>Utilizamos la función <strong>cor.test</strong> especificando que el método es el <span class="math inline">\(r_s\)</span> de Spearman.</p>
+<pre class="r"><code># cor.test para Spearman
+cor.test(tuatara$mass, tuatara$territory, method = &quot;spearman&quot;)</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  tuatara$mass and tuatara$territory
+## S = 50, p-value = 0.0001888
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.8626374</code></pre>
+<p>El resultado indica que el valor de <em>p</em> está por debajo del <span class="math inline">\(\alpha\)</span> = 0.05, y por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span> con baja probabilidad de equivocarnos.</p>
 <p> </p>
 <p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
 </div>
 </div>
 

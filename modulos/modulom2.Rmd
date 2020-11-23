@@ -213,12 +213,57 @@ $$Num.\ pruebas\ independientes = \frac{(Num.\ variables)^2 - Num.\ variables}{2
 
 En este caso el número de pruebas independientes es de:  
 $$Num.\ pruebas\ independientes = \frac{5^2 - 5}{2} = 10$$
-Por lo tanto el valor de $\alpha$ ajustado para este caso es: 0.05/10 = 0.005.  Revisando los resultados de la correlación múltiple, solo las variables ingreso _per capita_ y doctores por 100000 habitantes estean relacionadas significativamente. 
+Por lo tanto el valor de $\alpha$ ajustado para este caso es: 0.05/10 = 0.005.  Revisando los resultados de la correlación múltiple, solo las variables ingreso _per capita_ y doctores por 100000 habitantes están relacionadas significativamente. 
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.2.4.Correlación No-paramétrica
+## 3.2.4.Correlación No-paramétrica  
+#### Objetivos  
+__Realizar pruebas no-paramétricas de correlación, cuando no se cumple el supuesto de normalidad bivariada.__  
+
+Cuando alguno de los datos se encuentra en una escala ordinal, o los supuestos de la correlación paramétrica (normalidad bivariada) no se cumplen, se puede usar una prueba no-paramétrica; la __correlación de rangos de Spearman__.  La hipótesis nula es la misma que en la correlación de Pearson: no hay asociación entre las dos variables.  
+
+#### __Ejemplo__  
+Tenemos los datos de la masa (g) de 13 tuataras (_Hatteria punctata_, reptil) adultos machos y del tamaño ($m^2$) de sus respectivos territorios.  Queremos saber si hay una asociación entre la masa de los reptiles y el territorio que ocupan, queremos probar la hipótesis de que animales meas grandes (masa) defienden territorios más grandes (área).  Las mediciones de las variables no tienen distribución normal y no son muchos para obviar esta violación del supuesto.
+
+### Cálculo del Coeficiente de Correlación de Spearman (_n_)  
+> Rango y diferencias de rango entre las variables
+
+Para calcular el _r_ de Spearman:  
+
+1. Colocar un número de rango (_Rx_ y _Ry_) para cada valor de las variables masa y territorio (cada una por separado).  
+2. Restar _Rx_ - _Ry_ (_d_) y elevarlo al cuadrado ($d^2$).  
+3. Sumar los valores de $d^2$, $\sum d^2$.  
+4. Calcular la _r_ de Spearman ($r_s$):  
+$$r_s = 1 - (\frac{6*\sum d^2}{n*(n^2 - 1)})$$  
+
+```{r}
+library(kableExtra)
+# datos
+tuatara <- read.csv("./data/tuatara.txt", sep = "")
+# tabla
+tuatara %>% 
+  kable(caption = "Tabla 1. Masa (g) de tuataras machos adultos (n = 13) y tamaño de su territorio (m2).  Rx y Ry representan el número de rango de los datos de cada variable ordenados de menor a mayor; d d.2 es la diferencia de rangos (Rx - Ry) para cada individuo y su cuadrado.") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+Para el ejemplo tenemos que:
+
+> $\sum d^2$ = 50   
+> $r_s$ = 0.863  
+
+Evaluamos la $H_0:r_s = 0$ utilizando la [Tabla de Valores Críticos para el Coeficiente de Correlación de Spearman](https://drive.google.com/file/d/1QySNDiwN4MvBE3hh0EUBZUuLdLpYKmMT/view?usp=sharing).  El valor de $r_{s,0.05,13}$ es 0.560, por lo tanto podemos rechazar la $H_0$ para $\alpha$ = 0.05.  En los tuataras macho la masa corporal está correlacionada con el área del territorio que ocupan.  
+
+### Prueba de $r_s$ utilizando R 
+Utilizamos la función __cor.test__ especificando que el método es el $r_s$ de Spearman.
+```{r}
+# cor.test para Spearman
+cor.test(tuatara$mass, tuatara$territory, method = "spearman")
+```
+El resultado indica que el valor de _p_ está por debajo del $\alpha$ = 0.05, y por lo tanto podemos rechazar la $H_0$ con baja probabilidad de equivocarnos. 
+
 
 \ 
 
