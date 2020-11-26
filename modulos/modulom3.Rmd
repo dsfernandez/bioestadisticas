@@ -44,8 +44,8 @@ donde el término $e_i$ indica la desviación aleatoria o __residual__ del valor
 ### Objetivos del Análisis de Regresión  
 
 1. Estimar la ecuación de regresión mediante estimadores de $\alpha$ (_a_) y $\beta$ (_b_) a partir de una muestra y generar intervalos de confianza para los mismos.  
-2. Usar la ecuación de regresión para predecir valores de _y_ a partir de valores de _x_.  
-3. Estimar que tanto está la variable dependiente controlada por la variable independiente, en otras palabras que tanto la variación en _y_ se explica por la variación en _x_.
+2. Estimar que tanto está la variable dependiente controlada por la variable independiente, en otras palabras que tanto la variación en _y_ se explica por la variación en _x_.  
+3. Usar la ecuación de regresión para predecir valores de _y_ a partir de valores de _x_. 
 
 ### Supuestos del Análisis de Regresión  
 Como en todo análisis estadístico paramétrico, la regresión lineal simple posee algunos supuestos:  
@@ -61,7 +61,31 @@ Como en todo análisis estadístico paramétrico, la regresión lineal simple po
 
 ## 3.3.2.Parámetros de la Regresión
 #### Objetivos
-__Calcular y probar hipótesis sobre los parámetros de la regresión lineal simple__ 
+__Calcular y probar hipótesis sobre los estimadores de los parámetros de la regresión lineal simple__  
+
+### Método de los Cuadrados Mínimos (_Least Squares_)  
+
+El primer objetivo del análisis de regresión, encontrar los valores de _a_ y _b_ de la ecuación de la recta, requiere un procedimiento matemático para encontrar la "mejor" línea recta que pase por los puntos $(x_i,y_i)$ de las variables respuesta y predictora.  Comunmente se utiliza el método de los __cuadrados mínimos ('least squares')__, el cual consiste en encontrar el mínimo valor de esta expresión:  
+$$\sum_{i=1}^n (y_i - \hat{y_i})^2$$
+es decir el mínimo valor de la suma de las diferencias verticales de la _y_ de cada punto y la _y_ sobre una línea de regresión, elevada al cuadrado (Figura 1).  
+
+![](./imagenes/14-2 Variation in Dependent Variable.jpg)  
+\
+__Figura 1.__ Ritmo cardíaco (BPM) en función de la temperatura corporal (ºC) en pitones. Línea con la menor distancia vertical a los puntos de la muestra ($y_i - \hat{y_i}$).  
+
+### Cálculos del Coeficiente de Regresión (_b_) y el Intercepto en el eje Y (_a_)
+Para el cálculo de los estimadores de $\alpha$ y $\beta$, según el método de los cuadrados mínimos, se necesitan las siguientes cantidades:  
+
+__Suma de Cuadrados de la Variable Predictora, $\sum x^2$__  
+(todas las sumatorias son de _i_ = 1 hasta _n_, número de puntos)  
+$$\sum(X_i - \bar X)^2 = \sum X_i^{2} - \frac{(\sum X_i)^2}{n}  $$
+
+__Suma de Productos Cruzados, $\sum xy$__
+$$\sum(X_i - \bar X)(Y_i - \bar Y) = \sum X_iY_i - \frac{(\sum X_i)(\sum Y_i)}{n}$$
+El __coeficiente de regresión__ (parámetro $\beta$) es la pendiente de la __línea de regresión__ y su estimador (_b_) es el siguiente:  
+$$b = \frac{\sum xy}{\sum x^2}$$
+Para calcular el estimador de $\alpha$, _a_, utilizamos el estimador _b_ y las medias de _x_ y _y_ (que por definición están en la recta de regresión):
+$$a = \bar Y - b\bar X$$
 
 
 
