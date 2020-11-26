@@ -51,7 +51,7 @@ donde el término $e_i$ indica la desviación aleatoria o __residual__ del valor
 Como en todo análisis estadístico paramétrico, la regresión lineal simple posee algunos supuestos:  
 
 1. Las observaciones son independientes, lo cual implica que cada sujeto en una muestra solo se mide una vez: no puede haber pseudoreplicación.    
-2. Se asume (aunque la visualización no lo muestre) que la relación entre las dos variables es lineal.  
+2. Se asume que la relación entre las dos variables es lineal.  
 3. Los residuales ($e_i$) alrededor de la línea de regresión tienen una distribución normal estándar ($\mu = 0$).  
 4. La varianza de los residuales es igual para todos los valores de _x_ de los datos.  Esto es equivalente a la homogeneidad de varianza en el ANOVA.  
 
@@ -106,7 +106,7 @@ plot(edad,l.ala,xlab = "Edad, días", ylab = "Longitud, cm")
 \
 __Figura 2.__ Gráfica de los datos de la Tabla 1, longitud del ala de gorriones (variable dependiente) y edad (variable independiente).  
 
-Observando la Figura 1 podemos sospechar que hay una posible relación entre la longitud del ala y la edad.  A continuación calcularemos los estadísticos que necesitamos para obtener los estimadores de los parámetros de la ecuación de regresión lineal para las variables de esta muestra.  
+Observando la Figura 2 podemos sospechar que hay una posible relación entre la longitud del ala y la edad.  A continuación calcularemos los estadísticos que necesitamos para obtener los estimadores de los parámetros de la ecuación de regresión lineal para las variables de esta muestra.  
 
 ### Cálculo Manual
 
@@ -169,13 +169,177 @@ __Figura 3.__ Línea de regresión para la relación entre la longitud del ala (
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
 ## 3.3.3.Pruebas de Hipótesis y Evaluación de la Regresión
+__Realizar pruebas de hipótesis sobre los coeficientes de la regresión y el cumplimiento de los supuestos__  
 
- 
+Una vez obtenida la ecuación de regresión, nos interesa saber cuál es su significancia en contraste con la hipótesis nula:  
+$$H_0:\beta = 0$$    
+Por otra parte, es importante cuantificar qué tan bien el modelo de regresión (línea recta) predice _y_ a partir de _x_; para esto calcularemos el __coeficiente de determinación__ ($\mathbf{r^2}$).  
+
+Y finalmente, debemos determinar si las variables cumplen los supuestos para aplicar el análisis de regresión paramétrico.  
+
+### Significancia de la Ecuación de Regresión  
+
+Para probar el modelo de regresión utilizamos el estadístico _F_, de manera similar a lo hecho en el ANOVA, utilizando los cuadrados medios (_MS_) equivalentes.  Como no tenemos grupos (tratamientos), en lugar de la suma de cuadrados dentro de grupos ($SS_{within}$), utilizamos como equivalente los __residuales__ (___residual SS___).  A partir de la diferencia de cada valor de _y_ con la media $\bar y$ global, calculamos la suma de cuadrados total (___total SS___).  El equivalente a la suma de cuadrados entre grupos es la suma de cuadrados de la regresión (___regresión SS___).
+
+#### __Fórmulas para los cálculos de sumas de cuadrados:__  
+
+__Suma de Cuadrados de _y_ o Total $\sum y^2$:__  
+$$total\ SS = \sum y_i{^2} - \frac{(\sum y_i)^2}{n}$$
+
+__Suma de Cuadrados de la Regresión:__
+$$regresión\ SS = \frac{(\sum x_iy_i)^2}{\sum x{_i}^2} = b\sum x_iy_i$$
+
+__Suma de Cuadrados de Residuales:__
+$$residual\ SS = total\ SS - regresión\ SS$$
+
+#### __Cuadrados medios y estadístico _F___  
+Para calcular los cuadrados medios necesitamos conocer los grados de libertad (_gl_).  En el análisis de regresión estos son los siguientes:  
+
+> _gl total_ = _N_ - 1  (_N_, cantidad de pares $x_i,y_i$)  
+> _gl regresión_ = 1 (por tratarse de una sola variable independiente)  
+> _gl residual_ = _N_ - 2  
+
+Los cuadrados medios (_MS_) que necesitamos para calcular _F_:  
+$$regresión\ MS = \frac{regresión\ SS}{gl\ regresión}$$  
+$$residual\ MS = \frac{residual\ SS}{gl\ residual}$$
+El estadístico _F_:  
+$$F_{calculado} = \frac{regresión\ MS}{residual\ MS}$$
+  
+Para completar la prueba, obtenemos el valor crítico de _F_, para un nivel de significancia $\alpha$ y con los grados de libertad del numerador ($\nu_1$ = _gl regresión_) y del denominador ($\nu_2$ = _gl residual_).  Podemos utilizar la [Tabla de Valores Críticos de F](https://drive.google.com/file/d/1NAnlk4PMiPgof4suSOBxY58inOT1B2Kt/view?usp=sharing) o la función __qf__ en R (con _lower.tail_ = FALSE).  
+
+#### __Resumen de cálculos__  
+
+__Tabla 2:__ Resumen de cálculos para la prueba de hipótesis del coeficiente de regresión _b_.  
+```{r prueba, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+tabla2 <- data.frame(
+  Fuente.de.Variacion = c("Total", "Regresión", "Residual"),
+  SS = c("total SS", "regresión SS", "residual SS"),
+  GL = c("n - 1", "1", "n - 2"),
+  MS = c(" ", "reg.SS/reg.GL","res.SS/res.GL")
+)
+kable(tabla2) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2:4, width = "10em", background = "orange")
+```
+
+\
+
+#### __Ejercicio 1__  
+
+Con los datos del Ejemplo 1 vamos a calcular el estadístico _F_ para probar la $H_0$, y si la rechazamos aceptaremos como significativo para $\alpha$ = 0.05, el valor de _b_ = 0.270.  
+
+### Cálculo manual  
+```{r calcman}
+edad <- c(3.0,4.0,5.0,6.0,8.0,9.0,10.0,11.0,12.0,14.0,15.0,16.0,17.0)
+l.ala <- c(1.4,1.5,2.2,2.4,3.1,3.2,3.2,3.9,4.1,4.7,4.5,5.2,5.0)
+n <- length(edad)
+reg1 <- lm(l.ala ~ edad)
+coe <- as.matrix(coefficients(reg1))
+b <- coe[2,1]
+#Total SS
+TotalSS <- sum(l.ala^2) - (sum(l.ala)^2)/n
+#Regresión SS
+RegresSS <- b*(sum(l.ala*edad)-(sum(edad)*sum(l.ala))/n)
+#Residual SS
+ResidualSS <- TotalSS - RegresSS
+#MS
+RegresMS <- RegresSS/1
+ResidualMS <- ResidualSS/(n-2)
+#tabla fuentes de variaciones
+SS <- c(TotalSS, RegresSS, ResidualSS)
+GL <- c(n-1, 1, n-2)
+MS <- c(" ", RegresMS, ResidualMS)
+tabla2 <- data.frame(
+  Fuente.de.Variacion = c("Total", "Regresión", "Residual"),
+  SS, GL, MS)
+kable(tabla2) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(1, bold = T, border_right = T) %>%
+  column_spec(2:4, width = "10em", background = "orange")
+#Fs
+Fcalc <- RegresMS/ResidualMS
+Ftabla <- qf(.05,1,n-2, lower.tail = FALSE)
+```
+
+$F_{calculado}$ = `r Fcalc`  
+
+$F_{0.05,\nu_1=1,\nu_2=11}$ = `r Ftabla`
+
+En conclusión, al encontrar que $F_{calculado} > F_{0.05,1,11}$, podemos rechazar la hipótesis nula de que $\beta$ = 0, y por lo tanto nuestro modelo muestra una relación significativa entre la longitud del ala y la edad de los gorriones.
+
+\
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html) 
+
+### Intervalo de Confianza para $\beta$  
+El coeficiente de regresión _b_ es un estimador del parámetro $\beta$, que no conocemos, pero podemos calcular un intervalo de confianza alrededor de _b_ en el que pudiera encontrarse con cierta probabilidad.  Para esto debemos primero calcular el __error estándar__ para _b_, $s_b$.  
+$$s_b = \sqrt \frac{residual\ MS}{\sum x_i^2 - \frac{[\sum x_i]^2}{n}}$$  
+
+Todos los valores necesarios para el cálculo de $s_b$ ya los tenemos del cálculo de _b_ y su prueba de significancia.  La fórmula para el intervalo de confianza requiere obtener un valor del estadístico _t_ para el nivel de confianza requerido (p. ej.: 95%):  
+$$b \pm s_b*t_{\alpha,n-2}$$
+Para nuestro ejemplo:  
+
+_residual MS_ = `r ResidualMS`  
+
+$\sum x_i^2$ = `r sumX2`  
+
+$\sum x_i$ = `r sumX`
+
+$$s_b = \sqrt \frac{0.0477}{1562 - \frac{[130]^2}{13}} = 0.01349$$
+$$t_{0.05,11} = 1.7959$$
+El intervalo de confianza 95% para $\beta$:  
+$$0.2458 \leq \beta \leq 0.2942$$
+
+### Coeficiente de Determinación  
+El estadístico $r^2$ nos permite conocer cuál es la proporción de la varianza en _y_ que es explicada por su dependencia en _x_.  A $r^2$ también se lo conoce como __ajuste al modelo__ y su valor va de 0 a 1, con 1 como ajuste completo de los datos al modelo.  El coeficiente de determinación se calcula:  
+$$r^2 = \frac{regresión\ SS}{total\ SS}$$
+Para nuestro ejemplo, y con los valores calculados anteriormente:  
+$$r^2 = \frac{19.132}{19.657} = 0.973$$
+Es decir que el modelo explica el 97.3% de la variación de _y_ con su dependencia de _x_.  
+
+### Cálculos con R  
+La función __lm__ en R nos provee también los estadísticos y valores de probabilidad para probar hipótesis sobre el modelo de regresión lineal.  
+```{r}
+regrtest <- lm(l.ala ~ edad, data = sparrow)
+summary(regrtest)
+```
+
+### Cumplimiento de los Supuestos  
+
+El análisis de regresión, al igual que el ANOVA son bastantes robustos y permiten cierta desviación de los supuestos, en particular cuando se tiene un buen número de datos (por encima de 30 para algunos casos).  El supuesto de normalidad de las variables se puede comprobar con la prueba de Shapiro-Wilk, y una desviación o no de la linealidad en la relación se puede detectar visualmente; la Figura 2 en nuestro ejemplo, muestra una aparente relación lineal.  
+
+Es más crítico probar la normalidad de los residuales y su homogeneidad de varianza.  A continuación usaremos gráficas de los residuales, obtenidos del modelo de regresión usando la función __lm__ en R.
+
+```{r}
+# q-q plot de residuales
+plot(regr, 2)
+```
+__Figura 4.__ Gráfica Q-Q de los residuales.  
+
+En la Figura 4 se pueden observar desviaciones de la normalidad (línea punteada).  Esta situación podría corregirse aumentando la cantidad de observaciones.  
+
+```{r}
+# homocedasticidad residuales
+plot(regr, 3)
+```
+
+__Figura 5.__ Raíz cuadrada de los residuales estandarizados del modelo en función de los valores ajustados de _y_.  La línea roja muestra la tendencia de los puntos.
+
+En la gráfica de la Figura 5 aunque no parece ocurrir una desviación importante del supuesto de homogeneidad de varianza de los residuales, ya que se distribuyen de forma homogénea alrededor de la línea de tendencia, sin embargo esta debería ser horizontal.  
+
+Para tratar de corregir estas desviaciones de los supuestos se pueden realizar transformaciones de los datos, al igual que se indicó en detalle para el ANOVA.
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.3.4.Predicción de y a partir de x
 
+## 3.3.4.Predicción de _y_ a partir de _x_ usando la ecuación de regresión  
+#### Objetivos  
+__Estimar un valor de _y_ a partir de un valor de _x_ y su intervalo de confianza, usando la ecuación de regresión__  
  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
