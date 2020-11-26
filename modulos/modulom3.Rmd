@@ -15,7 +15,7 @@ options("yaml.eval.expr" = TRUE)
 
 # 3.3.Análisis de Regresión  
 
-En el análisis de regresión se busca un modelo para describir estadísticamente la relación entre una __variable dependiente__ y otra (u otras) __independiente__.  El modelo es una ecuación matemática que "cuantifica" la relación entre las variables.  A la variable dependiente también se le llama __variable respuesta__ (y se grafica en el eje _y_) y a la variable independiente también se la conoce como __variable predictora__ o __explicativa__.  
+En el análisis de regresión se busca un modelo para describir estadísticamente la relación entre una __variable dependiente__ y otra (u otras) __independiente__.  El modelo es una ecuación matemática que "cuantifica" la relación entre las variables.  A la variable dependiente también se le llama __variable respuesta__ (y se grafica en el eje _Y_) y a la variable independiente también se la conoce como __variable predictora__ o __explicativa__.  
 
 A diferencia del análisis de correlación, en el análisis de regresión se asume una __relación causa-efecto__ en la que las variaciones en la variable predictora causan cambios en la variable respuesta.  
 
@@ -84,16 +84,91 @@ __Suma de Productos Cruzados, $\sum xy$__
 $$\sum(X_i - \bar X)(Y_i - \bar Y) = \sum X_iY_i - \frac{(\sum X_i)(\sum Y_i)}{n}$$
 El __coeficiente de regresión__ (parámetro $\beta$) es la pendiente de la __línea de regresión__ y su estimador (_b_) es el siguiente:  
 $$b = \frac{\sum xy}{\sum x^2}$$
-Para calcular el estimador de $\alpha$, _a_, utilizamos el estimador _b_ y las medias de _x_ y _y_ (que por definición están en la recta de regresión):
+Para calcular el estimador de $\alpha$, _a_, utilizamos el estimador _b_ y las medias de _x_ y _y_ (que por deducción matemática, están en la recta de regresión):
 $$a = \bar Y - b\bar X$$
-
-
 
 \  
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.3.3.Pruebas de Hipótesis para la Regresión
+
+#### __Ejemplo 1__  
+Vamos a usar los datos de la longitud (cm) del ala derecha de gorriones de diferentes edades (días).  En este caso, podemos asumir que la variable dependiente es la longitud del ala y la independiente, la edad de las aves.  
+```{r gorriones}
+edad <- c(3.0,4.0,5.0,6.0,8.0,9.0,10.0,11.0,12.0,14.0,15.0,16.0,17.0)
+l.ala <- c(1.4,1.5,2.2,2.4,3.1,3.2,3.2,3.9,4.1,4.7,4.5,5.2,5.0)
+sparrow <- data.frame(edad,l.ala)
+#tabla de datos
+knitr::kable(sparrow, col.names = c("Edad (días)", "Longitud ala (cm)"), caption = 'Tabla 1.  Longitud del ala derecha de gorriones de diferente edad') 
+#gráfica x-y
+plot(edad,l.ala,xlab = "Edad, días", ylab = "Longitud, cm")
+```
+\
+__Figura 2.__ Gráfica de los datos de la Tabla 1, longitud del ala de gorriones (variable dependiente) y edad (variable independiente).  
+
+Observando la Figura 1 podemos sospechar que hay una posible relación entre la longitud del ala y la edad.  A continuación calcularemos los estadísticos que necesitamos para obtener los estimadores de los parámetros de la ecuación de regresión lineal para las variables de esta muestra.  
+
+### Cálculo Manual
+
+```{r calcab}
+#tamaño muestra
+n <- length(l.ala)
+#medias
+X <- mean(sparrow$edad)
+Y <- mean(sparrow$l.ala)
+#sumatorias
+sumX <- sum(sparrow$edad)
+sumY <- sum(sparrow$l.ala)
+sumX2 <- sum(sparrow$edad^2)
+sumXY <- sum(sparrow$edad*sparrow$l.ala)
+#suma de cuadrados
+SSx2 <- sumX2 - (sumX^2)/n
+Sxy <- sumXY - (sumX*sumY)/n
+#cálculo de b
+est.b <- Sxy/SSx2
+# cálculo de a  
+est.a = Y - est.b*X
+```
+
+__Resultados parciales__  
+$\sum x_i$ = `r sumX`  
+$\sum y_i$ = `r sumY`  
+$\sum {x_i}^2$ = `r sumX2`  
+$\sum x_i y_i$ = `r sumXY`    
+$\sum x^2$ (suma de cuadrados) = `r SSx2`  
+$\sum xy$ (suma de productos cruzados) = `r Sxy`    
+
+__Coeficiente de Regresión (_b_)__    
+$b$ = `r est.b`  
+
+__Intercepto en Y (_a_)__    
+$a$ = `r est.a`  
+
+__Ecuación de la recta de regresión__  
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+sprintf("Y = %.3f + %.3fX", est.a, est.b)
+```
+
+### Cálculo de Coeficientes con R
+Para obtener los coeficientes de la recta de regresión, usamos la función __lm__ (_linear models_) en R.
+```{r lmreg}
+regr <- lm(l.ala ~ edad)
+coefficients(regr)
+```
+### Gráfica de la línea de regresión lineal
+
+```{r}
+plot(edad,l.ala, xlab = 'Edad, días', ylab = 'Longitud del ala, cm', asp = 1)
+abline(regr, col = 'blue')
+```
+\
+__Figura 3.__ Línea de regresión para la relación entre la longitud del ala (cm) y la edad (días) de gorriones.
+
+\  
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 3.3.3.Pruebas de Hipótesis y Evaluación de la Regresión
 
  
 
