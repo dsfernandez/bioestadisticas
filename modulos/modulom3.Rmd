@@ -307,6 +307,16 @@ regrtest <- lm(l.ala ~ edad, data = sparrow)
 summary(regrtest)
 ```
 
+__Interpretación de los Resultados__  
+
+*  _Call:_ variables sobre las que se aplica la función lm, variable dependiente ~ variable predictora.  
+*  _Residuals:_ cuartiles de la distribución de los valores del error (residuales); ayuda a determinar si los residuales tienen una distribución no-sesgada con respecto a la variable predictora.  
+*  _Coefficients:_ estimados de los coeficientes de la regresión, sus errores estándares, el valor t para su diferencia con 0, y la probabilidad (error tipo I) para este valor t.  
+*  _Residual standard error:_ el error estándar de los residuales, con n - 2 grados de libertad.  
+*  _Multiple & Adjusted R-squared:_ los coeficientes de determinación ($r^2$), múltiple (total) y ajustado al número de variables.  
+*  _F-statistic:_ el valor del estadístico F calculado, sus grados de libertad, y el valor p correspondiente. 
+
+
 ### Cumplimiento de los Supuestos  
 
 El análisis de regresión, al igual que el ANOVA son bastantes robustos y permiten cierta desviación de los supuestos, en particular cuando se tiene un buen número de datos (por encima de 30 para algunos casos).  El supuesto de normalidad de las variables se puede comprobar con la prueba de Shapiro-Wilk, y una desviación o no de la linealidad en la relación se puede detectar visualmente; la Figura 2 en nuestro ejemplo, muestra una aparente relación lineal.  
@@ -315,15 +325,16 @@ Es más crítico probar la normalidad de los residuales y su homogeneidad de var
 
 ```{r}
 # q-q plot de residuales
-plot(regr, 2)
+plot(regrtest, 2)
 ```
+
 __Figura 4.__ Gráfica Q-Q de los residuales.  
 
 En la Figura 4 se pueden observar desviaciones de la normalidad (línea punteada).  Esta situación podría corregirse aumentando la cantidad de observaciones.  
 
 ```{r}
 # homocedasticidad residuales
-plot(regr, 3)
+plot(regrtest, 3)
 ```
 
 __Figura 5.__ Raíz cuadrada de los residuales estandarizados del modelo en función de los valores ajustados de _y_.  La línea roja muestra la tendencia de los puntos.
@@ -339,8 +350,54 @@ Para tratar de corregir estas desviaciones de los supuestos se pueden realizar t
 
 ## 3.3.4.Predicción de _y_ a partir de _x_ usando la ecuación de regresión  
 #### Objetivos  
-__Estimar un valor de _y_ a partir de un valor de _x_ y su intervalo de confianza, usando la ecuación de regresión__  
+__Estimar un valor de _y_ a partir de un valor de _x_ y su intervalo de confianza, usando la ecuación de regresión__    
  
+Una vez que obtenemos los valores de __a__ y __b__ para la regresión lineal, podemos predecir el valor de la variable dependiente ($\hat Y$) dado un valor de $X_i$:
+$$\hat Y = a + bX_i$$
+$$\hat Y = 0.715 + 0.270X_i$$
+
+#### __Ejercicio__  
+¿cuánto mide el ala de un gorrión de 13 días?
+
+longitud del ala = 0.715 cm + (0.270 cm/día)(13 días) = 4.225 cm
+
+Es importante tener en cuenta que la línea de regresión es aplicable para el ámbito de edades a partir del cuál se calculó, - en este caso, entre 3 y 17 días - fuera del mismo no podemos esperar que la regresión sea la misma.  Por ejemplo, usando la ecuación de regresión obtenida: ¿cuál sería la longitud del ala de un gorrión de seis meses (180 días)?  
+
+### Error Estándar e Intervalo de Confianza para el Estimado de Y  
+
+El estimado de Y proviene de una 'población' de valores con un __error estándar__ dado por la ecuación:
+$$s_{\hat Y_i} = \sqrt{s_{Y·X}^2[\frac{1}{n} + \frac{(X_i - \bar X)^2}{\sum x^2}]}$$
+donde $s_{Y·X}^2$ es el __cuadrado medio de residuales__:
+$$ residual\ MS = \frac{residual\ SS}{n - 2}$$
+
+Continuando con el ejercicio anterior, vamos a calcular el error estándar para el estimado de _Y_ (4.225 cm) con _X_ = 13 días.
+```{r seyestimado}
+library(kableExtra)
+#Y estimado = 4.225
+#SumaCuadradosX = 262.0
+#residual MS = 0.047701
+#mediaX = 10
+#n = 13
+#error estándar del estimado de Y
+syi <- sqrt(0.047701*(1/13 + ((13 - 10)^2)/262))
+#intervalo de confianza del estimado 95%
+linf <- 4.225 - qt(.025, 11, lower.tail = FALSE)*syi
+lsup <- 4.225 + qt(.025, 11, lower.tail = FALSE)*syi
+result <- data.frame(syi, "4.225", linf, lsup)
+kable(result, format = "markdown", col.names = c("Error Est.", "Y estimada", "Límite inferior", "Límite superior"))
+```
+
+### Cálculos con R
+```{r intervconfianza}
+reg1 <- lm(l.ala ~ edad)
+intconf <- predict.lm(reg1, newdata=list(edad=13.0), se.fit = TRUE, 
+           interval="confidence", level=.95)
+table4 <- data.frame(intconf)
+kable(table4[,c(4,1:3)], format = "markdown")
+```  
+
+
+\
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
