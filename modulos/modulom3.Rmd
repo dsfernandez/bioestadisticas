@@ -412,7 +412,12 @@ __Figura 4.__ Línea de regresión con intervalo de confianza de 95% para el est
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
-## 3.3.5.Otras Técnicas de Regresión
+## 3.3.5.Otras Técnicas de Regresión  
+
+### Regresión Múltiple  
+
+### Regresión Logística  
+
 
   
 
