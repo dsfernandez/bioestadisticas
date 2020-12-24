@@ -5,23 +5,23 @@ navbar:
     - 
       menu:
         - 
-          text: "Estadísticas"
           href: modulos/modulod1.html
+          text: "Estadísticas"
         - 
-          text: "Variables - Manejo de Datos"
           href: modulos/modulod2.html
+          text: "Variables - Manejo de Datos"
         - 
-          text: "Tablas y Gráficas"
           href: modulos/modulod3.html
+          text: "Tablas y Gráficas"
         - 
-          text: "Estadísticas Descriptivas"
           href: modulos/modulod4.html
+          text: "Estadísticas Descriptivas"
         - 
-          text: "Probabilidades - Distribuciones Discretas"
           href: modulos/modulod5.html
+          text: "Probabilidades - Distribuciones Discretas"
         - 
-          text: "Otros Recursos"
           href: modulos/datos.html
+          text: "Otros Recursos"
       text: "Datos"
     -
       menu:
