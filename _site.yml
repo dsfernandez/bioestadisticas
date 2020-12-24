@@ -4,8 +4,10 @@ navbar:
   title: "Bioestadísticas"
   left:
     - text: "Hola"
-      href: index.html
+      icon: fa-home
+      href: home.html
     - text: "Datos"
+      href: unidad1.html
       menu:
         - text: "Estadísticas"
           href: modulos/modulod1.html
@@ -47,3 +49,6 @@ navbar:
           href: modulos/modulom5.html
         - text: "Otros Recursos"
           href: modulos/modelos.html
+output:
+  html_document:
+    highlight: textmate

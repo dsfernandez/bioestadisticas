@@ -1,0 +1,26 @@
+---
+title: "Hola"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Biometría BIOL 3740
+#### UNIVERSIDAD DE PUERTO RICO en HUMACAO
+#### Departamento de Biología
+[ __Denny S. Fernández del Viso__](https://sites.google.com/site/hicindicium/home)
+
+
+## Descripción del curso
+Curso introductorio de estadísticas aplicadas a la biología.  El diseño del curso se basa en el modelo UMT (unidad-módulo-tema):  
+
+[ __Estructura del Curso__](https://docs.google.com/spreadsheets/d/1yaoF2FtqcPcSIn-Io9ZxXIEGfXJrqGIKfCN3r7cW3dw/edit?usp=sharing)
+
+
+### Textos principales:  
+
+* __Havel, J.E., Hampton, R.E., Meiners, S.J.__, 2019. _Introductory biological statistics_, Fourth ed. Waveland Press, Inc., Long Grove, Illinois.  
+* __Lepš, J., Šmilauer, P.__, 2020. _Biostatistics with R: An Introductory Guide for Field Biologists_, 1st ed. Cambridge University Press.  
+* __Whitlock, M.C., Schluter, D.__, 2019. _The analysis of biological data_, Third ed. Macmillan Learning, New York.
