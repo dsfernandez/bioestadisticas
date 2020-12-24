@@ -3,6 +3,8 @@ output_dir: "."
 navbar:
   title: "Bioestadísticas"
   left:
+    - text: "Hola"
+      href: index.html
     - text: "Datos"
       menu:
         - text: "Estadísticas"
