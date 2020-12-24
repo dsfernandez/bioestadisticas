@@ -1,6 +1,7 @@
----
-name: "Bioestadísticas"
+ name: "Bioestadísticas"
+output_dir: "."
 navbar:
+  title: "Bioestadísticas"
   left:
     - 
       menu:
@@ -65,5 +66,4 @@ navbar:
           text: "Otros Recursos"
           href: modulos/modelos.html
       text: "Modelos"
-  title: "Bioestadísticas"
-output_dir: "."
+
