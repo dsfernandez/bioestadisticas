@@ -33,18 +33,12 @@ __Reconocer alguna aplicación de las estadísticas en la investigación biológ
 
 #### __Actividades__  
 
-_Foro en MOODLE:_ Los datos de la epidemia de Covid-19
-
-_Encuesta:_ ¿Cómo te pueden ayudar las estadísticas, de una manera concreta, en tus estudios o tu vida cotidiana?
-
-#### __Resultados__    
-
-[Nube de Palabras](https://rpubs.com/dsfernandez/649391)  
+_Discusión_ Los datos de la epidemia de Covid-19: incertidumbre en su análisis.
 
 ### ¿Para quiénes son las estadísticas?  
 
 * Para los que usamos cualquier medio para ver o leer las noticias:
-  + están cargadas de falacias (las tendencias, los falsos conflictos);
+  + están cargadas de falacias (las tendencias, los falsos conflictos, teorías conspirativas);
   + entender las estadísticas nos hace algo escépticos, y nos permite filtrar conclusiones débiles (o falsas) 
  de las sólidas.  
 * Para los que leen literatura científica (todo/as nosotro/as), en cualquier área.  
@@ -131,7 +125,7 @@ __Aplicar una metodología para obtener muestras aleatorias__
 
 > 1. Asignarle un número entero a cada unidad (individuo o posición) en la población (1, 2, 3, ..., N)  
 > 2. Decidir cuántas unidades serán colectadas por muestra.  El tamaño de esta muestra será n.  
-> 3. Utilizar un método para generar números al azar entre 1 y N.  
+> 3. Utilizar un método para generar números al azar entre 1 y N.  [Uso de Tabla de Números Aleatorios](https://drive.google.com/file/d/1mmLwxjTmGucnOENPYk3gP1e1-h3HETzY/view?usp=sharing) o mediante computadora.
 > 4. Tomar las unidades que corresponden a los números generados.  Estos individuos serán los medidos o tratados en esa muestra.  
 
 #### __Ejercicios__  
