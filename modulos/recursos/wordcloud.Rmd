@@ -115,7 +115,7 @@ detexto <- c("./Biometria_encuesta_estadisticas_20210118.txt")
 ## ejemplo de "wordcloud"
 res <- rquery.wordcloud(detexto, type ="file",
                         lang = "spanish",
-                        excludeWords = c("estadísticos", "estadisticas", "estadística", "estadísticas", "pueden", "vemos"),
+                        excludeWords = c("estadísticos", "estadisticas", "estadística", "estadísticas", "pueden", "vemos", "ejemplo"),
                         textStemming = FALSE,
                         colorPalette = "Dark2",
                         min.freq = 2,
@@ -160,7 +160,7 @@ barplot(TablaFrecuencia[1:20,]$freq, las = 2,
 ```{r}
 # palabras que aparecen con cierta frecuencia
 tdm <- res$tdm
-findFreqTerms(tdm, lowfreq = 3)
+findFreqTerms(tdm, lowfreq = 7)
 # relación entre una palabra y otras
 findAssocs(tdm, terms = "datos", corlimit = 0.0)
 ```
