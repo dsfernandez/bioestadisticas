@@ -85,7 +85,7 @@ Los estimados que podemos hacer a partir de una muestra van a depender de que es
 > __Exactitud:__ una medida de cuán cerca estamos de un estimador representativo de la población (la media, por ejemplo)  
 > __Precisión:__ una medida de cuánto se parecen los valores o mediciones de los individuos u objetos entre sí.
 
-[ __exactitud__](https://online.upr.edu/mod/glossary/showentry.php?eid=5638)
+[ __exactitud__](https://online.upr.edu/mod/glossary/showentry.php?eid=5638)  
 [ __precisión__](https://online.upr.edu/mod/glossary/showentry.php?eid=4997)    
   
 La falta de __exactitud__ puede deberse a la toma de una __muestra sesgada__
