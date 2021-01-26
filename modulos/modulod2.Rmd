@@ -40,7 +40,7 @@ __Distinguir los diferentes tipos de variables estadísticas y sus propiedades__
 #### __Ejercicios__
 _Ejemplos:_  un ejemplo de cada tipo de variable categórica y numérica.  
 
-_Tipos de datos en R y tipos de variables_: revisar la sección [ _Tipos de Datos_](https://dsfernandez.github.io/tallerRbasico/modulos/TiposDatos.html) del Tutorial de R, y establecer la relación entre tipos de datos en R y tipos de variables estadísticas.  
+_Tipos de datos en R y tipos de variables_: revisar esta página [ _Tipos de Datos_](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/) y establecer la relación entre tipos de datos en R y tipos de variables estadísticas.  
 
 \
 
