@@ -84,7 +84,7 @@ Hay otras opciones para representar datos numéricos, incluyendo:
 * __coordenadas:__ para ubicación de individuos, pueden ser cartesianas o polares.      
 \
 
-> __Gráfica de tres dimensiones (3D)  
+> __Gráfica de tres dimensiones (3D)__  
 
 A continuación un ejemplo de una gráfica de tres ejes, para las variables largo de sépalo (X), ancho de sépalo (Y) y largo de pétalo (Z), de los datos 'iris' en R.
 ```{r 3d}
