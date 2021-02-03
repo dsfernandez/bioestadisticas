@@ -79,9 +79,33 @@ p
 ### Otros tipos de Gráficas
 Hay otras opciones para representar datos numéricos, incluyendo:  
 
-> gráficas de dos variables con __línea de regresión e intervalos de confianza__: para representar resultados de análisis de regresión.  
-> gráficas de __tres variables__: con tres ejes o con dos ejes y símbolo proporcional a la tercera variable.    
-> __coordenadas:__ para ubicación de individuos, pueden ser cartesianas o polares.      
+* gráficas de dos variables con __línea de regresión e intervalos de confianza__: para representar resultados de análisis de regresión.  
+* gráficas de __tres variables__: con tres ejes o con dos ejes y símbolo proporcional a la tercera variable.      
+* __coordenadas:__ para ubicación de individuos, pueden ser cartesianas o polares.      
+\
+
+> __Gráfica de tres dimensiones (3D)  
+
+A continuación un ejemplo de una gráfica de tres ejes, para las variables largo de sépalo (X), ancho de sépalo (Y) y largo de pétalo (Z), de los datos 'iris' en R.
+```{r 3d}
+# paquete 3D
+library(rgl)
+# Datos 'iris' en R
+data <- iris
+# Añadir columna de colores para diferenciar especies de iris
+mycolors <- c('royalblue1', 'darkcyan', 'oldlace')
+data$color <- mycolors[ as.numeric(data$Species) ]
+# gráfica 3D
+par(mar=c(0,0,0,0))
+plot3d( 
+  x=data$`Sepal.Length`, y=data$`Sepal.Width`, z=data$`Petal.Length`, 
+  col = data$color, 
+  type = 's', 
+  radius = .1,
+  xlab="Sepal Length", ylab="Sepal Width", zlab="Petal Length")
+rglwidget()
+```
+
 \
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)

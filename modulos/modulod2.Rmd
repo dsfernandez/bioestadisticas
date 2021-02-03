@@ -30,7 +30,7 @@ __Distinguir los diferentes tipos de variables estadísticas y sus propiedades__
 
 #### __Definiciones__   
 
-[ __variable categórica__](https://online.upr.edu/mod/glossary/showentry.php?eid=5665)  
+[ __variable categórica__](https://online.upr.edu/mod/glossary/showentry.php?eid=12250)  
 [ __variable nominal__](https://online.upr.edu/mod/glossary/showentry.php?eid=5666)  
 [ __variable ordinal__](https://online.upr.edu/mod/glossary/showentry.php?eid=5667)  
 [ __variable numérica__](https://online.upr.edu/mod/glossary/showentry.php?eid=5668)  
