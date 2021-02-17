@@ -231,6 +231,12 @@ ggplot(melocactus, aes(x=alturatotal)) + geom_boxplot(fill="cornflowerblue") +
 
 En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%).  Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la __distancia intercuartil__ ($Q_3 - Q_1$), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites.  Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.  
 
+### Gráfica de frecuencia acumulada  
+Otra manera de visualizar la ubicación de las percentilas y la mediana es usar una gráfica de frecuencia acumulada de los datos.  
+![](imagenes/4-3 Cumulative Freq for Percentiles.jpg)
+
+#### Figura 4. Frecuencia acumulada de valores de la longitud de peces (mm).  Las líneas verticales indican los valores de longitud, en el eje x, del primer cuartil (25% de los valores), de la mediana (50% de los valores) y del tercer cuartil (75% de los valores)
+
 \ 
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
