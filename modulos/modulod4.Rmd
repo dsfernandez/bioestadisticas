@@ -268,8 +268,10 @@ __Masa Corporal en kg__
 | $\bar X$ | 0.0125 | 1240 |
 | _s_ | 0.0072 | 626 |
 | _CV_ | 57.6 | 50.4 |
+\
 
-### Método para calcular tendencia central y medidas de dispersión en R  
+## 1.4.4. Método para calcular tendencia central y medidas de dispersión en R  
+
 Hay varias maneras de calcular los estadísticos de la tendencia central usando R, a continuación usaremos una que permite calcular varios de ellos en los datos de altura total de la planta (cm) de _Melocactus intortus_, para grupos separados por un factor (estado: Enfermos, Saludables, X muertos).
 ```{r estadisticos, message=FALSE, warning=FALSE}
 # leer los datos
