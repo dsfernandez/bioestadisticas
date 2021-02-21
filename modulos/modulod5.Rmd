@@ -324,7 +324,9 @@ Usualmente las frecuencias (o proporciones de un total) de las ocurrencias se mi
 La distribución de proporciones (frecuencias) o probabilidades de ocurrencia, de eventos independientes, sin límite teórico de ocurrencias, se puede definir con la siguiente ecuación:  
 $$p(x) = \frac{\mu^{x}e^{-\mu}}{x!}$$
 donde $\mu$ es la media de la población de ocurrencias del evento por unidad de muestreo o caso, $e$ es la base de los logaritmos naturales, y $p(x)$ es la probabilidad de ocurrencia de $x$ eventos en una unidad de muestreo o caso.  Sin embargo, usualmente no conocemos la media de la población, y usamos la media de la muestra:  
-$$p(x) = \frac{\bar x^{x}e^{-\mu}}{x!}$$  
+$$p(x) = \frac{\bar x^{x}e^{-\bar x}}{x!}$$  
+
+Alternativamente, podemos encontrar los valores de probabilidad _p(x)_, utilizando una [tabla de probabilidades de Poisson](https://drive.google.com/file/d/13FYc6FRVBZstAeSOC0IjI0yA9v2suCFJ/view?usp=sharing), cuyas filas son los valores de __x__ y las columnas los valores de $\bar x$, llamados también $\lambda$.
 
 #### __Ejemplo__  
 (Example 5.9 Havel _et al._ 2019) La distribución del número de plántulas de arce _(maple)_ en 100 parcelas cuadradas de 1 $m^2$, en teoría puede seguir una distribución de Poisson.  La media de la muestra, llamada también lambda ($\lambda$) en la distribución de Poisson, es 1.41 plántulas de arce por parcela.  La siguiente gráfica compara los valores teóricos con los reales.  
