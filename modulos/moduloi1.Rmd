@@ -57,17 +57,25 @@ Ver ejemplos anteriores para la distribución binomial y de Poisson.
 #### Objetivos  
 __Conocer las probabilidades de rechazar la hipótesis nula y la de equivocarnos__  
 
-En el ejemplo 5.7 del libro, observamos que la probabilidad de que una pareja heterocigota recesiva, tenga sus tres hijos con fibrosis cística (FC) es de 0.0156; si en 15 parejas heterocigóticas de un total de 100 (proporción: 0.15) con tres hijos, los tres tienen FC, ¿será algo que puede ocurrir al azar, según las reglas de la genética clásica? O, ¿existirán otros factores que determinan la FC en la población de la cual se obtuvo la muestra?  Y si fueran 2 de 100 (0.02), ¿es suficiente para rechazar que hay una segregación al azar de los alelos?
+En el ejemplo 5.7 del libro, observamos que la probabilidad de que una pareja heterocigota recesiva, tenga sus tres hijos con fibrosis cística (FC) es de 0.0156; podemos decir que en 100 parejas heterocigotas del alelo FC, con tres hijos, esperamos que entre una y dos parejas tengan los tres hijos con FC.  
 
-Podemos calcular la probabilidad _(p(x))_ de que el evento "tres hijos con FC" _(p = 0.0156)_ ocurra en contraposición a los otros eventos _(q = 0.9844)_ posibles (0, 1, o 2 hijos con FC) en 100 parejas de tres hijos _(k)_: 
+Ahora bien, si en 15 parejas heterocigóticas, de un total de 100 con tres hijos, los tres tienen FC, ¿será algo que puede ocurrir al azar, según las reglas de la genética clásica? O, ¿existirán otros factores que determinan la FC en la población de la cual se obtuvo la muestra?  Y si fueran 3 de 100, ¿es suficiente para rechazar que hay una segregación al azar de los alelos?  
 
-```{r}
+Con la información anterior podemos formular las siguientes hipótesis estadísticas:
+$$H_0 : parejas\ con\ tres\ hijos\ con\ FC \leq 2$$
+para el caso de que sea un proceso puramente aleatorio de segregación de alelos y herencia simple.  
+$$H_a : parejas\ con\ tres\ hijos\ con\ FC > 2$$  
+para el caso en que intervengan otros factores, además de la genética Mendeliana.  
+
+Mediante la función binomial, podemos calcular la probabilidad _(p(x))_ de que el evento "tres hijos con FC" _(p = 0.0156)_ ocurra en _x_ número de parejas, en contraposición a los otros eventos _(q = 0.9844)_ posibles (0, 1, o 2 hijos con FC), de un total de 100 parejas heterocigotas recesivas de tres hijos _(k)_: 
+
+```{r pbin}
 # para x = 15
 tresFC <- dbinom(15, size = 100, prob = 0.0156)
 sprintf("probabilidad de tres hijos con FC en 15 de 100 parejas = %.2e", tresFC)
-# para x = 6
-tresFC <- dbinom(6, size = 100, prob = 0.0156)
-sprintf("probabilidad de tres hijos con FC en 6 de 100 parejas = %.4f", tresFC)
+# para x = 3
+tresFC <- dbinom(3, size = 100, prob = 0.0156)
+sprintf("probabilidad de tres hijos con FC en 3 de 100 parejas = %.4f", tresFC)
 # para x = 2
 tresFC <- dbinom(2, size = 100, prob = 0.0156)
 sprintf("probabilidad de tres hijos con FC en 2 de 100 parejas = %.4f", tresFC)
@@ -76,11 +84,24 @@ tresFC <- dbinom(1, size = 100, prob = 0.0156)
 sprintf("probabilidad de tres hijos con FC en 1 de 100 parejas = %.4f", tresFC)
 ```
 
-Los resultados anteriores nos muestran que a medida de que el valor medido se aleja de lo esperado (que sería la $H_0$), la probabilidad de que ocurra es menor, y en valores extremos (15 parejas) es extremadamente baja. Si nuestra medición es confiable, podemos pensar que la $H_0$ no se sostiene en este caso, y una $H_a$ puede ser la alternativa (inclusive se puede convertir en una nueva $H_0$).  
+Los resultados muestran una probabilidad muy baja de que 15 parejas de 100, con tres hijos con FC, se dé de forma aleatoria, asumiendo que la hipótesis nula de que se cumple con la genética mendeliana solamente.  Por otra parte, encontrar tres parejas de 100, no tiene una baja probabilidad de ocurrencia (en comparación con lo esperado, una o dos parejas) asumiendo que solo actúa la genética mendeliana y el azar.
+
+```{r binom}
+parejas <- 0:15
+plot(parejas,dbinom(parejas,size=100,prob=.0156),
+     type='h',
+     ylab='Probabilidad',
+     xlab ='Número de parejas',
+     lwd=3)
+```
+
+__Figura 1.__ Distribución de probabilidades binomiales para diferentes números de parejas con tres hijos con FC (p = 0.0156), de un total de 100 parejas heterocigóticas recesivas para FC. 
+
+Los resultados en la gráfica nos muestran que a medida de que el valor observado/medido se aleja de lo más esperado (que sería la $H_0$), la probabilidad de que ocurra un mayor número de parejas con tres hijos con FC es menor, y en valores extremos (15 parejas) es extremadamente baja. Si nuestra medición es confiable, podemos pensar que la $H_0$ no se sostiene en este último caso, y la $H_a$ puede ser la alternativa.
 
 ### Valor de probabilidad _(p-value)_ y nivel de significancia de la prueba ($\alpha$)  
 
-El valor anterior de probabilidad para 15 parejas con hijos con FC, es la probabilidad en esta prueba, de obtener un valor extremo, asumiendo que la hipótesis nula es correcta, y es lo que encontraremos en las pruebas estadísticas como __p-value__ (en R a veces como Pr).  
+El valor anterior de probabilidad para 15 parejas con hijos con FC, es la probabilidad en esta prueba y con esta distribución de probabilidades, de obtener un valor extremo, asumiendo que la hipótesis nula es correcta, y es lo que encontraremos en las pruebas estadísticas como __p-value__ (en R a veces como Pr).  
 
 Pero ¿cuán baja debe ser esa probabilidad para poder decir que nuestra medición no se ajusta o rechaza la hipótesis nula al alejarse mucho de esta?  En muchos procedimientos estadísticos, la probabilidad para aceptar o rechazar la $H_0$ es 0.05 o 0.01.  A esta probabilidad se la conoce como el __nivel de significancia__ o $\alpha$.  Este valor de probabilidad debe establecerse al inicio de nuestra investigación, para no entrar en decisiones sesgadas al momento de aceptar o rechazar $H_0$, como veremos a continuación.  
 
@@ -105,7 +126,7 @@ Cuando se rechaza la $H_0$ y esta es verdadera, cometemos un __error Tipo I__, y
 A continuación un ejemplo más concreto de lo que estamos describiendo, para el caso de una __hipótesis nula de negatividad__ para un ensayo clínico:  
 
 ![tomado de https://www.statisticssolutions.com/](./imagenes/ho-negative-test.jpg)  
-__Figura 1.__  Ilustración de los errores Tipo I y Tipo II, para una $H_0$: prueba negativa de embarazo.
+__Figura 2.__  Ilustración de los errores Tipo I y Tipo II, para una $H_0$: prueba negativa de embarazo.
 
 ### Poder de la Prueba  
 
@@ -116,7 +137,7 @@ Se denomina __poder de la prueba__ a la probabilidad de poder rechazar una hipó
 3. el tamaño de la muestra  
 
 ![Tomado de Havel et al. 2019](./imagenes/Test Power.jpg)  
-__Figura 2.__  Ilustración de cómo al variar $\alpha$ cambia el valor de $\beta$, y el poder de la prueba, $1 - \beta$.   
+__Figura 3.__  Ilustración de cómo al variar $\alpha$ cambia el valor de $\beta$, y el poder de la prueba, $1 - \beta$.   
 
 \
 
