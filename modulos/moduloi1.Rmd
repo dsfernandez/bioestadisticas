@@ -147,16 +147,46 @@ __Figura 3.__  Ilustración de cómo al variar $\alpha$ cambia el valor de $\bet
 #### Objetivos  
 __Conocer el significado de la terminología y conceptos para realizar pruebas de hipótesis estadísticas__  
 
-En el glosario se encuentran la terminología  utilizada, usualmente __resaltada__.  
+### Términos claves para recordar  
+
+* nivel $\alpha$  
+* hipótesis alterna, $H_a$  
+* probabilidad $\beta$  
+* valor crítico del estadístico de la prueba  
+* prueba de hipótesis  
+* hipótesis nula, $H_0$  
+* valor p, _p-value_ o _Pr_  
+* poder de la prueba, $1 - \beta$  
+* estadísticamente significativo  
+* inferencia estadística  
+* prueba estadística  
+* teoría  
+* hipótesis formal  
+* error tipo I  
+* error tipo II  
 
 ### Efecto o diferencia significativa  
 
 Usualmente empleamos el término "significativo" para referirnos al resultado de una prueba, que nos permite rechazar la $H_0$ con a un nivel $\alpha$ predeterminado.  Es importante señalar que lo significativo es dentro del contexto de la prueba estadística (estadísticamente significativo), ya que la palabra significativo tiene otras acepciones, como llamativo, por ejemplo. 
 
 ### Pasos para Completar una Prueba de Hipótesis  
-Revisar __Box 6.2__ del libro de Havel _et al._ (2019)
+__Box 6.2__ del libro de Havel _et al._ (2019)    
+
+1.    Establecer claramente la __pregunta__ o __predicción__ que se quiere responder o probar.  
+2.    ¿Cuál __distribución__ describe el tipo de __muestras__ obtenidas?  Algunos ejemplos:   
+    a.    probabilidades: distribución binomial  
+    b.    contaje en tiempo o espacio: distribución de Poisson  
+    c.    medias muestrales: distribución normal  
+3.    ¿Cuál es la __prueba estadística__ apropiada?  
+4.    Formular las __hipótesis nula__ $H_0$ y __alterna__ $H_a$.  
+5.    Establecer el __nivel__ $\alpha$ al cual o debajo del cual rechazar $H_0$.  
+6.    Calcular el __estadístico__ correspondiente, de la prueba, usando la(s) muestra(a).  
+7.    Calcular el __valor__ apropiado de __p__ del estadístico de la prueba, usando una tabla o programa estadístico.  
+8.    Tomar una __decisión__ acerca de $H_0$, al comparar $\alpha$ y el __valor de p__.  Por ejemplo, si __p__ es menor o igual a $\alpha$, rechazar $H_0$.  
+9.    __Interpretar__ la decisión, a la luz de la pregunta o hipótesis formal original.      
 
 \
+
 
 [  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
 
