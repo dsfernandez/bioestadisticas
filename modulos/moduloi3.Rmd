@@ -74,10 +74,10 @@ Como pudimos observar en la función de densidad normal, la curva está definida
 
 __Figura 3__.  Areas de probabilidad o proporción bajo la curva de distribución normal estándar ($\mu = 0, \sigma = 1$), para algunos valores de $\sigma$.  
 
-La imagen anterior nos muestra la proporción de valores o probabilidades de ocurrencia (área) que hay debajo de la curva y entre 1 y 2 veces la desviación estándar.  Por ser una función simétrica, podemos decir que entre la media y 1 o 2 veces la desviación estándar, tendremos la mitad de la probabilidad o proporción de valores.  
+La imagen anterior nos muestra la proporción de valores o probabilidades de ocurrencia (área) que hay debajo de la curva y entre 1 y entre 1.96 veces la desviación estándar.  Por ser una función simétrica, podemos decir que entre la media y 1 o 1.96 veces la desviación estándar, tendremos la mitad de la probabilidad o proporción de valores.  
 
 #### __Ejercicio__  
-¿Cuál es la proporción de valores entre +1$\sigma$ y -2$\sigma$?
+¿Cuál es la proporción de valores entre +1$\sigma$ y -1.96$\sigma$?
 
 \
 
