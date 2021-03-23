@@ -248,7 +248,7 @@ dónde:
 > $x_{2,i} - x_{1,i}$: diferencia entre parejas de valores  
 > $R_i$: rango (orden) de las diferencias  
 
-El valor calculado se compara con un valor crítico de W para una probabilidad establecida.
+El valor calculado se compara con un [valor crítico de W](https://drive.google.com/file/d/1GwFMYPAU8YHuYVjZ02ky1F_BHAnCv94S/view?usp=sharing) para una probabilidad establecida.
 
 Los cálculos para usar la fórmula y realizar la prueba correspondiente son algo engorrosos, pero disponemos de procedimientos computacionales, como R, para realizarlos.  
 
