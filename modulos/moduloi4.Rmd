@@ -182,9 +182,9 @@ curacion %>%
   kable_classic(full_width = F, html_font = "Cambria")
 ```
 
-En primer lugar debemos formular las hipótesis de trabajo; en este experimento esperamos que la versión N del medicamento sea mejor que la versión O, por lo tanto el tiempo de curación debe ser menor y la diferencia N - O debe ser un número positivo. 
+En primer lugar debemos formular las hipótesis de trabajo; en este experimento esperamos que la versión N del medicamento sea mejor que la versión O, por lo tanto el tiempo de curación debe ser menor y la diferencia O - N debe ser un número positivo. 
 $$H_0 : \mu_{diferencia}  \leq 0$$  
-$$H_0 : \mu_{diferencia}  > 0$$  
+$$H_A : \mu_{diferencia}  > 0$$  
 
 A partir de los datos anteriores podemos calcular la media de las diferencias y su desviación estándar: 
 ```{r echo=FALSE}
