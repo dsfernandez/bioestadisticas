@@ -2322,15 +2322,15 @@ qqPlot(df.cerdos$masa, add.line = TRUE, points.col = &quot;blue&quot;, line.col 
 <div id="homogeneidad-de-varianza" class="section level3">
 <h3>Homogeneidad de varianza</h3>
 <blockquote>
-<p>Prueba de Bartlett</p>
+<p>Prueba de Levene</p>
 </blockquote>
-<p>Para la homogeneidad de varianza realizamos la <strong>prueba de Bartlett</strong>, que tiene una hipótesis nula de varianzas iguales:</p>
-<pre class="r"><code>bartlett.test(masa ~ Dieta, data=df.cerdos)</code></pre>
-<pre><code>## 
-##  Bartlett test of homogeneity of variances
-## 
-## data:  masa by Dieta
-## Bartlett&#39;s K-squared = 0.47515, df = 3, p-value = 0.9243</code></pre>
+<p>Para la homogeneidad de varianza realizamos la <strong>prueba de Levene</strong>, que tiene una hipótesis nula de varianzas iguales:</p>
+<pre class="r"><code>library(car)
+leveneTest(masa ~ Dieta, data = df.cerdos)</code></pre>
+<pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
+##       Df F value Pr(&gt;F)
+## group  3  0.4508 0.7205
+##       15</code></pre>
 <p>No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos por grupo tienen homogeneidad de varianza.</p>
 </div>
 <div id="remedios-cuando-no-se-cumplen-los-supuestos" class="section level3">

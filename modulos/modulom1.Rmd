@@ -329,11 +329,12 @@ shapiro.test(df.cerdos$masa)
 No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos tienen una distribución normal.
 
 ### Homogeneidad de varianza  
-> Prueba de Bartlett
+> Prueba de Levene
 
-Para la homogeneidad de varianza realizamos la __prueba de Bartlett__, que tiene una hipótesis nula de varianzas iguales:
-```{r bartletthomogeneidad}
-bartlett.test(masa ~ Dieta, data=df.cerdos)
+Para la homogeneidad de varianza realizamos la __prueba de Levene__, que tiene una hipótesis nula de varianzas iguales:
+```{r levenehomogeneidad, message=FALSE, warning=FALSE}
+library(car)
+leveneTest(masa ~ Dieta, data = df.cerdos)
 ```
 
 No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos por grupo tienen homogeneidad de varianza.
