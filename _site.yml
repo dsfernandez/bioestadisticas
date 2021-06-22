@@ -9,45 +9,45 @@ navbar:
     - text: "Datos"
       menu:
       - text: "Estadísticas"
-        href: modulos/modulod1.html
+        href: modulod1.html
       - text: "Variables - Manejo de Datos"
-        href: modulos/modulod2.html
+        href: modulod2.html
       - text: "Tablas y Gráficas"
-        href: modulos/modulod3.html
+        href: modulod3.html
       - text: "Estadísticas Descriptivas"
-        href: modulos/modulod4.html
+        href: modulod4.html
       - text: "Probabilidades - Distribuciones Discretas"
-        href: modulos/modulod5.html
+        href: modulod5.html
       - text: "Otros Recursos"
         href: datos.html
     - text: "Inferencias"
       menu:
         - text: "Inferencia Estadística - Prueba de Hipótesis"
-          href: modulos/moduloi1.html
+          href: moduloi1.html
         - text: "Hipótesis sobre Frecuencias"
-          href: modulos/moduloi2.html
+          href: moduloi2.html
         - text: "Distribución Normal"
-          href: modulos/moduloi3.html
+          href: moduloi3.html
         - text: "Inferencias: Una Población"
-          href: modulos/moduloi4.html
+          href: moduloi4.html
         - text: "Inferencias: Dos Poblaciones"
-          href: modulos/moduloi5.html
+          href: moduloi5.html
         - text: "Otros Recursos"
-          href: modulos/inferencia.html
+          href: inferencia.html
     - text: "Modelos"
       menu:
         - text: "Análisis de Varianza"
-          href: modulos/modulom1.html
+          href: modulom1.html
         - text: "Análisis de Correlación"
-          href: modulos/modulom2.html
+          href: modulom2.html
         - text: "Análisis de Regresión"
-          href: modulos/modulom3.html
+          href: modulom3.html
         - text: "Otros Modelos"
-          href: modulos/modulom4.html
+          href: modulom4.html
         - text: "Diseño Experimental"
-          href: modulos/modulom5.html
+          href: modulom5.html
         - text: "Otros Recursos"
-          href: modulos/modelos.html
+          href: modelos.html
 output:
   html_document:
     highlight: textmate

@@ -2,4 +2,4 @@
 title: "Bioestadísticas"
 ---
 
-![](./modulos/imagenes/sunflower.jpg)
+![](./imagenes/sunflower.jpg)
