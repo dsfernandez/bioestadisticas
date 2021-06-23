@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Análisis de Correlación</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Análisis de Correlación</h1>
+
+</div>
+
+
+<div id="análisis-de-correlación" class="section level1">
+<h1>3.2.Análisis de Correlación</h1>
+<p>A partir de esta sección estaremos considerando relaciones entre variables de una muestra o población, mediciones de atributos diferentes en un mismo sujeto u objeto. Ejemplos de estas relaciones:</p>
+<ul>
+<li>relación entre presión alta y riesgo de accidente cerebrovascular;<br />
+</li>
+<li>tamaño de lagartijas hembras y la cantidad de huevos producidos;<br />
+</li>
+<li>asociación entre presencia de compuestos tóxicos y la cantidad de descargas a cuerpos de agua.</li>
+</ul>
+<p>A modo de comparación con otras pruebas que ya hemos tratado:</p>
+<ul>
+<li>en la prueba <em>t</em> y el ANOVA, una variable es categórica (tratamientos, por ejemplo) y la otra es de mediciones (discreta o continua);<br />
+</li>
+<li>en la prueba <span class="math inline">\(\chi^2\)</span>, ambas variables son categóricas;<br />
+</li>
+<li>en la correlación, ambas variables son mediciones continuas.</li>
+</ul>
+<div id="asociación-o-modelo" class="section level2">
+<h2>3.2.1.Asociación o Modelo</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Distinguir entre una asociación entre variables y una relación causa-efecto.</strong></p>
+<p>Al probar la posible relación entre variables, es importante distinguir entre dos métodos muy utilizados en el análisis estadístico: el análisis de correlación y el análisis de regresión.</p>
+<p>En el <strong>análisis de correlación</strong> solamente nos interesa conocer si existe una asociación entre dos variables de mediciones. Con el <strong>análisis de regresión</strong> queremos modelar la dependencia de una variable respuesta (dependiente) en una variable predictora (independiente).</p>
+<p>En el análisis de correlación estamos interesado/as en investigar si existe un patrón de asociaciones entre variables, por lo tanto es mayormente una herramienta descriptiva. Es muy útil para seleccionar variables a considerar en estudios que pudieran ser muy complejos si se consideran todas las variables desde un principio.</p>
+<p>En el análisis de correlación nos hacemos las siguientes preguntas:</p>
+<ol style="list-style-type: decimal">
+<li>¿Están dos variables de mediciones relacionadas de alguna manera consistente y lineal, y si es así, en cuál dirección?<br />
+</li>
+<li>¿Qué tan fuerte es la relación? (La fuerza de una correlación está dada por cuán cerca el cambio en una variable covaría con la otra.)</li>
+</ol>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="coeficiente-de-correlación-de-pearson" class="section level2">
+<h2>3.2.2.Coeficiente de Correlación de Pearson</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Calcular el coeficiente de correlación de Pearson y probar su significancia</strong></p>
+<p>La medida de la fuerza de la relación entre dos variables es el <strong>coeficiente de correlación</strong>. El más comúnmente utilizado es el <strong>coeficiente de correlación de Pearson</strong>, representado por la letra griega <span class="math inline">\(\rho\)</span>, cuando se trata del valor teórico de la población completa de datos. Como usualmente no tenemos todos los valores de una población, sino una muestra, en este caso se usa la letra <em>r</em>.</p>
+</div>
+<div id="supuestos-para-el-análisis-de-correlación-de-pearson" class="section level3">
+<h3>Supuestos para el Análisis de Correlación de Pearson</h3>
+<ol style="list-style-type: decimal">
+<li>Es una <strong>muestra aleatoria</strong> de la población.<br />
+</li>
+<li>Cada variable es de mediciones continuas y juntas poseen una <strong>distribución normal bivariada</strong>.<br />
+</li>
+<li>La relación entre las variables, si existe, es <strong>lineal</strong>.</li>
+</ol>
+<pre class="r"><code>library (bivariate)
+f &lt;- nbvpdf (0, 0, 1, 1, 0)
+plot(f)</code></pre>
+<p><img src="modulom2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><strong>Figura 1.</strong> Distribución Normal Bivariada.</p>
+<p><br />
+</p>
+</div>
+<div id="el-coeficiente-de-correlación-de-pearson" class="section level3">
+<h3>El Coeficiente de Correlación de Pearson</h3>
+<p>La fórmula para calcular el coeficiente <em>r</em> de una muestra con dos variables es la siguiente:<br />
+<span class="math display">\[r = \frac{\sum xy - (\frac{\sum x \sum y}{n})}{\sqrt{(\sum x^2 - \frac{(\sum x)^2}{n})(\sum y^2 - \frac{(\sum y)^2}{n})}}\]</span></p>
+<p>dónde:</p>
+<blockquote>
+<p><span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> son los valores en pareja de las variables,<br />
+<span class="math inline">\(n\)</span> es el número de pares <span class="math inline">\(xy\)</span></p>
+</blockquote>
+<p>El numerador de la fórmula anterior es la <strong>covarianza</strong> y puede ser positiva o negativa, mientras que el denominador, que es la raíz cuadrada de las suma de cuadrados de cada variable, es siempre positivo. El valor de <em>r</em> (estimador de <span class="math inline">\(\rho\)</span>) puede estar entre 0 (no hay correlación) y +1 (perfecta correlación) cuando la relación es positiva y entre 0 y -1 cuando es negativa.</p>
+</div>
+<div id="cálculo-de-r" class="section level3">
+<h3>Cálculo de <em>r</em></h3>
+<blockquote>
+<p>Método manual y usando R</p>
+</blockquote>
+<p><strong>Ejemplo 1</strong><br />
+Vamos a calcular el coeficiente de correlación de Pearson, para la posible relación lineal entre la longitud del ala (cm) de un especie de ave, y el largo de su cola (cm).</p>
+<pre class="r"><code>library(kableExtra)
+#datos
+ala &lt;- c(10.4,10.8,11.1,10.2,10.3,10.2,
+         10.7,10.5,10.8,11.2,10.6,11.4)
+cola &lt;- c(7.4,7.6,7.9,7.2,7.4,7.1,
+          7.4,7.2,7.8,7.7,7.8,8.3)
+#cálculos de sumatorias
+n &lt;- length(ala)
+##X
+sumXi &lt;- sum(ala)
+sumXi2 &lt;- sum(ala^2)
+sumx2 &lt;- sumXi2 - ((sumXi)^2)/n
+##Y
+sumYi &lt;- sum(cola)
+sumYi2 &lt;- sum(cola^2)
+sumy2 &lt;- sumYi2 - ((sumYi)^2)/n
+#XY
+sumXiYi &lt;- sum(ala*cola)
+sumxy &lt;- sumXiYi - (sumXi*sumYi)/n
+#tablas de resultados parciales
+SumX &lt;- data.frame(sumXi,sumYi2,sumx2)
+SumY &lt;- data.frame(sumYi,sumYi2,sumy2)
+SumXY &lt;- data.frame(sumXiYi,sumxy)
+kable(SumX, format = &quot;markdown&quot;, col.names = c(&quot;Sumatoria  X&quot;,&quot;Sumatoria X^2&quot;, &quot;Suma Cuadrados X&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Sumatoria X</th>
+<th align="right">Sumatoria X^2</th>
+<th align="right">Suma Cuadrados X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">128.2</td>
+<td align="right">688.4</td>
+<td align="right">1.716667</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(SumY, format = &quot;markdown&quot;, col.names = c(&quot;Sumatoria  Y&quot;,&quot;Sumatoria Y^2&quot;, &quot;Suma Cuadrados Y&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Sumatoria Y</th>
+<th align="right">Sumatoria Y^2</th>
+<th align="right">Suma Cuadrados Y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">90.8</td>
+<td align="right">688.4</td>
+<td align="right">1.346667</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>kable(SumXY, format = &quot;markdown&quot;, col.names = c(&quot;Sumatoria XY&quot;, &quot;Covarianza XY&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Sumatoria XY</th>
+<th align="right">Covarianza XY</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">971.37</td>
+<td align="right">1.323333</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#Coeficiente de Correlación
+coefcorr &lt;- sumxy/sqrt(sumx2*sumy2)
+sprintf(&quot;r = %.3f&quot;, coefcorr)</code></pre>
+<pre><code>## [1] &quot;r = 0.870&quot;</code></pre>
+<p>Mediante R podemos obtener una gráfica de la distribución bivariada de los datos de la muestra, con la elipse del intervalo de confianza conjunto. La función <strong>cor</strong> calcula el valor del coeficiente de correlación de Pearson (y otros).</p>
+<pre class="r"><code>library(ggplot2)
+# datos
+ala &lt;- c(10.4,10.8,11.1,10.2,10.3,10.2,
+         10.7,10.5,10.8,11.2,10.6,11.4)
+cola &lt;- c(7.4,7.6,7.9,7.2,7.4,7.1,
+          7.4,7.2,7.8,7.7,7.8,8.3)
+# gráficas
+scatter &lt;- data.frame(ala,cola)
+ggplot(scatter, aes(ala, cola)) +
+  geom_point() +
+  stat_ellipse(type = &quot;t&quot;, level = 0.95, color = &quot;blue&quot;) +
+  stat_ellipse(type = &quot;norm&quot;, linetype = 2)</code></pre>
+<p><img src="modulom2_files/figure-html/graficapuntos-1.png" width="672" /></p>
+<p><strong>Figura 2.</strong> Codistribución de las variables longitud del ala (cm) y longitud de la cola (cm) en una especie de ave. La elipse azul indica el intervalo de confianza 95% multivariado con distribución <em>t</em> y la línea cortada el intevalo de confianza 95% multivariado con distribución normal.</p>
+<pre class="r"><code># cálculo coeficiente correlación
+rpearson &lt;- cor(ala, cola, method = &quot;pearson&quot;)
+sprintf(&quot;Coeficiente de Correlación de Pearson: %.3f&quot;, rpearson)</code></pre>
+<pre><code>## [1] &quot;Coeficiente de Correlación de Pearson: 0.870&quot;</code></pre>
+</div>
+<div id="probando-la-significancia-de-r" class="section level3">
+<h3>Probando la Significancia de <em>r</em></h3>
+<p>El coeficiente de correlación, <em>r</em>, es un estimador del parámetro poblacional <span class="math inline">\(\rho\)</span>. Podemos preguntarnos si ciertamente existe una correlación entre los valores X y los valores Y de la población, y probar <span class="math inline">\(H_0: \rho=0\)</span>.</p>
+<p>Una manera directa de hacerlo es utilizando una <a href="https://drive.google.com/open?id=1Tl2dawvLUybhoX3ePY66snMhLeVU2yEY">tabla de valores críticos de</a> <em>r</em>, con n - 2 grados de libertad (<span class="math inline">\(\nu\)</span>). Estos valores, en realidad, se basan en el estadístico <em>t</em>, mediante la fórmula: <span class="math display">\[r_{\alpha,\nu} = \sqrt \frac{t_{\alpha,\nu}^2}{t_{\alpha,\nu}^2 + \nu}\]</span></p>
+<p>Para nuestro ejemplo el valor crítico de <em>r</em> para <span class="math inline">\(\alpha\)</span> = 0.05 (dos colas, según nuestra hipótesis) y <span class="math inline">\(\nu\)</span> = 10, es 0.576. Al compararlo con el valor estimado de <em>r</em> = 0.876, podemos concluir que rechazamos la <span class="math inline">\(H_0\)</span> y decir que existe alguna relación entre las dos variables. Debo resaltar que esta relación no es necesariamente una de causa y efecto o dependencia de una en particular en la otra.</p>
+<p>Mediante R podemos calcular el valor crítico de <em>r</em>:</p>
+<pre class="r"><code>#valor crítico para r usando una función
+#basada en la fórmula r_alfa,nu
+critical.r &lt;- function( n, alpha) {
+  df &lt;- n - 2
+  critical.t &lt;- qt(alpha/2, df, lower.tail = F)
+  critical.r &lt;- sqrt( (critical.t^2) / ( (critical.t^2) + df ) )
+  return(critical.r)
+}
+#en nuestro caso n = 12, alfa = 0.05 (dos colas)
+rcrit &lt;- critical.r(12,0.05)
+sprintf(&quot;valor crítico de r(0.05,10) = %.3f&quot;, rcrit)</code></pre>
+<pre><code>## [1] &quot;valor crítico de r(0.05,10) = 0.576&quot;</code></pre>
+<p>También podemos realizar la prueba completa en R, utilizando la función <strong>cor.test</strong>:</p>
+<pre class="r"><code>cor.test(ala, cola, method=&quot;pearson&quot;)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  ala and cola
+## t = 5.5893, df = 10, p-value = 0.0002311
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.5923111 0.9631599
+## sample estimates:
+##       cor 
+## 0.8703546</code></pre>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="matriz-de-correlación" class="section level2">
+<h2>3.2.3.Matriz de Correlación</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Producir una matriz de coeficientes de correlación entre múltiples variables y evaluar su significancia</strong></p>
+<p>En muchos estudios exploratorios, con múltiples variables medidas al mismo tiempo, deseamos calcular todos los posibles valores de <em>r</em> para probar la asociación entre las variables. Esto se puede realizar utilizando programas o paquetes estadísticos que producen una matriz con los resultados del cálculo de todos los posibles valores de <em>r</em>.</p>
+<p><strong>Ejemplo 2.</strong><br />
+Vamos a explorar la posible relación entre variables socio-económicas y de salud pública en 53 ciudades pequeñas de Estados Unidos. Las variables a considerar son:</p>
+<blockquote>
+<p><em>death1K</em>: mortalidad por 1000 habitantes<br />
+<em>doctor100K</em>: cantidad de doctores por 100000 habitantes<br />
+<em>hosp100K</em>: camas de hospitales por 100000 habitantes<br />
+<em>income1K</em>: ingreso per capita en miles de dólares<br />
+<em>density</em>: densidad poblacional, habitantes por milla cuadrada</p>
+</blockquote>
+<p>Utilizando la función <strong>cor</strong> aplicada a una matriz de datos (en realidad un <em>data.frame</em>) vamos a crear la matriz de correlaciones.</p>
+<pre class="r"><code># leer datos desde Excel
+library(readxl)
+small_city &lt;- read_excel(&quot;./data/death_small_cities.xlsx&quot;, 
+    sheet = &quot;data&quot;)
+head(small_city)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   death1K doctor100K hosp100K income1K density
+##     &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+## 1    8            78      284     9.10     109
+## 2    9.30         68      433     8.70     144
+## 3    7.5          70      739     7.20     113
+## 4    8.90         96     1792     8.90      97
+## 5   10.2          74      477     8.30     206
+## 6    8.30        111      362    10.9      124</code></pre>
+<pre class="r"><code>coef1 &lt;- cor(small_city, method = &quot;pearson&quot;)
+round(coef1, 2)</code></pre>
+<pre><code>##            death1K doctor100K hosp100K income1K density
+## death1K       1.00       0.12     0.11    -0.17   -0.28
+## doctor100K    0.12       1.00     0.30     0.43   -0.02
+## hosp100K      0.11       0.30     1.00     0.03    0.19
+## income1K     -0.17       0.43     0.03     1.00    0.13
+## density      -0.28      -0.02     0.19     0.13    1.00</code></pre>
+<p>También podemos obtener el valor de <em>P</em> (probabilidad) de cada coeficiente para comparar con el valor establecido de <span class="math inline">\(\alpha\)</span> y decidir si se acepta o no la <span class="math inline">\(H_0\)</span>. Usamos en este caso la función <strong>rcorr</strong> del paquete <em>Hmisc</em>.</p>
+<pre class="r"><code>library(Hmisc)
+coef2 &lt;- rcorr(as.matrix(small_city), type = &quot;pearson&quot;)
+coef2</code></pre>
+<pre><code>##            death1K doctor100K hosp100K income1K density
+## death1K       1.00       0.12     0.11    -0.17   -0.28
+## doctor100K    0.12       1.00     0.30     0.43   -0.02
+## hosp100K      0.11       0.30     1.00     0.03    0.19
+## income1K     -0.17       0.43     0.03     1.00    0.13
+## density      -0.28      -0.02     0.19     0.13    1.00
+## 
+## n= 53 
+## 
+## 
+## P
+##            death1K doctor100K hosp100K income1K density
+## death1K            0.4091     0.4305   0.2181   0.0442 
+## doctor100K 0.4091             0.0316   0.0012   0.8873 
+## hosp100K   0.4305  0.0316              0.8450   0.1809 
+## income1K   0.2181  0.0012     0.8450            0.3582 
+## density    0.0442  0.8873     0.1809   0.3582</code></pre>
+<p>Cuando se realizan múltiples pruebas independientes el error tipo I se incrementa según el número de pruebas. Una manera de solucionar este problema es dividir <span class="math inline">\(\alpha\)</span> entre el número de pruebas independientes. Para calcular este número usamos esta fórmula:<br />
+<span class="math display">\[Num.\ pruebas\ independientes = \frac{(Num.\ variables)^2 - Num.\ variables}{2}\]</span></p>
+<p>En este caso el número de pruebas independientes es de:<br />
+<span class="math display">\[Num.\ pruebas\ independientes = \frac{5^2 - 5}{2} = 10\]</span> Por lo tanto el valor de <span class="math inline">\(\alpha\)</span> ajustado para este caso es: 0.05/10 = 0.005. Revisando los resultados de la correlación múltiple, solo las variables ingreso <em>per capita</em> y doctores por 100000 habitantes están relacionadas significativamente.<br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="correlación-no-paramétrica" class="section level2">
+<h2>3.2.4.Correlación No-paramétrica</h2>
+<div id="objetivos-3" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Realizar pruebas no-paramétricas de correlación, cuando no se cumple el supuesto de normalidad bivariada.</strong></p>
+<p>Cuando alguno de los datos se encuentra en una escala ordinal, o los supuestos de la correlación paramétrica (normalidad bivariada) no se cumplen, se puede usar una prueba no-paramétrica; la <strong>correlación de rangos de Spearman</strong>. La hipótesis nula es la misma que en la correlación de Pearson: no hay asociación entre las dos variables.</p>
+</div>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Tenemos los datos de la masa (g) de 13 tuataras (<em>Hatteria punctata</em>, reptil) adultos machos y del tamaño (<span class="math inline">\(m^2\)</span>) de sus respectivos territorios. Queremos saber si hay una asociación entre la masa de los reptiles y el territorio que ocupan, queremos probar la hipótesis de que animales meas grandes (masa) defienden territorios más grandes (área). Las mediciones de las variables no tienen distribución normal y no son muchos para obviar esta violación del supuesto.</p>
+</div>
+<div id="cálculo-del-coeficiente-de-correlación-de-spearman-n" class="section level3">
+<h3>Cálculo del Coeficiente de Correlación de Spearman (<em>n</em>)</h3>
+<blockquote>
+<p>Rango y diferencias de rango entre las variables</p>
+</blockquote>
+<p>Para calcular el <em>r</em> de Spearman:</p>
+<ol style="list-style-type: decimal">
+<li>Colocar un número de rango (<em>Rx</em> y <em>Ry</em>) para cada valor de las variables masa y territorio (cada una por separado).<br />
+</li>
+<li>Restar <em>Rx</em> - <em>Ry</em> (<em>d</em>) y elevarlo al cuadrado (<span class="math inline">\(d^2\)</span>).<br />
+</li>
+<li>Sumar los valores de <span class="math inline">\(d^2\)</span>, <span class="math inline">\(\sum d^2\)</span>.<br />
+</li>
+<li>Calcular la <em>r</em> de Spearman (<span class="math inline">\(r_s\)</span>):<br />
+<span class="math display">\[r_s = 1 - (\frac{6*\sum d^2}{n*(n^2 - 1)})\]</span></li>
+</ol>
+<pre class="r"><code>library(kableExtra)
+# datos
+tuatara &lt;- read.csv(&quot;./data/tuatara.txt&quot;, sep = &quot;&quot;)
+# tabla
+tuatara %&gt;% 
+  kable(caption = &quot;Tabla 1. Masa (g) de tuataras machos adultos (n = 13) y tamaño de su territorio (m2).  Rx y Ry representan el número de rango de los datos de cada variable ordenados de menor a mayor; d d.2 es la diferencia de rangos (Rx - Ry) para cada individuo y su cuadrado.&quot;) %&gt;%
+  kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Masa (g) de tuataras machos adultos (n = 13) y tamaño de su territorio (m2). Rx y Ry representan el número de rango de los datos de cada variable ordenados de menor a mayor; d d.2 es la diferencia de rangos (Rx - Ry) para cada individuo y su cuadrado.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+tuatara
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+Rx
+</th>
+<th style="text-align:right;">
+territory
+</th>
+<th style="text-align:right;">
+Ry
+</th>
+<th style="text-align:right;">
+d
+</th>
+<th style="text-align:right;">
+d.2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6.9
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+773
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+20.6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+-3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+840
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+17.2
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+505
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6.7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+765
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+20.0
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+780
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+24.1
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+-3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+235
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+790
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+13.8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+440
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+435
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+815
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+460
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+697
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+10.3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p>Para el ejemplo tenemos que:</p>
+<blockquote>
+<p><span class="math inline">\(\sum d^2\)</span> = 50<br />
+<span class="math inline">\(r_s\)</span> = 0.863</p>
+</blockquote>
+<p>Evaluamos la <span class="math inline">\(H_0:r_s = 0\)</span> utilizando la <a href="https://drive.google.com/file/d/1QySNDiwN4MvBE3hh0EUBZUuLdLpYKmMT/view?usp=sharing">Tabla de Valores Críticos para el Coeficiente de Correlación de Spearman</a>. El valor de <span class="math inline">\(r_{s,0.05,13}\)</span> es 0.560, por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span> para <span class="math inline">\(\alpha\)</span> = 0.05. En los tuataras macho la masa corporal está correlacionada con el área del territorio que ocupan.</p>
+</div>
+<div id="prueba-de-r_s-utilizando-r" class="section level3">
+<h3>Prueba de <span class="math inline">\(r_s\)</span> utilizando R</h3>
+<p>Utilizamos la función <strong>cor.test</strong> especificando que el método es el <span class="math inline">\(r_s\)</span> de Spearman.</p>
+<pre class="r"><code># cor.test para Spearman
+cor.test(tuatara$mass, tuatara$territory, method = &quot;spearman&quot;)</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  tuatara$mass and tuatara$territory
+## S = 50, p-value = 0.0001888
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.8626374</code></pre>
+<p>El resultado indica que el valor de <em>p</em> está por debajo del <span class="math inline">\(\alpha\)</span> = 0.05, y por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span> con baja probabilidad de equivocarnos.</p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

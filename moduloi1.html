@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Inferencia Estadística y Pruebas de Hipótesis</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Inferencia Estadística y Pruebas de Hipótesis</h1>
+
+</div>
+
+
+<div id="inferencia-estadística-y-prueba-de-hipótesis" class="section level1">
+<h1>2.1.Inferencia Estadística y Prueba de Hipótesis</h1>
+<div id="definiciones" class="section level4">
+<h4><strong>Definiciones</strong></h4>
+<p>Ver definiciones en el libro, y las siguientes entradas en el glosario del curso:</p>
+<ul>
+<li><a href="https://online.upr.edu/mod/glossary/showentry.php?eid=5523"><strong>Inferencia Estadística</strong></a><br />
+</li>
+<li><a href="https://online.upr.edu/mod/glossary/showentry.php?eid=6376"><strong>Estimación Estadística</strong></a><br />
+</li>
+<li><a href="https://online.upr.edu/mod/glossary/showentry.php?eid=7510"><strong>Prueba de Hipótesis</strong></a></li>
+</ul>
+</div>
+<div id="hipótesis-estadísticas" class="section level2">
+<h2>2.1.1.Hipótesis Estadísticas</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Construir hipótesis que puedan ser probadas estadísticamente</strong></p>
+<p>La observación de un fenómeno en el mundo biológico es usualmente muy interesante, pero cuando tratamos de explicarlo es cuando realmente estamos haciendo un trabajo científico. Es aquí donde interviene la formulación de una hipótesis adecuada.</p>
+</div>
+<div id="definiciones-1" class="section level4">
+<h4><strong>Definiciones</strong></h4>
+<ul>
+<li><a href="https://online.upr.edu/mod/glossary/showentry.php?eid=7541"><strong>Hipótesis</strong></a><br />
+</li>
+<li><a href="https://online.upr.edu/mod/glossary/showentry.php?eid=7542"><strong>Teoría</strong></a></li>
+</ul>
+</div>
+<div id="ejercicios" class="section level4">
+<h4><strong>Ejercicios</strong></h4>
+<p>Elaborar hipótesis formales sobre un tema asignado, partiendo de una pregunta y planteando una premisa y una predicción, y que pueda ser comprobada mediante observaciones y/o experimentación.</p>
+</div>
+<div id="hipótesis-estadísticas-1" class="section level3">
+<h3>Hipótesis Estadísticas</h3>
+<p>Para probar una hipótesis de manera estadística, debemos primero convertir la hipótesis formal en un par de hipótesis mutualmente excluyentes: la <strong>hipótesis nula</strong>, que se representa <span class="math inline">\(H_0\)</span>, y la <strong>hipótesis alterna</strong>, que se representa <span class="math inline">\(H_a\)</span> (o con un número, <span class="math inline">\(H_1\)</span>). Solamente la <span class="math inline">\(H_0\)</span> es la que se prueba directamente mediante estadísticas, y en un experimento representa la falta de efecto por parte de los tratamientos o condiciones experimentales; también puede representar lo esperado según un modelo probabilístico (Normal, Poisson, et c.).</p>
+<div id="ejemplos" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<p>En el libro de Havel <em>et al.</em> (2019): Table 6.2 Some Examples of Null and Alternative Hypotheses.<br />
+<br />
+</p>
+<p>Toda hipótesis nula genera una distribución de probabilidades, y cualquiera que sea esta distribución, está asociada a la hipótesis nula. La hipótesis alterna es todo aquello que no sea la hipótesis nula, y son mutuamente excluyentes. Es decir si una es correcta la otra no puede serlo, y entre ambas se cubren todas las posibilidades.</p>
+</div>
+<div id="ejemplos-1" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<p>Ver ejemplos anteriores para la distribución binomial y de Poisson.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="decisiones-estadísticas-y-potenciales-errores" class="section level2">
+<h2>2.1.2.Decisiones Estadísticas y Potenciales Errores</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer las probabilidades de rechazar la hipótesis nula y la de equivocarnos</strong></p>
+<p>En el ejemplo 5.7 del libro, observamos que la probabilidad de que una pareja heterocigota recesiva, tenga sus tres hijos con fibrosis cística (FC) es de 0.0156; podemos decir que en 100 parejas heterocigotas del alelo FC, con tres hijos, esperamos que entre una y dos parejas tengan los tres hijos con FC.</p>
+<p>Ahora bien, si en 15 parejas heterocigóticas, de un total de 100 con tres hijos, los tres tienen FC, ¿será algo que puede ocurrir al azar, según las reglas de la genética clásica? O, ¿existirán otros factores que determinan la FC en la población de la cual se obtuvo la muestra? Y si fueran 3 de 100, ¿es suficiente para rechazar que hay una segregación al azar de los alelos?</p>
+<p>Con la información anterior podemos formular las siguientes hipótesis estadísticas: <span class="math display">\[H_0 : parejas\ con\ tres\ hijos\ con\ FC \leq 2\]</span> para el caso de que sea un proceso puramente aleatorio de segregación de alelos y herencia simple.<br />
+<span class="math display">\[H_a : parejas\ con\ tres\ hijos\ con\ FC &gt; 2\]</span><br />
+para el caso en que intervengan otros factores, además de la genética Mendeliana.</p>
+<p>Mediante la función binomial, podemos calcular la probabilidad <em>(p(x))</em> de que el evento “tres hijos con FC” <em>(p = 0.0156)</em> ocurra en <em>x</em> número de parejas, en contraposición a los otros eventos <em>(q = 0.9844)</em> posibles (0, 1, o 2 hijos con FC), de un total de 100 parejas heterocigotas recesivas de tres hijos <em>(k)</em>:</p>
+<pre class="r"><code># para x = 15
+tresFC &lt;- dbinom(15, size = 100, prob = 0.0156)
+sprintf(&quot;probabilidad de tres hijos con FC en 15 de 100 parejas = %.2e&quot;, tresFC)</code></pre>
+<pre><code>## [1] &quot;probabilidad de tres hijos con FC en 15 de 100 parejas = 5.25e-11&quot;</code></pre>
+<pre class="r"><code># para x = 3
+tresFC &lt;- dbinom(3, size = 100, prob = 0.0156)
+sprintf(&quot;probabilidad de tres hijos con FC en 3 de 100 parejas = %.4f&quot;, tresFC)</code></pre>
+<pre><code>## [1] &quot;probabilidad de tres hijos con FC en 3 de 100 parejas = 0.1336&quot;</code></pre>
+<pre class="r"><code># para x = 2
+tresFC &lt;- dbinom(2, size = 100, prob = 0.0156)
+sprintf(&quot;probabilidad de tres hijos con FC en 2 de 100 parejas = %.4f&quot;, tresFC)</code></pre>
+<pre><code>## [1] &quot;probabilidad de tres hijos con FC en 2 de 100 parejas = 0.2580&quot;</code></pre>
+<pre class="r"><code># para x = 1
+tresFC &lt;- dbinom(1, size = 100, prob = 0.0156)
+sprintf(&quot;probabilidad de tres hijos con FC en 1 de 100 parejas = %.4f&quot;, tresFC)</code></pre>
+<pre><code>## [1] &quot;probabilidad de tres hijos con FC en 1 de 100 parejas = 0.3289&quot;</code></pre>
+<p>Los resultados muestran una probabilidad muy baja de que 15 parejas de 100, con tres hijos con FC, se dé de forma aleatoria, asumiendo que la hipótesis nula de que se cumple con la genética mendeliana solamente. Por otra parte, encontrar tres parejas de 100, no tiene una baja probabilidad de ocurrencia (en comparación con lo esperado, una o dos parejas) asumiendo que solo actúa la genética mendeliana y el azar.</p>
+<pre class="r"><code>parejas &lt;- 0:15
+plot(parejas,dbinom(parejas,size=100,prob=.0156),
+     type=&#39;h&#39;,
+     ylab=&#39;Probabilidad&#39;,
+     xlab =&#39;Número de parejas&#39;,
+     lwd=3)</code></pre>
+<p><img src="moduloi1_files/figure-html/binom-1.png" width="672" /></p>
+<p><strong>Figura 1.</strong> Distribución de probabilidades binomiales para diferentes números de parejas con tres hijos con FC (p = 0.0156), de un total de 100 parejas heterocigóticas recesivas para FC.</p>
+<p>Los resultados en la gráfica nos muestran que a medida de que el valor observado/medido se aleja de lo más esperado (que sería la <span class="math inline">\(H_0\)</span>), la probabilidad de que ocurra un mayor número de parejas con tres hijos con FC es menor, y en valores extremos (15 parejas) es extremadamente baja. Si nuestra medición es confiable, podemos pensar que la <span class="math inline">\(H_0\)</span> no se sostiene en este último caso, y la <span class="math inline">\(H_a\)</span> puede ser la alternativa.</p>
+</div>
+<div id="valor-de-probabilidad-p-value-y-nivel-de-significancia-de-la-prueba-alpha" class="section level3">
+<h3>Valor de probabilidad <em>(p-value)</em> y nivel de significancia de la prueba (<span class="math inline">\(\alpha\)</span>)</h3>
+<p>El valor anterior de probabilidad para 15 parejas con hijos con FC, es la probabilidad en esta prueba y con esta distribución de probabilidades, de obtener un valor extremo, asumiendo que la hipótesis nula es correcta, y es lo que encontraremos en las pruebas estadísticas como <strong>p-value</strong> (en R a veces como Pr).</p>
+<p>Pero ¿cuán baja debe ser esa probabilidad para poder decir que nuestra medición no se ajusta o rechaza la hipótesis nula al alejarse mucho de esta? En muchos procedimientos estadísticos, la probabilidad para aceptar o rechazar la <span class="math inline">\(H_0\)</span> es 0.05 o 0.01. A esta probabilidad se la conoce como el <strong>nivel de significancia</strong> o <span class="math inline">\(\alpha\)</span>. Este valor de probabilidad debe establecerse al inicio de nuestra investigación, para no entrar en decisiones sesgadas al momento de aceptar o rechazar <span class="math inline">\(H_0\)</span>, como veremos a continuación.</p>
+</div>
+<div id="dificultades-en-la-decisión-sobre-la-h_0" class="section level3">
+<h3>Dificultades en la Decisión sobre la <span class="math inline">\(H_0\)</span></h3>
+<p>El rechazo de <span class="math inline">\(H_0\)</span> al obtener un valor de <em>p</em>, puede llevarnos a conclusiones contradictorias si no establecemos de antemano un valor de <span class="math inline">\(\alpha\)</span> adecuado al tipo de estudio o procedimiento estadístico con el que estamos trabajando. Por ejemplo si obtenemos un valor de <em>p = 0.02</em>, podemos rechazar la <span class="math inline">\(H_0\)</span> si <span class="math inline">\(\alpha = 0.05\)</span>, pero no si establecemos un <span class="math inline">\(\alpha = 0.01\)</span> . Por esto es importante siempre reportar el valor de <em>p</em>, y no solamente indicar si se rechazó o no la <span class="math inline">\(H_0\)</span> .</p>
+<p>Lo anterior nos muestra una de las características que más nos dificulta el manejo de las estadísticas en nuestro quehacer en las ciencias: la omnipresencia de la incertidumbre.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+<div id="errores-tipo-i-y-tipo-ii" class="section level3">
+<h3>Errores Tipo I y Tipo II</h3>
+<p>Mediante las pruebas estadísticas tomamos la decisión de aceptar o rechazar la <span class="math inline">\(H_0\)</span>, y por otra parte esta puede ser verdadera o falsa. Por lo tanto hay cuatro posibles situaciones, dos correctas y dos incorrectas.</p>
+<div class="figure">
+<img src="imagenes/TypeError.jpg" alt="" />
+<p class="caption">tomado de <a href="https://www.bartleby.com/" class="uri">https://www.bartleby.com/</a></p>
+</div>
+<p>Cuando se rechaza la <span class="math inline">\(H_0\)</span> y esta es verdadera, cometemos un <strong>error Tipo I</strong>, y su riesgo lo determina el valor de <strong><span class="math inline">\(\alpha\)</span></strong>, el cual se establece antes de realizar la prueba. Un <strong>error Tipo II</strong> lo cometemos cuando fallamos en rechazar la <span class="math inline">\(H_0\)</span> cuando esta es en realidad falsa. La probabilidad de este tipo de error se denomina <strong><span class="math inline">\(\beta\)</span></strong>.</p>
+<p>A continuación un ejemplo más concreto de lo que estamos describiendo, para el caso de una <strong>hipótesis nula de negatividad</strong> para un ensayo clínico:</p>
+<p><img src="imagenes/ho-negative-test.jpg" alt="tomado de https://www.statisticssolutions.com/" /><br />
+<strong>Figura 2.</strong> Ilustración de los errores Tipo I y Tipo II, para una <span class="math inline">\(H_0\)</span>: prueba negativa de embarazo.</p>
+</div>
+<div id="poder-de-la-prueba" class="section level3">
+<h3>Poder de la Prueba</h3>
+<p>Se denomina <strong>poder de la prueba</strong> a la probabilidad de poder rechazar una hipótesis nula falsa, y su valor es <span class="math inline">\(1- \beta\)</span>. El valor de <span class="math inline">\(\alpha\)</span> lo seleccionamos de antemano, pero <span class="math inline">\(1-\beta\)</span> no lo conocemos de antemano, y está influenciado por los siguientes factores:</p>
+<ol style="list-style-type: decimal">
+<li>el error Tipo I <span class="math inline">\((\alpha)\)</span><br />
+</li>
+<li>la diferencia entre los estadísticos (media por ejemplo) que queremos discriminar; a esta diferencia también se la conoce como <strong>tamaño del efecto</strong> <span class="math inline">\((\delta)\)</span>; y<br />
+</li>
+<li>el tamaño de la muestra</li>
+</ol>
+<p><img src="imagenes/Test%20Power.jpg" alt="Tomado de Havel et al. 2019" /><br />
+<strong>Figura 3.</strong> Ilustración de cómo al variar <span class="math inline">\(\alpha\)</span> cambia el valor de <span class="math inline">\(\beta\)</span>, y el poder de la prueba, <span class="math inline">\(1 - \beta\)</span>.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="pruebas-de-hipótesis-alguna-terminología-para-recordar" class="section level2">
+<h2>2.1.3.Pruebas de Hipótesis: alguna terminología para recordar</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer el significado de la terminología y conceptos para realizar pruebas de hipótesis estadísticas</strong></p>
+</div>
+<div id="términos-claves-para-recordar" class="section level3">
+<h3>Términos claves para recordar</h3>
+<ul>
+<li>nivel <span class="math inline">\(\alpha\)</span><br />
+</li>
+<li>hipótesis alterna, <span class="math inline">\(H_a\)</span><br />
+</li>
+<li>probabilidad <span class="math inline">\(\beta\)</span><br />
+</li>
+<li>valor crítico del estadístico de la prueba<br />
+</li>
+<li>prueba de hipótesis<br />
+</li>
+<li>hipótesis nula, <span class="math inline">\(H_0\)</span><br />
+</li>
+<li>valor p, <em>p-value</em> o <em>Pr</em><br />
+</li>
+<li>poder de la prueba, <span class="math inline">\(1 - \beta\)</span><br />
+</li>
+<li>estadísticamente significativo<br />
+</li>
+<li>inferencia estadística<br />
+</li>
+<li>prueba estadística<br />
+</li>
+<li>teoría<br />
+</li>
+<li>hipótesis formal<br />
+</li>
+<li>error tipo I<br />
+</li>
+<li>error tipo II</li>
+</ul>
+</div>
+<div id="efecto-o-diferencia-significativa" class="section level3">
+<h3>Efecto o diferencia significativa</h3>
+<p>Usualmente empleamos el término “significativo” para referirnos al resultado de una prueba, que nos permite rechazar la <span class="math inline">\(H_0\)</span> con a un nivel <span class="math inline">\(\alpha\)</span> predeterminado. Es importante señalar que lo significativo es dentro del contexto de la prueba estadística (estadísticamente significativo), ya que la palabra significativo tiene otras acepciones, como llamativo, por ejemplo.</p>
+</div>
+<div id="pasos-para-completar-una-prueba-de-hipótesis" class="section level3">
+<h3>Pasos para Completar una Prueba de Hipótesis</h3>
+<p>Adaptado de <strong>Box 6.2</strong> del libro de Havel <em>et al.</em> (2019)</p>
+<ol style="list-style-type: decimal">
+<li>Establecer claramente la <strong>pregunta</strong> o <strong>predicción</strong> que se quiere responder o probar.<br />
+</li>
+<li>¿Cuál <strong>distribución</strong> describe el tipo de <strong>muestras</strong> obtenidas? Algunos ejemplos:<br />
+a. probabilidades: distribución binomial<br />
+b. contaje en tiempo o espacio: distribución de Poisson<br />
+c. medias muestrales: distribución normal<br />
+</li>
+<li>¿Cuál es la <strong>prueba estadística</strong> apropiada?<br />
+</li>
+<li>Formular las <strong>hipótesis nula</strong> <span class="math inline">\(H_0\)</span> y <strong>alterna</strong> <span class="math inline">\(H_a\)</span>.<br />
+</li>
+<li>Establecer el <strong>nivel</strong> <span class="math inline">\(\alpha\)</span> al cual o debajo del cual rechazar <span class="math inline">\(H_0\)</span>.<br />
+</li>
+<li>Calcular el <strong>estadístico</strong> correspondiente, de la prueba, usando la(s) muestra(s).<br />
+</li>
+<li>Calcular el <strong>valor</strong> apropiado de <strong>p</strong> del estadístico de la prueba, usando una tabla o programa estadístico.<br />
+</li>
+<li>Tomar una <strong>decisión</strong> acerca de <span class="math inline">\(H_0\)</span>, al comparar <span class="math inline">\(\alpha\)</span> y el <strong>valor de p</strong>. Por ejemplo, si <strong>p</strong> es menor o igual a <span class="math inline">\(\alpha\)</span>, rechazar <span class="math inline">\(H_0\)</span>.<br />
+</li>
+<li><strong>Interpretar</strong> la decisión, a la luz de la pregunta o hipótesis formal original.</li>
+</ol>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

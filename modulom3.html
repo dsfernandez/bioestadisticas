@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Análisis de Regresión</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Análisis de Regresión</h1>
+
+</div>
+
+
+<div id="análisis-de-regresión" class="section level1">
+<h1>3.3.Análisis de Regresión</h1>
+<p>En el análisis de regresión se busca un modelo para describir estadísticamente la relación entre una <strong>variable dependiente</strong> y otra (u otras) <strong>independiente</strong>. El modelo es una ecuación matemática que “cuantifica” la relación entre las variables. A la variable dependiente también se le llama <strong>variable respuesta</strong> (y se grafica en el eje <em>Y</em>) y a la variable independiente también se la conoce como <strong>variable predictora</strong> o <strong>explicativa</strong>.</p>
+<p>A diferencia del análisis de correlación, en el análisis de regresión se asume una <strong>relación causa-efecto</strong> en la que las variaciones en la variable predictora causan cambios en la variable respuesta.</p>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Escribir ejemplos de posibles relaciones causa-efecto entre dos variables, indicando cuál es la variable respuesta y cuál la predictora.</p>
+</div>
+<div id="fundamentos-de-la-regresión-lineal-simple" class="section level2">
+<h2>3.3.1.Fundamentos de la Regresión Lineal Simple</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Formalizar el modelo y los supuestos de la regresión lineal simple</strong></p>
+<p>Una <strong>regresión lineal simple</strong> modela el efecto de una variable predictora continua sobre una variable de respuesta continua. La <strong>ecuación de regresión</strong> resultante se puede representar gráficamente como una <strong>línea de regresión</strong>, que representa los valores esperados de la variable de respuesta para todos los valores de la variable predictora.</p>
+<p>En la regresión lineal simple, la relación funcional entre la variable dependiente (<em>y</em>) y la independiente (<em>x</em>) se representa:<br />
+<span class="math display">\[\mu_y = \alpha + \beta x\]</span></p>
+<p>donde:</p>
+<blockquote>
+<p><span class="math inline">\(\mu_y\)</span>: es la media poblacional de <em>y</em> para cualquier valor de <em>x</em>,<br />
+<span class="math inline">\(\alpha\)</span>: es el <strong>intercepto</strong> y<br />
+<span class="math inline">\(\beta\)</span>: es la <strong>pendiente</strong>.</p>
+</blockquote>
+<p>Esta ecuación describe una línea recta. En forma estadística esta ecuación toma la forma:<br />
+<span class="math display">\[y_i = \alpha + \beta x + e_i\]</span><br />
+donde el término <span class="math inline">\(e_i\)</span> indica la desviación aleatoria o <strong>residual</strong> del valor de <span class="math inline">\(y_i\)</span> con respecto al valor esperado <span class="math inline">\(\mu_y\)</span>.</p>
+</div>
+<div id="objetivos-del-análisis-de-regresión" class="section level3">
+<h3>Objetivos del Análisis de Regresión</h3>
+<ol style="list-style-type: decimal">
+<li>Estimar la ecuación de regresión mediante estimadores de <span class="math inline">\(\alpha\)</span> (<em>a</em>) y <span class="math inline">\(\beta\)</span> (<em>b</em>) a partir de una muestra y generar intervalos de confianza para los mismos.<br />
+</li>
+<li>Estimar que tanto está la variable dependiente controlada por la variable independiente, en otras palabras que tanto la variación en <em>y</em> se explica por la variación en <em>x</em>.<br />
+</li>
+<li>Usar la ecuación de regresión para predecir valores de <em>y</em> a partir de valores de <em>x</em>.</li>
+</ol>
+</div>
+<div id="supuestos-del-análisis-de-regresión" class="section level3">
+<h3>Supuestos del Análisis de Regresión</h3>
+<p>Como en todo análisis estadístico paramétrico, la regresión lineal simple posee algunos supuestos:</p>
+<ol style="list-style-type: decimal">
+<li>Las observaciones son independientes, lo cual implica que cada sujeto en una muestra solo se mide una vez: no puede haber pseudoreplicación.<br />
+</li>
+<li>Se asume que la relación entre las dos variables es lineal.<br />
+</li>
+<li>Los residuales (<span class="math inline">\(e_i\)</span>) alrededor de la línea de regresión tienen una distribución normal estándar (<span class="math inline">\(\mu = 0\)</span>).<br />
+</li>
+<li>La varianza de los residuales es igual para todos los valores de <em>x</em> de los datos. Esto es equivalente a la homogeneidad de varianza en el ANOVA.</li>
+</ol>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="parámetros-de-la-regresión" class="section level2">
+<h2>3.3.2.Parámetros de la Regresión</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Calcular y probar hipótesis sobre los estimadores de los parámetros de la regresión lineal simple</strong></p>
+</div>
+<div id="método-de-los-cuadrados-mínimos-least-squares" class="section level3">
+<h3>Método de los Cuadrados Mínimos (<em>Least Squares</em>)</h3>
+<p>El primer objetivo del análisis de regresión, encontrar los valores de <em>a</em> y <em>b</em> de la ecuación de la recta, requiere un procedimiento matemático para encontrar la “mejor” línea recta que pase por los puntos <span class="math inline">\((x_i,y_i)\)</span> de las variables respuesta y predictora. Comunmente se utiliza el método de los <strong>cuadrados mínimos (‘least squares’)</strong>, el cual consiste en encontrar el mínimo valor de esta expresión:<br />
+<span class="math display">\[\sum_{i=1}^n (y_i - \hat{y_i})^2\]</span> es decir el mínimo valor de la suma de las diferencias verticales de la <em>y</em> de cada punto y la <em>y</em> sobre una línea de regresión, elevada al cuadrado (Figura 1).</p>
+<p><img src="imagenes/14-2%20Variation%20in%20Dependent%20Variable.jpg" /><br />
+<br />
+<strong>Figura 1.</strong> Ritmo cardíaco (BPM) en función de la temperatura corporal (ºC) en pitones. Línea con la menor distancia vertical a los puntos de la muestra (<span class="math inline">\(y_i - \hat{y_i}\)</span>).</p>
+</div>
+<div id="cálculos-del-coeficiente-de-regresión-b-y-el-intercepto-en-el-eje-y-a" class="section level3">
+<h3>Cálculos del Coeficiente de Regresión (<em>b</em>) y el Intercepto en el eje Y (<em>a</em>)</h3>
+<p>Para el cálculo de los estimadores de <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>, según el método de los cuadrados mínimos, se necesitan las siguientes cantidades:</p>
+<p><strong>Suma de Cuadrados de la Variable Predictora, <span class="math inline">\(\sum x^2\)</span></strong><br />
+(todas las sumatorias son de <em>i</em> = 1 hasta <em>n</em>, número de puntos)<br />
+<span class="math display">\[\sum(X_i - \bar X)^2 = \sum X_i^{2} - \frac{(\sum X_i)^2}{n}  \]</span></p>
+<p><strong>Suma de Productos Cruzados, <span class="math inline">\(\sum xy\)</span></strong> <span class="math display">\[\sum(X_i - \bar X)(Y_i - \bar Y) = \sum X_iY_i - \frac{(\sum X_i)(\sum Y_i)}{n}\]</span> El <strong>coeficiente de regresión</strong> (parámetro <span class="math inline">\(\beta\)</span>) es la pendiente de la <strong>línea de regresión</strong> y su estimador (<em>b</em>) es el siguiente:<br />
+<span class="math display">\[b = \frac{\sum xy}{\sum x^2}\]</span> Para calcular el estimador de <span class="math inline">\(\alpha\)</span>, <em>a</em>, utilizamos el estimador <em>b</em> y las medias de <em>x</em> y <em>y</em> (que por deducción matemática, están en la recta de regresión): <span class="math display">\[a = \bar Y - b\bar X\]</span></p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo 1</strong></h4>
+<p>Vamos a usar los datos de la longitud (cm) del ala derecha de gorriones de diferentes edades (días). En este caso, podemos asumir que la variable dependiente es la longitud del ala y la independiente, la edad de las aves.</p>
+<pre class="r"><code>edad &lt;- c(3.0,4.0,5.0,6.0,8.0,9.0,10.0,11.0,12.0,14.0,15.0,16.0,17.0)
+l.ala &lt;- c(1.4,1.5,2.2,2.4,3.1,3.2,3.2,3.9,4.1,4.7,4.5,5.2,5.0)
+sparrow &lt;- data.frame(edad,l.ala)
+#tabla de datos
+knitr::kable(sparrow, col.names = c(&quot;Edad (días)&quot;, &quot;Longitud ala (cm)&quot;), caption = &#39;Tabla 1.  Longitud del ala derecha de gorriones de diferente edad&#39;) </code></pre>
+<table>
+<caption>
+Tabla 1. Longitud del ala derecha de gorriones de diferente edad
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Edad (días)
+</th>
+<th style="text-align:right;">
+Longitud ala (cm)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+5.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#gráfica x-y
+plot(edad,l.ala,xlab = &quot;Edad, días&quot;, ylab = &quot;Longitud, cm&quot;)</code></pre>
+<p><img src="modulom3_files/figure-html/gorriones-1.png" width="672" /><br />
+<strong>Figura 2.</strong> Gráfica de los datos de la Tabla 1, longitud del ala de gorriones (variable dependiente) y edad (variable independiente).</p>
+<p>Observando la Figura 2 podemos sospechar que hay una posible relación entre la longitud del ala y la edad. A continuación calcularemos los estadísticos que necesitamos para obtener los estimadores de los parámetros de la ecuación de regresión lineal para las variables de esta muestra.</p>
+</div>
+</div>
+<div id="cálculo-manual" class="section level3">
+<h3>Cálculo Manual</h3>
+<pre class="r"><code>#tamaño muestra
+n &lt;- length(l.ala)
+#medias
+X &lt;- mean(sparrow$edad)
+Y &lt;- mean(sparrow$l.ala)
+#sumatorias
+sumX &lt;- sum(sparrow$edad)
+sumY &lt;- sum(sparrow$l.ala)
+sumX2 &lt;- sum(sparrow$edad^2)
+sumXY &lt;- sum(sparrow$edad*sparrow$l.ala)
+#suma de cuadrados
+SSx2 &lt;- sumX2 - (sumX^2)/n
+Sxy &lt;- sumXY - (sumX*sumY)/n
+#cálculo de b
+est.b &lt;- Sxy/SSx2
+# cálculo de a  
+est.a = Y - est.b*X</code></pre>
+<p><strong>Resultados parciales</strong><br />
+<span class="math inline">\(\sum x_i\)</span> = 130<br />
+<span class="math inline">\(\sum y_i\)</span> = 44.4<br />
+<span class="math inline">\(\sum {x_i}^2\)</span> = 1562<br />
+<span class="math inline">\(\sum x_i y_i\)</span> = 514.8<br />
+<span class="math inline">\(\sum x^2\)</span> (suma de cuadrados) = 262<br />
+<span class="math inline">\(\sum xy\)</span> (suma de productos cruzados) = 70.8</p>
+<p><strong>Coeficiente de Regresión (<em>b</em>)</strong><br />
+<span class="math inline">\(b\)</span> = 0.270229</p>
+<p><strong>Intercepto en Y (<em>a</em>)</strong><br />
+<span class="math inline">\(a\)</span> = 0.7130945</p>
+<p><strong>Ecuación de la recta de regresión</strong></p>
+<pre><code>## [1] &quot;Y = 0.713 + 0.270X&quot;</code></pre>
+</div>
+<div id="cálculo-de-coeficientes-con-r" class="section level3">
+<h3>Cálculo de Coeficientes con R</h3>
+<p>Para obtener los coeficientes de la recta de regresión, usamos la función <strong>lm</strong> (<em>linear models</em>) en R.</p>
+<pre class="r"><code>regr &lt;- lm(l.ala ~ edad)
+coefficients(regr)</code></pre>
+<pre><code>## (Intercept)        edad 
+##   0.7130945   0.2702290</code></pre>
+</div>
+<div id="gráfica-de-la-línea-de-regresión-lineal" class="section level3">
+<h3>Gráfica de la línea de regresión lineal</h3>
+<pre class="r"><code>plot(edad,l.ala, xlab = &#39;Edad, días&#39;, ylab = &#39;Longitud del ala, cm&#39;, asp = 1)
+abline(regr, col = &#39;blue&#39;)</code></pre>
+<p><img src="modulom3_files/figure-html/unnamed-chunk-2-1.png" width="672" /><br />
+<strong>Figura 3.</strong> Línea de regresión para la relación entre la longitud del ala (cm) y la edad (días) de gorriones.</p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="pruebas-de-hipótesis-y-evaluación-de-la-regresión" class="section level2">
+<h2>3.3.3.Pruebas de Hipótesis y Evaluación de la Regresión</h2>
+<p><strong>Realizar pruebas de hipótesis sobre los coeficientes de la regresión y el cumplimiento de los supuestos</strong></p>
+<p>Una vez obtenida la ecuación de regresión, nos interesa saber cuál es su significancia en contraste con la hipótesis nula:<br />
+<span class="math display">\[H_0:\beta = 0\]</span><br />
+Por otra parte, es importante cuantificar qué tan bien el modelo de regresión (línea recta) predice <em>y</em> a partir de <em>x</em>; para esto calcularemos el <strong>coeficiente de determinación</strong> (<span class="math inline">\(\mathbf{r^2}\)</span>).</p>
+<p>Y finalmente, debemos determinar si las variables cumplen los supuestos para aplicar el análisis de regresión paramétrico.</p>
+<div id="significancia-de-la-ecuación-de-regresión" class="section level3">
+<h3>Significancia de la Ecuación de Regresión</h3>
+<p>Para probar el modelo de regresión utilizamos el estadístico <em>F</em>, de manera similar a lo hecho en el ANOVA, utilizando los cuadrados medios (<em>MS</em>) equivalentes. Como no tenemos grupos (tratamientos), en lugar de la suma de cuadrados dentro de grupos (<span class="math inline">\(SS_{within}\)</span>), utilizamos como equivalente los <strong>residuales</strong> (<strong><em>residual SS</em></strong>). A partir de la diferencia de cada valor de <em>y</em> con la media <span class="math inline">\(\bar y\)</span> global, calculamos la suma de cuadrados total (<strong><em>total SS</em></strong>). El equivalente a la suma de cuadrados entre grupos es la suma de cuadrados de la regresión (<strong><em>regresión SS</em></strong>).</p>
+<div id="fórmulas-para-los-cálculos-de-sumas-de-cuadrados" class="section level4">
+<h4><strong>Fórmulas para los cálculos de sumas de cuadrados:</strong></h4>
+<p><strong>Suma de Cuadrados de <em>y</em> o Total <span class="math inline">\(\sum y^2\)</span>:</strong><br />
+<span class="math display">\[total\ SS = \sum y_i{^2} - \frac{(\sum y_i)^2}{n}\]</span></p>
+<p><strong>Suma de Cuadrados de la Regresión:</strong> <span class="math display">\[regresión\ SS =\frac{(Suma\ Productos\ Cruzados\ xy)^2}{Suma\ Cuadrados\ de\ x} = \frac{(\sum xy)^2}{\sum x^2} = b\sum xy\]</span></p>
+<p><strong>Suma de Cuadrados de Residuales:</strong> <span class="math display">\[residual\ SS = total\ SS - regresión\ SS\]</span></p>
+</div>
+<div id="cuadrados-medios-y-estadístico-f" class="section level4">
+<h4><strong>Cuadrados medios y estadístico <em>F</em></strong></h4>
+<p>Para calcular los cuadrados medios necesitamos conocer los grados de libertad (<em>gl</em>). En el análisis de regresión estos son los siguientes:</p>
+<blockquote>
+<p><em>gl total</em> = <em>N</em> - 1 (<em>N</em>, cantidad de pares <span class="math inline">\(x_i,y_i\)</span>)<br />
+<em>gl regresión</em> = 1 (por tratarse de una sola variable independiente)<br />
+<em>gl residual</em> = <em>N</em> - 2</p>
+</blockquote>
+<p>Los cuadrados medios (<em>MS</em>) que necesitamos para calcular <em>F</em>:<br />
+<span class="math display">\[regresión\ MS = \frac{regresión\ SS}{gl\ regresión}\]</span><br />
+<span class="math display">\[residual\ MS = \frac{residual\ SS}{gl\ residual}\]</span> El estadístico <em>F</em>:<br />
+<span class="math display">\[F_{calculado} = \frac{regresión\ MS}{residual\ MS}\]</span></p>
+<p>Para completar la prueba, obtenemos el valor crítico de <em>F</em>, para un nivel de significancia <span class="math inline">\(\alpha\)</span> y con los grados de libertad del numerador (<span class="math inline">\(\nu_1\)</span> = <em>gl regresión</em>) y del denominador (<span class="math inline">\(\nu_2\)</span> = <em>gl residual</em>). Podemos utilizar la <a href="https://drive.google.com/file/d/1NAnlk4PMiPgof4suSOBxY58inOT1B2Kt/view?usp=sharing">Tabla de Valores Críticos de F</a> o la función <strong>qf</strong> en R (con <em>lower.tail</em> = FALSE).</p>
+</div>
+<div id="resumen-de-cálculos" class="section level4">
+<h4><strong>Resumen de cálculos</strong></h4>
+<strong>Tabla 2:</strong> Resumen de cálculos para la prueba de hipótesis del coeficiente de regresión <em>b</em>.<br />
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Fuente.de.Variacion
+</th>
+<th style="text-align:left;">
+SS
+</th>
+<th style="text-align:left;">
+GL
+</th>
+<th style="text-align:left;">
+MS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Total
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+total SS
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+n - 1
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Regresión
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+regresión SS
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+1
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+reg.SS/reg.GL
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Residual
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+residual SS
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+n - 2
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+res.SS/res.GL
+</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+<div id="ejercicio-1" class="section level4">
+<h4><strong>Ejercicio 1</strong></h4>
+<p>Con los datos del Ejemplo 1 vamos a calcular el estadístico <em>F</em> para probar la <span class="math inline">\(H_0\)</span>, y si la rechazamos aceptaremos como significativo para <span class="math inline">\(\alpha\)</span> = 0.05, el valor de <em>b</em> = 0.270.</p>
+</div>
+</div>
+<div id="cálculo-manual-1" class="section level3">
+<h3>Cálculo manual</h3>
+<pre class="r"><code>edad &lt;- c(3.0,4.0,5.0,6.0,8.0,9.0,10.0,11.0,12.0,14.0,15.0,16.0,17.0)
+l.ala &lt;- c(1.4,1.5,2.2,2.4,3.1,3.2,3.2,3.9,4.1,4.7,4.5,5.2,5.0)
+n &lt;- length(edad)
+reg1 &lt;- lm(l.ala ~ edad)
+coe &lt;- as.matrix(coefficients(reg1))
+b &lt;- coe[2,1]
+#Total SS
+TotalSS &lt;- sum(l.ala^2) - (sum(l.ala)^2)/n
+#Regresión SS
+RegresSS &lt;- b*(sum(l.ala*edad)-(sum(edad)*sum(l.ala))/n)
+#Residual SS
+ResidualSS &lt;- TotalSS - RegresSS
+#MS
+RegresMS &lt;- RegresSS/1
+ResidualMS &lt;- ResidualSS/(n-2)
+#tabla fuentes de variaciones
+SS &lt;- c(TotalSS, RegresSS, ResidualSS)
+GL &lt;- c(n-1, 1, n-2)
+MS &lt;- c(&quot; &quot;, RegresMS, ResidualMS)
+tabla2 &lt;- data.frame(
+  Fuente.de.Variacion = c(&quot;Total&quot;, &quot;Regresión&quot;, &quot;Residual&quot;),
+  SS, GL, MS)
+kable(tabla2) %&gt;%
+  kable_styling(full_width = F) %&gt;%
+  column_spec(1, bold = T, border_right = T) %&gt;%
+  column_spec(2:4, width = &quot;10em&quot;, background = &quot;orange&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Fuente.de.Variacion
+</th>
+<th style="text-align:right;">
+SS
+</th>
+<th style="text-align:right;">
+GL
+</th>
+<th style="text-align:left;">
+MS
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Total
+</td>
+<td style="text-align:right;width: 10em; background-color: orange !important;">
+19.6569231
+</td>
+<td style="text-align:right;width: 10em; background-color: orange !important;">
+12
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Regresión
+</td>
+<td style="text-align:right;width: 10em; background-color: orange !important;">
+19.1322137
+</td>
+<td style="text-align:right;width: 10em; background-color: orange !important;">
+1
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+19.132213740458
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;border-right:1px solid;">
+Residual
+</td>
+<td style="text-align:right;width: 10em; background-color: orange !important;">
+0.5247093
+</td>
+<td style="text-align:right;width: 10em; background-color: orange !important;">
+11
+</td>
+<td style="text-align:left;width: 10em; background-color: orange !important;">
+0.0477008487695559
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#Fs
+Fcalc &lt;- RegresMS/ResidualMS
+Ftabla &lt;- qf(.05,1,n-2, lower.tail = FALSE)</code></pre>
+<p><span class="math inline">\(F_{calculado}\)</span> = 401.0874908</p>
+<p><span class="math inline">\(F_{0.05,\nu_1=1,\nu_2=11}\)</span> = 4.8443357</p>
+<p>En conclusión, al encontrar que <span class="math inline">\(F_{calculado} &gt; F_{0.05,1,11}\)</span>, podemos rechazar la hipótesis nula de que <span class="math inline">\(\beta\)</span> = 0, y por lo tanto nuestro modelo muestra una relación significativa entre la longitud del ala y la edad de los gorriones.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+<div id="intervalo-de-confianza-para-beta" class="section level3">
+<h3>Intervalo de Confianza para <span class="math inline">\(\beta\)</span></h3>
+<p>El coeficiente de regresión <em>b</em> es un estimador del parámetro <span class="math inline">\(\beta\)</span>, que no conocemos, pero podemos calcular un intervalo de confianza alrededor de <em>b</em> en el que pudiera encontrarse con cierta probabilidad. Para esto debemos primero calcular el <strong>error estándar</strong> para <em>b</em>, <span class="math inline">\(s_b\)</span>.<br />
+<span class="math display">\[s_b = \sqrt \frac{residual\ MS}{\sum x_i^2 - \frac{[\sum x_i]^2}{n}}\]</span></p>
+<p>Todos los valores necesarios para el cálculo de <span class="math inline">\(s_b\)</span> ya los tenemos del cálculo de <em>b</em> y su prueba de significancia. La fórmula para el intervalo de confianza requiere obtener un valor del estadístico <em>t</em> para el nivel de confianza requerido (p. ej.: 95%):<br />
+<span class="math display">\[b \pm s_b*t_{\alpha,n-2}\]</span> Para nuestro ejemplo:</p>
+<p><em>residual MS</em> = 0.0477008</p>
+<p><span class="math inline">\(\sum x_i^2\)</span> = 1562</p>
+<p><span class="math inline">\(\sum x_i\)</span> = 130</p>
+<p><span class="math display">\[s_b = \sqrt \frac{0.0477}{1562 - \frac{[130]^2}{13}} = 0.01349\]</span> <span class="math display">\[t_{0.05,11} = 1.7959\]</span> El intervalo de confianza 95% para <span class="math inline">\(\beta\)</span>:<br />
+<span class="math display">\[0.2458 \leq \beta \leq 0.2942\]</span></p>
+</div>
+<div id="coeficiente-de-determinación" class="section level3">
+<h3>Coeficiente de Determinación</h3>
+<p>El estadístico <span class="math inline">\(r^2\)</span> nos permite conocer cuál es la proporción de la varianza en <em>y</em> que es explicada por su dependencia en <em>x</em>. A <span class="math inline">\(r^2\)</span> también se lo conoce como <strong>ajuste al modelo</strong> y su valor va de 0 a 1, con 1 como ajuste completo de los datos al modelo. El coeficiente de determinación se calcula:<br />
+<span class="math display">\[r^2 = \frac{regresión\ SS}{total\ SS}\]</span> Para nuestro ejemplo, y con los valores calculados anteriormente:<br />
+<span class="math display">\[r^2 = \frac{19.132}{19.657} = 0.973\]</span> Es decir que el modelo explica el 97.3% de la variación de <em>y</em> con su dependencia de <em>x</em>.</p>
+</div>
+<div id="cálculos-con-r" class="section level3">
+<h3>Cálculos con R</h3>
+<p>La función <strong>lm</strong> en R nos provee también los estadísticos y valores de probabilidad para probar hipótesis sobre el modelo de regresión lineal.</p>
+<pre class="r"><code>regrtest &lt;- lm(l.ala ~ edad, data = sparrow)
+summary(regrtest)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = l.ala ~ edad, data = sparrow)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.30699 -0.21538  0.06553  0.16324  0.22507 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.71309    0.14790   4.821 0.000535 ***
+## edad         0.27023    0.01349  20.027 5.27e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2184 on 11 degrees of freedom
+## Multiple R-squared:  0.9733, Adjusted R-squared:  0.9709 
+## F-statistic: 401.1 on 1 and 11 DF,  p-value: 5.267e-10</code></pre>
+<p><strong>Interpretación de los Resultados</strong></p>
+<ul>
+<li><em>Call:</em> variables sobre las que se aplica la función lm, variable dependiente ~ variable predictora.<br />
+</li>
+<li><em>Residuals:</em> cuartiles de la distribución de los valores del error (residuales); ayuda a determinar si los residuales tienen una distribución no-sesgada con respecto a la variable predictora.<br />
+</li>
+<li><em>Coefficients:</em> estimados de los coeficientes de la regresión, sus errores estándares, el valor t para su diferencia con 0, y la probabilidad (error tipo I) para este valor t.<br />
+</li>
+<li><em>Residual standard error:</em> el error estándar de los residuales, con n - 2 grados de libertad.<br />
+</li>
+<li><em>Multiple &amp; Adjusted R-squared:</em> los coeficientes de determinación (<span class="math inline">\(r^2\)</span>), múltiple (total) y ajustado al número de variables.<br />
+</li>
+<li><em>F-statistic:</em> el valor del estadístico F calculado, sus grados de libertad, y el valor p correspondiente.</li>
+</ul>
+</div>
+<div id="cumplimiento-de-los-supuestos" class="section level3">
+<h3>Cumplimiento de los Supuestos</h3>
+<p>El análisis de regresión, al igual que el ANOVA son bastantes robustos y permiten cierta desviación de los supuestos, en particular cuando se tiene un buen número de datos (por encima de 30 para algunos casos). El supuesto de normalidad de las variables se puede comprobar con la prueba de Shapiro-Wilk, y una desviación o no de la linealidad en la relación se puede detectar visualmente; la Figura 2 en nuestro ejemplo, muestra una aparente relación lineal.</p>
+<p>Es más crítico probar la normalidad de los residuales y su homogeneidad de varianza. A continuación usaremos gráficas de los residuales, obtenidos del modelo de regresión usando la función <strong>lm</strong> en R.</p>
+<pre class="r"><code># q-q plot de residuales
+plot(regrtest, 2)</code></pre>
+<p><img src="modulom3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><strong>Figura 4.</strong> Gráfica Q-Q de los residuales.</p>
+<p>En la Figura 4 se pueden observar desviaciones de la normalidad (línea punteada). Esta situación podría corregirse aumentando la cantidad de observaciones.</p>
+<pre class="r"><code># homocedasticidad residuales
+plot(regrtest, 3)</code></pre>
+<p><img src="modulom3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><strong>Figura 5.</strong> Raíz cuadrada de los residuales estandarizados del modelo en función de los valores ajustados de <em>y</em>. La línea roja muestra la tendencia de los puntos.</p>
+<p>En la gráfica de la Figura 5 aunque no parece ocurrir una desviación importante del supuesto de homogeneidad de varianza de los residuales, ya que se distribuyen de forma homogénea alrededor de la línea de tendencia, sin embargo esta debería ser horizontal.</p>
+<p>Para tratar de corregir estas desviaciones de los supuestos se pueden realizar transformaciones de los datos, al igual que se indicó en detalle para el ANOVA.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="predicción-de-y-a-partir-de-x-usando-la-ecuación-de-regresión" class="section level2">
+<h2>3.3.4.Predicción de <em>y</em> a partir de <em>x</em> usando la ecuación de regresión</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Estimar un valor de <em>y</em> a partir de un valor de <em>x</em> y su intervalo de confianza, usando la ecuación de regresión</strong></p>
+<p>Una vez que obtenemos los valores de <strong>a</strong> y <strong>b</strong> para la regresión lineal, podemos predecir el valor de la variable dependiente (<span class="math inline">\(\hat Y\)</span>) dado un valor de <span class="math inline">\(X_i\)</span>: <span class="math display">\[\hat Y = a + bX_i\]</span> <span class="math display">\[\hat Y = 0.715 + 0.270X_i\]</span></p>
+</div>
+<div id="ejercicio-2" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>¿cuánto mide el ala de un gorrión de 13 días?</p>
+<p>longitud del ala = 0.715 cm + (0.270 cm/día)(13 días) = 4.225 cm</p>
+<p>Es importante tener en cuenta que la línea de regresión es aplicable para el ámbito de edades a partir del cuál se calculó, - en este caso, entre 3 y 17 días - fuera del mismo no podemos esperar que la regresión sea la misma. Por ejemplo, usando la ecuación de regresión obtenida: ¿cuál sería la longitud del ala de un gorrión de seis meses (180 días)?</p>
+</div>
+<div id="error-estándar-e-intervalo-de-confianza-para-el-estimado-de-y" class="section level3">
+<h3>Error Estándar e Intervalo de Confianza para el Estimado de Y</h3>
+<p>El estimado de Y proviene de una ‘población’ de valores con un <strong>error estándar</strong> dado por la ecuación: <span class="math display">\[s_{\hat Y_i} = \sqrt{s_{Y·X}^2[\frac{1}{n} + \frac{(X_i - \bar X)^2}{\sum x^2}]}\]</span> donde <span class="math inline">\(s_{Y·X}^2\)</span> es el <strong>cuadrado medio de residuales</strong>: <span class="math display">\[ residual\ MS = \frac{residual\ SS}{n - 2}\]</span></p>
+<p>Continuando con el ejercicio anterior, vamos a calcular el error estándar para el estimado de <em>Y</em> (4.225 cm) con <em>X</em> = 13 días.</p>
+<pre class="r"><code>library(kableExtra)
+#Y estimado = 4.225
+#SumaCuadradosX = 262.0
+#residual MS = 0.047701
+#mediaX = 10
+#n = 13
+#error estándar del estimado de Y
+syi &lt;- sqrt(0.047701*(1/13 + ((13 - 10)^2)/262))
+#intervalo de confianza del estimado 95%
+linf &lt;- 4.225 - qt(.025, 11, lower.tail = FALSE)*syi
+lsup &lt;- 4.225 + qt(.025, 11, lower.tail = FALSE)*syi
+result &lt;- data.frame(syi, &quot;4.225&quot;, linf, lsup)
+kable(result, format = &quot;markdown&quot;, col.names = c(&quot;Error Est.&quot;, &quot;Y estimada&quot;, &quot;Límite inferior&quot;, &quot;Límite superior&quot;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Error Est.</th>
+<th align="left">Y estimada</th>
+<th align="right">Límite inferior</th>
+<th align="right">Límite superior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.0728553</td>
+<td align="left">4.225</td>
+<td align="right">4.064647</td>
+<td align="right">4.385353</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cálculos-con-r-1" class="section level3">
+<h3>Cálculos con R</h3>
+<pre class="r"><code>reg1 &lt;- lm(l.ala ~ edad)
+intconf &lt;- predict.lm(reg1, newdata=list(edad=13.0), se.fit = TRUE, 
+           interval=&quot;confidence&quot;, level=.95)
+table4 &lt;- data.frame(intconf)
+kable(table4[,c(4,1:3)], format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">se.fit</th>
+<th align="right">fit.fit</th>
+<th align="right">fit.lwr</th>
+<th align="right">fit.upr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.0728552</td>
+<td align="right">4.226072</td>
+<td align="right">4.065719</td>
+<td align="right">4.386425</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gráfica-de-la-línea-de-regresión-con-el-intervalo-de-confianza-95-de-hat-y" class="section level3">
+<h3>Gráfica de la Línea de Regresión con el Intervalo de Confianza (95%) de <span class="math inline">\(\hat Y\)</span></h3>
+<pre class="r"><code>library(ggplot2)
+ggplot(data=sparrow, aes(x=edad, y=l.ala)) +
+  geom_point(pch=19, color=&quot;blue&quot;, size=2) +
+  geom_smooth(method=&quot;lm&quot;, color=&quot;red&quot;, linetype=2) +
+  labs(x=&quot;Edad, días&quot;, y=&quot;Longitud del ala, cm&quot;)</code></pre>
+<p><img src="modulom3_files/figure-html/yic-1.png" width="672" /> <strong>Figura 4.</strong> Línea de regresión con intervalo de confianza de 95% para el estimado de <em>Y</em>, para la relación entre la longitud del ala derecha de gorriones (cm) y su edad (días).</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="otras-técnicas-de-regresión" class="section level2">
+<h2>3.3.5.Otras Técnicas de Regresión</h2>
+<div id="regresión-múltiple" class="section level3">
+<h3>Regresión Múltiple</h3>
+</div>
+<div id="regresión-logística" class="section level3">
+<h3>Regresión Logística</h3>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

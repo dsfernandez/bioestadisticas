@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Gráficas y Tablas</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="site_libs/rglWebGL-binding-0.106.8/rglWebGL.js"></script>
+<link href="site_libs/rglwidgetClass-0.106.8/rgl.css" rel="stylesheet" />
+<script src="site_libs/rglwidgetClass-0.106.8/rglClass.min.js"></script>
+<script src="site_libs/CanvasMatrix4-0.106.8/CanvasMatrix.min.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Gráficas y Tablas</h1>
+
+</div>
+
+
+<div id="tablas-y-gráficas" class="section level1">
+<h1>1.3.Tablas y Gráficas</h1>
+<p>Los seres humanos somos una especie mayormente visual, para la percepción del ambiente y la información producida por nosotros. Por esto, un paso esencial en el análisis de datos, es la organización y representación de los datos en tablas y gráficas, de manera lógica y clara.</p>
+<p>En algunos libros y programas como Excel, se utiliza el término <em>chart</em> para referirse a algunos tipos de de <strong>gráficas</strong> <em>(graphs)</em>. En los informes y trabajos científicos se utiliza un término más general: <strong>figura</strong>, el cual puede referirse a gráficas, dibujos esquemáticos, diagramas, y fotografías o imágenes.</p>
+<p>La creación de tablas, al igual que gráficas, debe seguir reglas de <strong>claridad</strong>, ser <strong>concretas y completas</strong>, y hacer <strong>uso eficiente del espacio</strong>.</p>
+<p>Toda figura o tabla debe tener una <strong>leyenda</strong> explicativa de las mismas, describiendo las variables, unidades, estadísticas, et c., de manera tal que cualquier persona pueda interpretar la gráfica, imagen o tabla, sin necesidad de leer el texto del trabajo. Las figuras y tablas deben ser enumeradas de manera separada, a medida que se citan en el texto. Las leyendas de las tablas se escriben en la parte superior de las mismas, mientras que las figuras llevan su leyenda en la parte de abajo. Debo indicar que las gráficas <strong>no</strong> llevan títulos en los informes o escritos científicos; pueden llevarlos en presentaciones o infografías.</p>
+<p>La decisión entre representar los datos en una tabla o una gráfica, depende de diversos factores, entre ellos la naturaleza de los datos y procedimientos estadísticos aplicadas, pero <strong>no</strong> se deben presentar los mismos resultados en tablas y gráficas.</p>
+<hr />
+<div id="gráficas-con-datos-numéricos" class="section level2">
+<h2>1.3.1.Gráficas con Datos Numéricos</h2>
+<div id="objetivo" class="section level4">
+<h4>Objetivo</h4>
+<p><strong>Construir gráficas que presenten datos de variables numéricas de manera clara y concisa</strong></p>
+<p>En el libro de texto (Havel et al. 2019, cap. 3) pueden encontrar algunas reglas para crear buenas gráficas.</p>
+</div>
+<div id="gráficas-de-puntos-scatterplot" class="section level3">
+<h3>Gráficas de Puntos <em>(scatterplot)</em></h3>
+<p>Se utilizan para representar la relación entre dos variables. Cada variable está representada en un eje, llamados <strong>eje x</strong> u <strong>horizontal</strong>, y <strong>eje y</strong> o <strong>vertical</strong>. Cuando hemos formulado una hipótesis sobre la relación causa-efecto entre las dos variables, el eje x representa la <strong>variable independiente</strong> o <strong>predictiva</strong>, y el eje y, la <strong>variable dependiente</strong> o <strong>respuesta</strong>.</p>
+<div id="ejemplos" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<p>Gráficas de datos de cactus <em>Melocactus intortus</em> (melón de costa), en el Bosque Seco de Guánica.</p>
+<div class="figure">
+<img src="imagenes/melocactus.jpg" alt="" />
+<p class="caption">Figura 1. <em>Melocactus intortus</em> en Bosque Seco de Guánica</p>
+</div>
+<pre class="r"><code># activación de paquete de gráficas
+library(ggplot2)
+# cargar datos melocactus
+melocactus &lt;- read.csv(&quot;./data/melocactus.csv&quot;)
+# gráfica de puntos
+scpl &lt;- ggplot(melocactus, aes(alturatotal, longinflo))
+scpl + geom_point() +
+  theme(axis.title=element_text(size=20,face=&quot;bold&quot;), axis.text=element_text(size=12, face=&quot;bold&quot;)) +
+  labs(x=&quot;Altura total, cm&quot;, y=&quot;Longitud de la inflorescencia, cm&quot;) +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14,face=&quot;bold&quot;))</code></pre>
+<p><img src="modulod3_files/figure-html/scatterplot-1.png" width="672" /></p>
+</div>
+<div id="figura-2.-relación-entre-la-altura-total-de-la-planta-cm-y-la-longitud-de-la-inflorescencia-cm-en-una-población-de-melocactus-intortus-en-el-bosque-seco-de-guánica." class="section level4">
+<h4>Figura 2. Relación entre la altura total de la planta (cm) y la longitud de la inflorescencia (cm), en una población de <em>Melocactus intortus</em> en el Bosque Seco de Guánica.</h4>
+<p><br />
+</p>
+</div>
+</div>
+<div id="gráfica-de-serie-de-tiempo" class="section level3">
+<h3>Gráfica de Serie de Tiempo</h3>
+<p>Se utilizan para representar los cambios a lo largo del tiempo (eje x) en una variable numérica (eje y).</p>
+<div class="figure">
+<img src="imagenes/serie-tiempo.jpg" alt="" />
+<p class="caption"><strong>Figura 3. Duración del hielo, en días, en cada año en Lago Mendota, Wisconsin. Datos tomados de lter.limnology.wisc.edu</strong></p>
+</div>
+<p>Usando R</p>
+<pre class="r"><code>library(readxl)
+covid_Austr &lt;- read_excel(&quot;data/CoviD-19 Australia.xlsx&quot;)
+p &lt;- ggplot(covid_Austr, aes(x=date, y=contagiados)) +
+  geom_line() + 
+  xlab(&quot;&quot;)
+p</code></pre>
+<p><img src="modulod3_files/figure-html/ts-1.png" width="672" /></p>
+<div id="figura-4.-número-de-nuevos-contagios-con-covid-19-por-día-en-australia." class="section level4">
+<h4>Figura 4. Número de nuevos contagios con CoViD-19 por día, en Australia.</h4>
+</div>
+</div>
+<div id="otros-tipos-de-gráficas" class="section level3">
+<h3>Otros tipos de Gráficas</h3>
+<p>Hay otras opciones para representar datos numéricos, incluyendo:</p>
+<ul>
+<li>gráficas de dos variables con <strong>línea de regresión e intervalos de confianza</strong>: para representar resultados de análisis de regresión.<br />
+</li>
+<li>gráficas de <strong>tres variables</strong>: con tres ejes o con dos ejes y símbolo proporcional a la tercera variable.<br />
+</li>
+<li><strong>coordenadas:</strong> para ubicación de individuos, pueden ser cartesianas o polares.<br />
+<br />
+</li>
+</ul>
+<blockquote>
+<p><strong>Gráfica de tres dimensiones (3D)</strong></p>
+</blockquote>
+<p>A continuación un ejemplo de una gráfica de tres ejes, para las variables largo de sépalo (X), ancho de sépalo (Y) y largo de pétalo (Z), de los datos ‘iris’ en R.</p>
+<pre class="r"><code># paquete 3D
+library(rgl)
+# Datos &#39;iris&#39; en R
+data &lt;- iris
+# Añadir columna de colores para diferenciar especies de iris
+mycolors &lt;- c(&#39;royalblue1&#39;, &#39;darkcyan&#39;, &#39;oldlace&#39;)
+data$color &lt;- mycolors[ as.numeric(data$Species) ]
+# gráfica 3D
+par(mar=c(0,0,0,0))
+plot3d( 
+  x=data$`Sepal.Length`, y=data$`Sepal.Width`, z=data$`Petal.Length`, 
+  col = data$color, 
+  type = &#39;s&#39;, 
+  radius = .1,
+  xlab=&quot;Sepal Length&quot;, ylab=&quot;Sepal Width&quot;, zlab=&quot;Petal Length&quot;)
+rglwidget()</code></pre>
+<div id="rgl86662" style="width:672px;height:480px;" class="rglWebGL html-widget"></div>
+<script type="application/json" data-for="rgl86662">{"x":{"material":{"color":"#000000","alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false,"polygon_offset":[0,0]},"rootSubscene":7,"objects":{"13":{"id":13,"type":"spheres","material":{},"vertices":[[5.09999990463257,3.5,1.39999997615814],[4.90000009536743,3,1.39999997615814],[4.69999980926514,3.20000004768372,1.29999995231628],[4.59999990463257,3.09999990463257,1.5],[5,3.59999990463257,1.39999997615814],[5.40000009536743,3.90000009536743,1.70000004768372],[4.59999990463257,3.40000009536743,1.39999997615814],[5,3.40000009536743,1.5],[4.40000009536743,2.90000009536743,1.39999997615814],[4.90000009536743,3.09999990463257,1.5],[5.40000009536743,3.70000004768372,1.5],[4.80000019073486,3.40000009536743,1.60000002384186],[4.80000019073486,3,1.39999997615814],[4.30000019073486,3,1.10000002384186],[5.80000019073486,4,1.20000004768372],[5.69999980926514,4.40000009536743,1.5],[5.40000009536743,3.90000009536743,1.29999995231628],[5.09999990463257,3.5,1.39999997615814],[5.69999980926514,3.79999995231628,1.70000004768372],[5.09999990463257,3.79999995231628,1.5],[5.40000009536743,3.40000009536743,1.70000004768372],[5.09999990463257,3.70000004768372,1.5],[4.59999990463257,3.59999990463257,1],[5.09999990463257,3.29999995231628,1.70000004768372],[4.80000019073486,3.40000009536743,1.89999997615814],[5,3,1.60000002384186],[5,3.40000009536743,1.60000002384186],[5.19999980926514,3.5,1.5],[5.19999980926514,3.40000009536743,1.39999997615814],[4.69999980926514,3.20000004768372,1.60000002384186],[4.80000019073486,3.09999990463257,1.60000002384186],[5.40000009536743,3.40000009536743,1.5],[5.19999980926514,4.09999990463257,1.5],[5.5,4.19999980926514,1.39999997615814],[4.90000009536743,3.09999990463257,1.5],[5,3.20000004768372,1.20000004768372],[5.5,3.5,1.29999995231628],[4.90000009536743,3.59999990463257,1.39999997615814],[4.40000009536743,3,1.29999995231628],[5.09999990463257,3.40000009536743,1.5],[5,3.5,1.29999995231628],[4.5,2.29999995231628,1.29999995231628],[4.40000009536743,3.20000004768372,1.29999995231628],[5,3.5,1.60000002384186],[5.09999990463257,3.79999995231628,1.89999997615814],[4.80000019073486,3,1.39999997615814],[5.09999990463257,3.79999995231628,1.60000002384186],[4.59999990463257,3.20000004768372,1.39999997615814],[5.30000019073486,3.70000004768372,1.5],[5,3.29999995231628,1.39999997615814],[7,3.20000004768372,4.69999980926514],[6.40000009536743,3.20000004768372,4.5],[6.90000009536743,3.09999990463257,4.90000009536743],[5.5,2.29999995231628,4],[6.5,2.79999995231628,4.59999990463257],[5.69999980926514,2.79999995231628,4.5],[6.30000019073486,3.29999995231628,4.69999980926514],[4.90000009536743,2.40000009536743,3.29999995231628],[6.59999990463257,2.90000009536743,4.59999990463257],[5.19999980926514,2.70000004768372,3.90000009536743],[5,2,3.5],[5.90000009536743,3,4.19999980926514],[6,2.20000004768372,4],[6.09999990463257,2.90000009536743,4.69999980926514],[5.59999990463257,2.90000009536743,3.59999990463257],[6.69999980926514,3.09999990463257,4.40000009536743],[5.59999990463257,3,4.5],[5.80000019073486,2.70000004768372,4.09999990463257],[6.19999980926514,2.20000004768372,4.5],[5.59999990463257,2.5,3.90000009536743],[5.90000009536743,3.20000004768372,4.80000019073486],[6.09999990463257,2.79999995231628,4],[6.30000019073486,2.5,4.90000009536743],[6.09999990463257,2.79999995231628,4.69999980926514],[6.40000009536743,2.90000009536743,4.30000019073486],[6.59999990463257,3,4.40000009536743],[6.80000019073486,2.79999995231628,4.80000019073486],[6.69999980926514,3,5],[6,2.90000009536743,4.5],[5.69999980926514,2.59999990463257,3.5],[5.5,2.40000009536743,3.79999995231628],[5.5,2.40000009536743,3.70000004768372],[5.80000019073486,2.70000004768372,3.90000009536743],[6,2.70000004768372,5.09999990463257],[5.40000009536743,3,4.5],[6,3.40000009536743,4.5],[6.69999980926514,3.09999990463257,4.69999980926514],[6.30000019073486,2.29999995231628,4.40000009536743],[5.59999990463257,3,4.09999990463257],[5.5,2.5,4],[5.5,2.59999990463257,4.40000009536743],[6.09999990463257,3,4.59999990463257],[5.80000019073486,2.59999990463257,4],[5,2.29999995231628,3.29999995231628],[5.59999990463257,2.70000004768372,4.19999980926514],[5.69999980926514,3,4.19999980926514],[5.69999980926514,2.90000009536743,4.19999980926514],[6.19999980926514,2.90000009536743,4.30000019073486],[5.09999990463257,2.5,3],[5.69999980926514,2.79999995231628,4.09999990463257],[6.30000019073486,3.29999995231628,6],[5.80000019073486,2.70000004768372,5.09999990463257],[7.09999990463257,3,5.90000009536743],[6.30000019073486,2.90000009536743,5.59999990463257],[6.5,3,5.80000019073486],[7.59999990463257,3,6.59999990463257],[4.90000009536743,2.5,4.5],[7.30000019073486,2.90000009536743,6.30000019073486],[6.69999980926514,2.5,5.80000019073486],[7.19999980926514,3.59999990463257,6.09999990463257],[6.5,3.20000004768372,5.09999990463257],[6.40000009536743,2.70000004768372,5.30000019073486],[6.80000019073486,3,5.5],[5.69999980926514,2.5,5],[5.80000019073486,2.79999995231628,5.09999990463257],[6.40000009536743,3.20000004768372,5.30000019073486],[6.5,3,5.5],[7.69999980926514,3.79999995231628,6.69999980926514],[7.69999980926514,2.59999990463257,6.90000009536743],[6,2.20000004768372,5],[6.90000009536743,3.20000004768372,5.69999980926514],[5.59999990463257,2.79999995231628,4.90000009536743],[7.69999980926514,2.79999995231628,6.69999980926514],[6.30000019073486,2.70000004768372,4.90000009536743],[6.69999980926514,3.29999995231628,5.69999980926514],[7.19999980926514,3.20000004768372,6],[6.19999980926514,2.79999995231628,4.80000019073486],[6.09999990463257,3,4.90000009536743],[6.40000009536743,2.79999995231628,5.59999990463257],[7.19999980926514,3,5.80000019073486],[7.40000009536743,2.79999995231628,6.09999990463257],[7.90000009536743,3.79999995231628,6.40000009536743],[6.40000009536743,2.79999995231628,5.59999990463257],[6.30000019073486,2.79999995231628,5.09999990463257],[6.09999990463257,2.59999990463257,5.59999990463257],[7.69999980926514,3,6.09999990463257],[6.30000019073486,3.40000009536743,5.59999990463257],[6.40000009536743,3.09999990463257,5.5],[6,3,4.80000019073486],[6.90000009536743,3.09999990463257,5.40000009536743],[6.69999980926514,3.09999990463257,5.59999990463257],[6.90000009536743,3.09999990463257,5.09999990463257],[5.80000019073486,2.70000004768372,5.09999990463257],[6.80000019073486,3.20000004768372,5.90000009536743],[6.69999980926514,3.29999995231628,5.69999980926514],[6.69999980926514,3,5.19999980926514],[6.30000019073486,2.5,5],[6.5,3,5.19999980926514],[6.19999980926514,3.40000009536743,5.40000009536743],[5.90000009536743,3,5.09999990463257]],"colors":[[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0.282352954149246,0.462745100259781,1,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0,0.545098066329956,0.545098066329956,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1],[0.992156863212585,0.960784316062927,0.901960790157318,1]],"radii":[[0.100000001490116]],"centers":[[5.09999990463257,3.5,1.39999997615814],[4.90000009536743,3,1.39999997615814],[4.69999980926514,3.20000004768372,1.29999995231628],[4.59999990463257,3.09999990463257,1.5],[5,3.59999990463257,1.39999997615814],[5.40000009536743,3.90000009536743,1.70000004768372],[4.59999990463257,3.40000009536743,1.39999997615814],[5,3.40000009536743,1.5],[4.40000009536743,2.90000009536743,1.39999997615814],[4.90000009536743,3.09999990463257,1.5],[5.40000009536743,3.70000004768372,1.5],[4.80000019073486,3.40000009536743,1.60000002384186],[4.80000019073486,3,1.39999997615814],[4.30000019073486,3,1.10000002384186],[5.80000019073486,4,1.20000004768372],[5.69999980926514,4.40000009536743,1.5],[5.40000009536743,3.90000009536743,1.29999995231628],[5.09999990463257,3.5,1.39999997615814],[5.69999980926514,3.79999995231628,1.70000004768372],[5.09999990463257,3.79999995231628,1.5],[5.40000009536743,3.40000009536743,1.70000004768372],[5.09999990463257,3.70000004768372,1.5],[4.59999990463257,3.59999990463257,1],[5.09999990463257,3.29999995231628,1.70000004768372],[4.80000019073486,3.40000009536743,1.89999997615814],[5,3,1.60000002384186],[5,3.40000009536743,1.60000002384186],[5.19999980926514,3.5,1.5],[5.19999980926514,3.40000009536743,1.39999997615814],[4.69999980926514,3.20000004768372,1.60000002384186],[4.80000019073486,3.09999990463257,1.60000002384186],[5.40000009536743,3.40000009536743,1.5],[5.19999980926514,4.09999990463257,1.5],[5.5,4.19999980926514,1.39999997615814],[4.90000009536743,3.09999990463257,1.5],[5,3.20000004768372,1.20000004768372],[5.5,3.5,1.29999995231628],[4.90000009536743,3.59999990463257,1.39999997615814],[4.40000009536743,3,1.29999995231628],[5.09999990463257,3.40000009536743,1.5],[5,3.5,1.29999995231628],[4.5,2.29999995231628,1.29999995231628],[4.40000009536743,3.20000004768372,1.29999995231628],[5,3.5,1.60000002384186],[5.09999990463257,3.79999995231628,1.89999997615814],[4.80000019073486,3,1.39999997615814],[5.09999990463257,3.79999995231628,1.60000002384186],[4.59999990463257,3.20000004768372,1.39999997615814],[5.30000019073486,3.70000004768372,1.5],[5,3.29999995231628,1.39999997615814],[7,3.20000004768372,4.69999980926514],[6.40000009536743,3.20000004768372,4.5],[6.90000009536743,3.09999990463257,4.90000009536743],[5.5,2.29999995231628,4],[6.5,2.79999995231628,4.59999990463257],[5.69999980926514,2.79999995231628,4.5],[6.30000019073486,3.29999995231628,4.69999980926514],[4.90000009536743,2.40000009536743,3.29999995231628],[6.59999990463257,2.90000009536743,4.59999990463257],[5.19999980926514,2.70000004768372,3.90000009536743],[5,2,3.5],[5.90000009536743,3,4.19999980926514],[6,2.20000004768372,4],[6.09999990463257,2.90000009536743,4.69999980926514],[5.59999990463257,2.90000009536743,3.59999990463257],[6.69999980926514,3.09999990463257,4.40000009536743],[5.59999990463257,3,4.5],[5.80000019073486,2.70000004768372,4.09999990463257],[6.19999980926514,2.20000004768372,4.5],[5.59999990463257,2.5,3.90000009536743],[5.90000009536743,3.20000004768372,4.80000019073486],[6.09999990463257,2.79999995231628,4],[6.30000019073486,2.5,4.90000009536743],[6.09999990463257,2.79999995231628,4.69999980926514],[6.40000009536743,2.90000009536743,4.30000019073486],[6.59999990463257,3,4.40000009536743],[6.80000019073486,2.79999995231628,4.80000019073486],[6.69999980926514,3,5],[6,2.90000009536743,4.5],[5.69999980926514,2.59999990463257,3.5],[5.5,2.40000009536743,3.79999995231628],[5.5,2.40000009536743,3.70000004768372],[5.80000019073486,2.70000004768372,3.90000009536743],[6,2.70000004768372,5.09999990463257],[5.40000009536743,3,4.5],[6,3.40000009536743,4.5],[6.69999980926514,3.09999990463257,4.69999980926514],[6.30000019073486,2.29999995231628,4.40000009536743],[5.59999990463257,3,4.09999990463257],[5.5,2.5,4],[5.5,2.59999990463257,4.40000009536743],[6.09999990463257,3,4.59999990463257],[5.80000019073486,2.59999990463257,4],[5,2.29999995231628,3.29999995231628],[5.59999990463257,2.70000004768372,4.19999980926514],[5.69999980926514,3,4.19999980926514],[5.69999980926514,2.90000009536743,4.19999980926514],[6.19999980926514,2.90000009536743,4.30000019073486],[5.09999990463257,2.5,3],[5.69999980926514,2.79999995231628,4.09999990463257],[6.30000019073486,3.29999995231628,6],[5.80000019073486,2.70000004768372,5.09999990463257],[7.09999990463257,3,5.90000009536743],[6.30000019073486,2.90000009536743,5.59999990463257],[6.5,3,5.80000019073486],[7.59999990463257,3,6.59999990463257],[4.90000009536743,2.5,4.5],[7.30000019073486,2.90000009536743,6.30000019073486],[6.69999980926514,2.5,5.80000019073486],[7.19999980926514,3.59999990463257,6.09999990463257],[6.5,3.20000004768372,5.09999990463257],[6.40000009536743,2.70000004768372,5.30000019073486],[6.80000019073486,3,5.5],[5.69999980926514,2.5,5],[5.80000019073486,2.79999995231628,5.09999990463257],[6.40000009536743,3.20000004768372,5.30000019073486],[6.5,3,5.5],[7.69999980926514,3.79999995231628,6.69999980926514],[7.69999980926514,2.59999990463257,6.90000009536743],[6,2.20000004768372,5],[6.90000009536743,3.20000004768372,5.69999980926514],[5.59999990463257,2.79999995231628,4.90000009536743],[7.69999980926514,2.79999995231628,6.69999980926514],[6.30000019073486,2.70000004768372,4.90000009536743],[6.69999980926514,3.29999995231628,5.69999980926514],[7.19999980926514,3.20000004768372,6],[6.19999980926514,2.79999995231628,4.80000019073486],[6.09999990463257,3,4.90000009536743],[6.40000009536743,2.79999995231628,5.59999990463257],[7.19999980926514,3,5.80000019073486],[7.40000009536743,2.79999995231628,6.09999990463257],[7.90000009536743,3.79999995231628,6.40000009536743],[6.40000009536743,2.79999995231628,5.59999990463257],[6.30000019073486,2.79999995231628,5.09999990463257],[6.09999990463257,2.59999990463257,5.59999990463257],[7.69999980926514,3,6.09999990463257],[6.30000019073486,3.40000009536743,5.59999990463257],[6.40000009536743,3.09999990463257,5.5],[6,3,4.80000019073486],[6.90000009536743,3.09999990463257,5.40000009536743],[6.69999980926514,3.09999990463257,5.59999990463257],[6.90000009536743,3.09999990463257,5.09999990463257],[5.80000019073486,2.70000004768372,5.09999990463257],[6.80000019073486,3.20000004768372,5.90000009536743],[6.69999980926514,3.29999995231628,5.69999980926514],[6.69999980926514,3,5.19999980926514],[6.30000019073486,2.5,5],[6.5,3,5.19999980926514],[6.19999980926514,3.40000009536743,5.40000009536743],[5.90000009536743,3,5.09999990463257]],"ignoreExtent":false,"fastTransparency":true,"flags":32771},"15":{"id":15,"type":"text","material":{"lit":false},"vertices":[[6.10000038146973,1.51712286472321,-0.187072828412056]],"colors":[[0,0,0,1]],"texts":[["Sepal Length"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[6.10000038146973,1.51712286472321,-0.187072828412056]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"flags":33808},"16":{"id":16,"type":"text","material":{"lit":false},"vertices":[[3.57568454742432,3.20000028610229,-0.187072828412056]],"colors":[[0,0,0,1]],"texts":[["Sepal Width"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[3.57568454742432,3.20000028610229,-0.187072828412056]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"flags":33808},"17":{"id":17,"type":"text","material":{"lit":false},"vertices":[[3.57568454742432,1.51712286472321,3.95000028610229]],"colors":[[0,0,0,1]],"texts":[["Petal Length"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[3.57568454742432,1.51712286472321,3.95000028610229]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"flags":33808},"11":{"id":11,"type":"light","vertices":[[0,0,1]],"colors":[[1,1,1,1],[1,1,1,1],[1,1,1,1]],"viewpoint":true,"finite":false},"10":{"id":10,"type":"background","material":{},"colors":[[0.298039227724075,0.298039227724075,0.298039227724075,1]],"centers":[[0,0,0]],"sphere":false,"fogtype":"none","fogscale":1,"flags":32768},"12":{"id":12,"type":"background","material":{"lit":false,"back":"lines"},"colors":[[1,1,1,1]],"centers":[[0,0,0]],"sphere":false,"fogtype":"none","fogscale":1,"flags":32768},"14":{"id":14,"type":"bboxdeco","material":{"front":"lines","back":"lines"},"vertices":[[5,"NA","NA"],[6,"NA","NA"],[7,"NA","NA"],["NA",2,"NA"],["NA",2.5,"NA"],["NA",3,"NA"],["NA",3.5,"NA"],["NA",4,"NA"],["NA","NA",1],["NA","NA",2],["NA","NA",3],["NA","NA",4],["NA","NA",5],["NA","NA",6],["NA","NA",7]],"colors":[[0,0,0,1]],"draw_front":true,"newIds":[25,26,27,28,29,30,31]},"7":{"id":7,"type":"subscene","par3d":{"antialias":8,"FOV":30,"ignoreExtent":false,"listeners":7,"mouseMode":{"left":"trackball","right":"zoom","middle":"fov","wheel":"pull"},"observer":[0,0,18.7510375976562],"modelMatrix":[[1.17337131500244,0,0,-7.15756559371948],[0,0.601974904537201,0.672778010368347,-4.58379316329956],[0,-1.65391230583191,0.244871184229851,-14.4257583618164],[0,0,0,1]],"projMatrix":[[3.73205065727234,0,0,0],[0,3.73205065727234,0,0],[0,0,-3.86370301246643,-67.5953140258789],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,0.342020143325668,0.939692620785909,0],[0,-0.939692620785909,0.342020143325668,0],[0,0,0,1]],"userProjection":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"scale":[1.17337131500244,1.76005673408508,0.715955436229706],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[4.21477556228638,7.98522472381592,1.9431836605072,4.45681667327881,0.860326528549194,7.03967380523682],"windowRect":[0,91,256,347],"family":"sans","font":1,"cex":1,"useFreeType":true,"fontname":"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/rgl/fonts/FreeSans.ttf","maxClipPlanes":6,"glVersion":2.1,"activeSubscene":0},"embeddings":{"viewport":"replace","projection":"replace","model":"replace","mouse":"replace"},"objects":[12,14,13,15,16,17,11,25,26,27,28,29,30,31],"subscenes":[],"flags":34131},"25":{"id":25,"type":"lines","material":{"lit":false},"vertices":[[5,1.90547919273376,0.767636299133301],[7,1.90547919273376,0.767636299133301],[5,1.90547919273376,0.767636299133301],[5,1.84075307846069,0.608518123626709],[6,1.90547919273376,0.767636299133301],[6,1.84075307846069,0.608518123626709],[7,1.90547919273376,0.767636299133301],[7,1.84075307846069,0.608518123626709]],"colors":[[0,0,0,1]],"centers":[[6,1.90547919273376,0.767636299133301],[5,1.87311613559723,0.688077211380005],[6,1.87311613559723,0.688077211380005],[7,1.87311613559723,0.688077211380005]],"ignoreExtent":true,"origId":14,"flags":32832},"26":{"id":26,"type":"text","material":{"lit":false},"vertices":[[5,1.71130096912384,0.290281742811203],[6,1.71130096912384,0.290281742811203],[7,1.71130096912384,0.290281742811203]],"colors":[[0,0,0,1]],"texts":[["5"],["6"],["7"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[5,1.71130096912384,0.290281742811203],[6,1.71130096912384,0.290281742811203],[7,1.71130096912384,0.290281742811203]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"origId":14,"flags":33808},"27":{"id":27,"type":"lines","material":{"lit":false},"vertices":[[4.15821886062622,2,0.767636299133301],[4.15821886062622,4,0.767636299133301],[4.15821886062622,2,0.767636299133301],[4.06112957000732,2,0.608518123626709],[4.15821886062622,2.5,0.767636299133301],[4.06112957000732,2.5,0.608518123626709],[4.15821886062622,3,0.767636299133301],[4.06112957000732,3,0.608518123626709],[4.15821886062622,3.5,0.767636299133301],[4.06112957000732,3.5,0.608518123626709],[4.15821886062622,4,0.767636299133301],[4.06112957000732,4,0.608518123626709]],"colors":[[0,0,0,1]],"centers":[[4.15821886062622,3,0.767636299133301],[4.10967445373535,2,0.688077211380005],[4.10967445373535,2.5,0.688077211380005],[4.10967445373535,3,0.688077211380005],[4.10967445373535,3.5,0.688077211380005],[4.10967445373535,4,0.688077211380005]],"ignoreExtent":true,"origId":14,"flags":32832},"28":{"id":28,"type":"text","material":{"lit":false},"vertices":[[3.86695170402527,2,0.290281742811203],[3.86695170402527,2.5,0.290281742811203],[3.86695170402527,3,0.290281742811203],[3.86695170402527,3.5,0.290281742811203],[3.86695170402527,4,0.290281742811203]],"colors":[[0,0,0,1]],"texts":[["2"],["2.5"],["3"],["3.5"],["4"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[3.86695170402527,2,0.290281742811203],[3.86695170402527,2.5,0.290281742811203],[3.86695170402527,3,0.290281742811203],[3.86695170402527,3.5,0.290281742811203],[3.86695170402527,4,0.290281742811203]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"origId":14,"flags":33808},"29":{"id":29,"type":"lines","material":{"lit":false},"vertices":[[4.15821886062622,1.90547919273376,1],[4.15821886062622,1.90547919273376,7],[4.15821886062622,1.90547919273376,1],[4.06112957000732,1.84075307846069,1],[4.15821886062622,1.90547919273376,2],[4.06112957000732,1.84075307846069,2],[4.15821886062622,1.90547919273376,3],[4.06112957000732,1.84075307846069,3],[4.15821886062622,1.90547919273376,4],[4.06112957000732,1.84075307846069,4],[4.15821886062622,1.90547919273376,5],[4.06112957000732,1.84075307846069,5],[4.15821886062622,1.90547919273376,6],[4.06112957000732,1.84075307846069,6],[4.15821886062622,1.90547919273376,7],[4.06112957000732,1.84075307846069,7]],"colors":[[0,0,0,1]],"centers":[[4.15821886062622,1.90547919273376,4],[4.10967445373535,1.87311613559723,1],[4.10967445373535,1.87311613559723,2],[4.10967445373535,1.87311613559723,3],[4.10967445373535,1.87311613559723,4],[4.10967445373535,1.87311613559723,5],[4.10967445373535,1.87311613559723,6],[4.10967445373535,1.87311613559723,7]],"ignoreExtent":true,"origId":14,"flags":32832},"30":{"id":30,"type":"text","material":{"lit":false},"vertices":[[3.86695170402527,1.71130096912384,1],[3.86695170402527,1.71130096912384,2],[3.86695170402527,1.71130096912384,3],[3.86695170402527,1.71130096912384,4],[3.86695170402527,1.71130096912384,5],[3.86695170402527,1.71130096912384,6],[3.86695170402527,1.71130096912384,7]],"colors":[[0,0,0,1]],"texts":[["1"],["2"],["3"],["4"],["5"],["6"],["7"]],"cex":[[1]],"adj":[[0.5,0.5]],"centers":[[3.86695170402527,1.71130096912384,1],[3.86695170402527,1.71130096912384,2],[3.86695170402527,1.71130096912384,3],[3.86695170402527,1.71130096912384,4],[3.86695170402527,1.71130096912384,5],[3.86695170402527,1.71130096912384,6],[3.86695170402527,1.71130096912384,7]],"family":[["sans"]],"font":[[1]],"ignoreExtent":true,"origId":14,"flags":33808},"31":{"id":31,"type":"lines","material":{"lit":false},"vertices":[[4.15821886062622,1.90547919273376,0.767636299133301],[4.15821886062622,4.49452114105225,0.767636299133301],[4.15821886062622,1.90547919273376,7.13236379623413],[4.15821886062622,4.49452114105225,7.13236379623413],[4.15821886062622,1.90547919273376,0.767636299133301],[4.15821886062622,1.90547919273376,7.13236379623413],[4.15821886062622,4.49452114105225,0.767636299133301],[4.15821886062622,4.49452114105225,7.13236379623413],[4.15821886062622,1.90547919273376,0.767636299133301],[8.04178142547607,1.90547919273376,0.767636299133301],[4.15821886062622,1.90547919273376,7.13236379623413],[8.04178142547607,1.90547919273376,7.13236379623413],[4.15821886062622,4.49452114105225,0.767636299133301],[8.04178142547607,4.49452114105225,0.767636299133301],[4.15821886062622,4.49452114105225,7.13236379623413],[8.04178142547607,4.49452114105225,7.13236379623413],[8.04178142547607,1.90547919273376,0.767636299133301],[8.04178142547607,4.49452114105225,0.767636299133301],[8.04178142547607,1.90547919273376,7.13236379623413],[8.04178142547607,4.49452114105225,7.13236379623413],[8.04178142547607,1.90547919273376,0.767636299133301],[8.04178142547607,1.90547919273376,7.13236379623413],[8.04178142547607,4.49452114105225,0.767636299133301],[8.04178142547607,4.49452114105225,7.13236379623413]],"colors":[[0,0,0,1]],"centers":[[4.15821886062622,3.20000028610229,0.767636299133301],[4.15821886062622,3.20000028610229,7.13236379623413],[4.15821886062622,1.90547919273376,3.95000004768372],[4.15821886062622,4.49452114105225,3.95000004768372],[6.10000038146973,1.90547919273376,0.767636299133301],[6.10000038146973,1.90547919273376,7.13236379623413],[6.10000038146973,4.49452114105225,0.767636299133301],[6.10000038146973,4.49452114105225,7.13236379623413],[8.04178142547607,3.20000028610229,0.767636299133301],[8.04178142547607,3.20000028610229,7.13236379623413],[8.04178142547607,1.90547919273376,3.95000004768372],[8.04178142547607,4.49452114105225,3.95000004768372]],"ignoreExtent":true,"origId":14,"flags":32832}},"crosstalk":{"key":[],"group":[],"id":[],"options":[]},"width":672,"height":480,"context":{"shiny":false,"rmarkdown":"html_document"},"players":[],"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="tablas-o-cuadros" class="section level2">
+<h2>1.3.2.Tablas (o cuadros)</h2>
+<div id="objetivo-1" class="section level4">
+<h4><strong>Objetivo</strong></h4>
+<p><strong>Elaborar tablas siguiendo reglas de presentación de los datos</strong></p>
+<p>La mejor manera de producir tablas efectivas es buscando ejemplos en publicaciones científicas, y solicitando su revisión por personas con experiencia.</p>
+<p>En la parte superior de la tabla debe ir la leyenda descriptiva, empezando con la palabra <strong>Tabla</strong> (o Cuadro) y el número consecutivo que le toque, de acuerdo al orden de aparición en el escrito. En la parte superior de cada columna de datos, deben ir los nombres de las variables y sus unidades, y en la columna de la izquierda, al inicio de cada fila (línea) usualmente van los casos, tratamientos o grupos diferentes. Muy importante para una publicación: <strong>los datos numéricos en la tabla no deben acompañarse de las unidades</strong> (ver Ejemplo 3.2 en Havel et al. 2019).</p>
+</div>
+<div id="ejemplos-1" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<p>Tabla de datos de características de diversas marcas y modelos de automóviles:</p>
+<pre class="r"><code># activar paquetes y cargar datos
+library(kableExtra)
+library(car)
+data(&quot;mtcars&quot;)
+# crear data frame
+tabla &lt;- mtcars[1:5, 1:4]
+# construir tabla
+tabla %&gt;%
+  kbl(caption = &quot;Tabla 1.  Características mecánicas del motor de cinco modelos de automóbiles&quot;) %&gt;%
+  kable_classic(full_width = F, html_font = &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Características mecánicas del motor de cinco modelos de automóbiles
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+mpg
+</th>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+disp
+</th>
+<th style="text-align:right;">
+hp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mazda RX4
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mazda RX4 Wag
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Datsun 710
+</td>
+<td style="text-align:right;">
+22.8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+93
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hornet 4 Drive
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+258
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hornet Sportabout
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+360
+</td>
+<td style="text-align:right;">
+175
+</td>
+</tr>
+</tbody>
+</table>
+<p>La tabla anterior no presenta las unidades de los valores de cada variable.</p>
+<pre class="r"><code># agregar unidades a las columnas (variables)
+tabla &lt;- setNames(tabla, c(&quot;mpg, miles/gallon&quot;, &quot;cyl, number of cylinders&quot;, &quot;disp, cubic cm&quot;, &quot;hp, horse-power&quot; ))
+# construir nueva tabla
+tabla %&gt;%
+  kbl(caption = &quot;Tabla 1.  Características mecánicas del motor de cinco modelos de automóbiles&quot;) %&gt;%
+  kable_classic(full_width = F, html_font = &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Características mecánicas del motor de cinco modelos de automóbiles
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+mpg, miles/gallon
+</th>
+<th style="text-align:right;">
+cyl, number of cylinders
+</th>
+<th style="text-align:right;">
+disp, cubic cm
+</th>
+<th style="text-align:right;">
+hp, horse-power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Mazda RX4
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mazda RX4 Wag
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Datsun 710
+</td>
+<td style="text-align:right;">
+22.8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+93
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hornet 4 Drive
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+258
+</td>
+<td style="text-align:right;">
+110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hornet Sportabout
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+360
+</td>
+<td style="text-align:right;">
+175
+</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="gráficas-de-distribución-de-frecuencias" class="section level2">
+<h2>1.3.3.Gráficas de Distribución de Frecuencias</h2>
+<div id="objetivo-2" class="section level4">
+<h4><strong>Objetivo</strong></h4>
+<p><strong>Construir gráficas que muestren la cantidad o frecuencia de ocurrencia de datos de variables categóricas y numéricas</strong></p>
+<p>Una <strong>distribución de frecuencias</strong> muestra un resumen del número de observaciones <strong>(frecuencia)</strong> que se obtienen para valores específicos o rangos de valores. Una distribución de frecuencias se puede representar en una tabla o en una gráfica; en esta sección trabajaremos con gráficas de distribución de frecuencias.</p>
+</div>
+<div id="frecuencias-de-categorías-o-variables-discretas" class="section level3">
+<h3>Frecuencias de categorías o variables discretas</h3>
+<div id="ejemplos-2" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<p>La frecuencia de casos de una variable categórica, usualmente se grafican mediante barras.</p>
+<pre class="r"><code># cargar datos de archivo .Rdata
+load(&quot;./data/Arthr.Rdata&quot;)
+# gráfica de barras separadas
+ggplot(Arthritis, aes(x=Treatment, fill=Improved)) +
+     geom_bar(position=&quot;dodge&quot;)</code></pre>
+<p><img src="modulod3_files/figure-html/cat-barras-1.png" width="672" /></p>
+</div>
+<div id="figura-5.-efecto-del-tratamiento-con-una-droga-nueva-en-pacientes-con-artritis-a-los-que-se-les-suministró-un-placebo-y-una-dosis-de-la-droga." class="section level4">
+<h4>Figura 5. Efecto del tratamiento con una droga nueva, en pacientes con artritis, a los que se les suministró un placebo y una dosis de la droga.</h4>
+<p>La frecuencia de casos para una variable numérica discreta, también se puede graficar mediante barras separadas.</p>
+<div class="figure">
+<img src="imagenes/3-4%20barras-frecuencia.jpg" alt="" />
+<p class="caption"><strong>Figura 6. Frecuencia de la cantidad de plántulas de <em>maple</em> (arce) por parcela de un metro cuadrado.</strong></p>
+</div>
+<p>Usando R</p>
+<pre class="r"><code>maple &lt;- read.csv(&quot;./data/Table 3.3.csv&quot;)
+ggplot(maple, aes(Seedlings)) +
+  geom_bar(fill = &quot;#0073C2FF&quot;, width = 0.7) +
+  labs(x=&quot;Número de plántulas por parcela&quot;, y = &quot;Frecuencia&quot;)</code></pre>
+<p><img src="modulod3_files/figure-html/frecdiscr-1.png" width="672" /></p>
+<p><strong>Figura 7. Fecuencia de la cantidad de plántulas de <em>maple</em> (arce) por parcela de un metro cuadrado.</strong></p>
+</div>
+</div>
+<div id="histogramas-para-distribución-de-frecuencia-de-variables-numéricas-continuas" class="section level3">
+<h3>Histogramas para distribución de frecuencia de variables numéricas continuas</h3>
+<p>La representación de este tipo de datos es algo diferente a los anteriores, ya que la variable puede tomar cualquier valor, para obtener un valor de frecuencia es necesario agrupar los valores de la variable en <strong>clases</strong> o contenedores <em>(bins)</em>. Estas clases o <em>bins</em> se grafican de forma contigua, según la definición de variable continua.</p>
+<p>La selección del intervalo de la clase, es algo arbitraria, pues depende de la cantidad de datos y de su amplitud de valores (o rango). Usualmente se utilizan entre 8 y 12 clases o <em>bins</em>. El valor central de una clase se denomina <strong>marca de clase</strong>, y su valor aparece en el eje de la variable continua.</p>
+<div id="ejemplos-3" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<p>Histograma de la variable altura de la planta <em>Melocactus intortus</em></p>
+<pre class="r"><code>hist.melodata &lt;- ggplot(melocactus, aes(alturatotal)) + 
+  geom_histogram(binwidth=5, colour=&quot;white&quot;, fill=&quot;green&quot;) +
+  labs(x=&quot;Altura total de la planta,cm&quot;, y = &quot;Frecuencia&quot;)
+hist.melodata</code></pre>
+<p><img src="modulod3_files/figure-html/histograma-1.png" width="672" /></p>
+</div>
+<div id="figura-8.-distribución-de-frecuencias-de-altura-total-de-la-planta-cm-en-plantas-de-melocactus-intortus-del-bosque-seco-de-guánica." class="section level4">
+<h4>Figura 8. Distribución de frecuencias de altura total de la planta (cm), en plantas de <em>Melocactus intortus</em> del Bosque Seco de Guánica.</h4>
+<p>Otra forma de presentar las frecuencias, es en forma acumulada:</p>
+<div class="figure">
+<img src="imagenes/3-10%20frecuencia-acum.jpg" alt="" />
+<p class="caption"><strong>Figura 9. Frecuencia acumulada para la longitud de 797 hembras de pez mosquito (mm), usando barras y puntos con líneas.</strong></p>
+</div>
+<p>Usando R</p>
+<pre class="r"><code>frec_acum &lt;- ggplot(data = melocactus, aes(x = alturatotal)) + 
+    geom_histogram(aes(y = cumsum(..count..)), binwidth = 1, boundary = 0, color = &quot;white&quot;, fill =&quot;green&quot;) +
+  labs(x=&quot;Altura total de la planta,cm&quot;, y = &quot;Frecuencia acumulada&quot;)
+frec_acum</code></pre>
+<p><img src="modulod3_files/figure-html/frecacum-1.png" width="672" /></p>
+</div>
+<div id="figura-10.-frecuencia-acumulada-de-altura-total-de-la-planta-cm-en-plantas-de-melocactus-intortus-del-bosque-seco-de-guánica." class="section level4">
+<h4>Figura 10. Frecuencia acumulada de altura total de la planta (cm), en plantas de <em>Melocactus intortus</em> del Bosque Seco de Guánica.</h4>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Inferencias de las Medias de Dos Poblaciones</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Inferencias de las Medias de Dos Poblaciones</h1>
+
+</div>
+
+
+<div id="inferencias-acerca-de-la-media-de-dos-poblaciones" class="section level1">
+<h1>2.5.Inferencias acerca de la Media de Dos Poblaciones</h1>
+<p>Una de las preguntas más comunes en biología es si dos poblaciones (o grupos) difieren de alguna manera. En esta sección nos interesa saber si hay diferencias entre las medias de esas problaciones. Un requisito para esta comparación es que las muestras de las poblaciones sean <strong>independientes</strong>, al contrario de lo que estudiamos en la sección anterior en el tema de las <strong>muestras pareadas</strong>.</p>
+<p>Estaremos examinando un procedimiento estadístico basado en la <strong>prueba <em>t</em></strong>, pero para muestras independientes, y su análogo no-paramétrico, la <strong>prueba U de Mann-Whitney</strong>. También volveremos a calcular los intervalos de confianza para la diferencia entre dos medias, y exploraremos el <strong>poder de una prueba</strong>, aplicado a la prueba <em>t</em>.</p>
+<div id="prueba-t-para-dos-muestras-independientes" class="section level2">
+<h2>2.5.1.Prueba t para Dos Muestras Independientes</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Utilizar la prueba <em>t</em> para probar hipótesis sobre la diferencia entre muestras independientes</strong></p>
+</div>
+<div id="el-estadístico-t-para-dos-muestras" class="section level3">
+<h3>El estadístico <em>t</em> para dos muestras</h3>
+<p>Al igual que en la sección anterior con una sola muestra, a partir de dos muestras de una población con distribución normal, podemos probar la siguiente hipótesis utilizando el estadístico <em>t</em>:<br />
+<span class="math display">\[H_0 : \mu_a = \mu_b\]</span> Si las medias de muestras de una población con distribución normal tienen una distribución <em>t</em>, entonces las diferencias entre esas medias también tendrán una distribución <em>t</em>. Podemos modificar la ecuación del estadístico <em>t</em>: <span class="math display">\[t = \frac{(\bar x_a - \bar x_b) - (\mu_a - \mu_b)}{s_p}\]</span> La hipótesis nula formulada establece que las medias de las poblaciones son iguales, por lo tanto su diferencia es igual a 0. El estadístico <span class="math inline">\(s_p\)</span> es el error estándar agrupado para las dos muestras, y se calcula a partir de la varianza de las muestras. El estadístico <em>t</em> a utilizar es entonces: <span class="math display">\[t = \frac{\bar x_a - \bar x_b}{\sqrt{\frac{s_a^2}{n_a} + \frac{s_b^2}{n_b}}}\]</span> donde:</p>
+<blockquote>
+<p><span class="math inline">\(\bar x_a,\ \bar x_b\)</span>: son las medias de las muestras<br />
+<span class="math inline">\(s_a^2,\ s_b^2\)</span>: son las varianzas de las muestras<br />
+<span class="math inline">\(n_a,\ n_b\)</span>: son los tamaños de las muestras</p>
+</blockquote>
+<p>Para encontrar el valor crítico de <em>t</em>, para un <span class="math inline">\(\alpha\)</span> establecido, necesitamos conocer los grados de libertad. Para la distribución <em>t</em> a partir de dos muestras, y si las varianzas de las poblaciones son iguales (más adelante veremos una prueba para esto), los grados de libertad están dados por:<br />
+<span class="math display">\[gl = n_a + n_b -2\]</span> Usualmente no estamos segura/os de la igualdad de las varianzas, y en ese caso los grados de libertad se calculan mediante una fórmula compleja (no es problema al trabajar con R), pero una aproximación a la misma es la siguiente: <span class="math display">\[gl \approx menor\ \{n_a - 1, n_b - 1\}\]</span></p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+<div id="la-prueba-t-para-dos-muestras" class="section level3">
+<h3>La Prueba <em>t</em> para Dos Muestras</h3>
+<blockquote>
+<p>Comparando las medias de dos muestras para decidir si provienen de una o dos poblaciones</p>
+</blockquote>
+<p>Antes de aplicar el estadístico <em>t</em> para la <strong>prueba <em>t</em> para dos muestras</strong>, debemos corroborar que se cumplen los supuestos para la misma:</p>
+<ol style="list-style-type: decimal">
+<li>las muestras fueron colectadas al azar<br />
+</li>
+<li>las medidas de las variables son continuas (o discretas con un amplio ámbito de valores)<br />
+</li>
+<li>la variable tiene una distribución aproximadamente normal (o el tamaño es grande, mayor de 30 por ejemplo)</li>
+</ol>
+<p>Cuando los supuestos se cumplen, la prueba <em>t</em> tiene <strong>poder</strong> (bajo error tipo II) y es <strong>robusta</strong> (no afectada por alguna desviación de los supuestos). Si no se cumplen los supuesto 2. y 3., o la muestra no es grande, debemos considerar una prueba no-paramétrica que estaremos revisando más adelante.</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Queremos comparar mediciones de la razón largo/ancho (RLA) de pelos radiculares, realizadas en dos especies de plantas del mismo género. Asumimos que la variable RLA está distribuida de forma normal, y los estadísticos obtenidos de las muestras son los siguientes:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Estadístico</th>
+<th align="right">Especie A</th>
+<th align="right">Especie B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(n\)</span></td>
+<td align="right">12</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(\bar x\)</span></td>
+<td align="right">1.28</td>
+<td align="right">4.43</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(s^2\)</span></td>
+<td align="right">0.112</td>
+<td align="right">7.072</td>
+</tr>
+</tbody>
+</table>
+<p>Usualmente se debe comprobar antes la normalidad de la variable, pero en este caso la asumimos por información previa. Antes de examinar los datos, debemos formular nuestra hipótesis para no sesgar la prueba:<br />
+<span class="math display">\[H_0 : \mu_A = \mu_B\]</span><br />
+<span class="math display">\[H_A : \mu_A \neq \mu_B\]</span><br />
+Vamos ahora a calcular el estadístico <em>t</em>:<br />
+<span class="math display">\[t = \frac{1.28 - 4.43}{\sqrt{\frac{0.112}{12} + \frac{7.072}{18}}} = -4.967\]</span><br />
+Dado que la distribución <em>t</em> es simétrica podemos usar el valor absoluto del estadístico calculado (4.967). Utilizando la tabla de la distribución <em>t</em> (o la función <strong>qt</strong> en R) obtenemos el valor crítico (umbral) de <em>t</em>; pero antes debemos decidir como calcular los grados de libertad. Dado que las varianzas parecen ser muy diferentes, utilizaremos la aproximación del menor valor de n - 1, en este caso 11.<br />
+Según la tabla, el valor de <em>t</em> para un <span class="math inline">\(\alpha\)</span> = 0.05, es 2.201. Estos resultados nos indican que podemos rechazar la hipótesis nula con seguridad (error tipo I &lt;&lt; 0.05), y aceptar que las especies difieren en la razón longitud/ancho de los pelos radiculares.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="intervalo-de-confianza-para-la-diferencia-entre-dos-medias-poblacionales" class="section level2">
+<h2>2.5.2. Intervalo de Confianza para la Diferencia entre Dos Medias Poblacionales</h2>
+<p>Utilizando el mismo enfoque de la sección anterior para calcular el intervalo de confianza de la media poblacional, podemos calcular el intervalo de confianza para la diferencia de las medias poblacionales. La fórmula para un 95% de confianza es:<br />
+<span class="math display">\[(\bar x_a - \bar x_b) \pm t_{0.05,k}*\sqrt{\frac{s_a^2}{n_a} + \frac{s_b^2}{n_b}}\]</span></p>
+<p>Para el caso del ejemplo anterior: <span class="math display">\[IC\ 95 \%\ \mu_B - \mu_A = (4.43 - 1.28) \pm 2.201 \sqrt{\frac{7.072}{18} + \frac{0.112}{12}}\]</span><br />
+<span class="math display">\[= 3.15 \pm 1.40 = 1.75,\ 4.55\]</span><br />
+Este resultado nos indica que estamos 95% segura/os de que la diferencia entre las medias de la razón longitud/ancho de pelos radiculares de las especies A y B, es al menos 1.75 y no sobrepasa 4.55</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+<div id="prueba-t-mediante-r" class="section level3">
+<h3>Prueba <em>t</em> Mediante R</h3>
+<p>La plataforma RStudio provee funciones de R para realizar la prueba <em>t</em>, intervalo de confianza, y las visualizaciones y cálculos de estadísticas básicas de dos variables.</p>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Queremos comparar las medias de la masa de dos muestras de semillas de la especie <em>Thespesia populnea</em> (emajagüilla), tomadas en dos años.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="supuestos-y-pruebas-no-paramétricas" class="section level2">
+<h2>2.5.3.Supuestos y Pruebas No-paramétricas</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Realizar pruebas de independencia de dos muestras mediante un método no-paramétrico</strong></p>
+<p>Cuando los datos no cumplen con los supuestos para la prueba <em>t</em>, y además las muestras son pequeñas, podemos usar una prueba no-paramétrica (que no depende de los parámetros de la distribución normal) llamada <strong>prueba U de Mann-Whitney</strong>. Con esta prueba queremos saber si las muestras poseen medianas (<span class="math inline">\(\theta\)</span>) idénticas:<br />
+<span class="math display">\[H_0 : \theta_1 = \theta_2\]</span><br />
+Aunque esta prueba es independiente de los supuestos anteriores de la pruenba <em>t</em>, posee sus propios supuestos:</p>
+<ol style="list-style-type: decimal">
+<li>las muestras se toman al azar e independientes una de otra.<br />
+</li>
+<li>la variable medida es ordinal, discreta o continua.<br />
+</li>
+<li>las muestras tienen una distribución de forma y dispersión similar.</li>
+</ol>
+</div>
+<div id="preparación-de-los-datos-para-la-prueba" class="section level3">
+<h3>Preparación de los Datos para la Prueba</h3>
+<blockquote>
+<p>Codificar su rango de menor a mayor</p>
+</blockquote>
+<p>Para facilitar el proceso de preparación para los cálculos, los datos de cada muestra se ordenan de menor a mayor. Los datos se codifican de menor a mayor, en una misma secuencia con las dos muestras, empezando en 1. Cuando hay valores iguales, se suman las posiciones (código) que tendrían si fueran diferentes y se dividen entre el número de valores iguales.</p>
+La siguiente tabla ilustra el proceso. Los gatos machos pueden ser muy territoriales en ciertas localidades. En un estudio se determinó el área territorial (hectáreas) de gatos machos, en dos localidades (A y B):
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Tamaño de territorio (ha) de gatos machos, en dos localidades (LA, LB), y codificación en rango de menor a mayor
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Territorio LA, ha
+</th>
+<th style="text-align:left;">
+Rango LA
+</th>
+<th style="text-align:left;">
+Territotrio LB, ha
+</th>
+<th style="text-align:left;">
+Rango LB
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+1.5
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+1.5
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+4.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+4.5
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+20.6
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+32
+</td>
+<td style="text-align:left;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+35
+</td>
+<td style="text-align:left;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:left;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:left;">
+19
+</td>
+</tr>
+</tbody>
+</table>
+<p>Las hipótesis que deseamos probar:<br />
+<span class="math display">\[H_0 : \theta_A = \theta_B\]</span><br />
+<em>versus</em>: <span class="math display">\[H_0 : \theta_A \neq \theta_B\]</span> A partir de los datos anteriores se pueden calcular los estadísticos que necesitamos para la prueba: mediana, sumatoria de rangos de cada muestra (<span class="math inline">\(\sum R_A\)</span> y <span class="math inline">\(\sum R_B\)</span>), y el tamaño de las muestras, <em>n</em>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Estadístico</th>
+<th align="right">Localidad A</th>
+<th align="right">Localidad B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mediana</td>
+<td align="right">17</td>
+<td align="right">30.5</td>
+</tr>
+<tr class="even">
+<td align="left"><em>n</em></td>
+<td align="right">9</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sum R\)</span></td>
+<td align="right">64.5</td>
+<td align="right">125.5</td>
+</tr>
+</tbody>
+</table>
+<p>El estadístico U se calcula para ambas muestras:<br />
+<span class="math display">\[U_A = n_A n_B + \frac{n_A(n_A + 1)}{2} - \sum R_A\]</span> <span class="math display">\[U_B = n_A n_B - U_A\]</span> y obtenemos <span class="math inline">\(U_A\)</span> = 70.5 y <span class="math inline">\(U_B\)</span> = 19.5. Se utiliza el valor mayor para comparar con el valor crítico de <em>U</em> en la <a href="https://drive.google.com/file/d/1424rM80eN5CUszoIY24ARLQaNHKHI9Qg/view?usp=sharing">Tabla U-Mann-Whitney</a>, para <span class="math inline">\(\alpha\)</span> = 0.05 (dos colas), <span class="math inline">\(n_1\)</span> = 9 y <span class="math inline">\(n_2\)</span> = 10. Al ser el valor <span class="math inline">\(U_A\)</span> mayor que el valor de <span class="math inline">\(U_{0.05,9,10}\)</span> = 20, podemos rechazar la hipótesis nula de igualdad de medianas, y concluir que los territorios de gatos machos son mayores en la localidad B.</p>
+</div>
+<div id="prueba-u-de-mann-whitney-con-r" class="section level3">
+<h3>Prueba U de Mann-Whitney con R</h3>
+<p>La prueba U de Mann-Whitney se realiza en R usando la misma función de la prueba Wilcoxon, pero sin especificar para prueba pareada. Solamente se proveen los datos crudos, sin tener que realizar el ordenamiento ni la codificación.</p>
+<pre class="r"><code># datos localidades
+la &lt;- c(7,7,10,14,17,20.6,21,21,24)
+lb &lt;- c(8,10,18,21,29,32,35,36,37,45)
+# prueba
+wilcox.test(lb, la, alternative = &quot;two.sided&quot;)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  lb and la
+## W = 70.5, p-value = 0.04069
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="poder-de-la-prueba" class="section level2">
+<h2>2.5.4.Poder de la Prueba</h2>
+<p>Referirse al capítulo 10, sección 10.4 del libro de Havel <em>et al.</em>, 2019.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

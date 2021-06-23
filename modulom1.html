@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Análisis de Varianza - ANOVA</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Análisis de Varianza - ANOVA</h1>
+
+</div>
+
+
+<div id="análisis-de-varianza" class="section level1">
+<h1>3.1.Análisis de Varianza</h1>
+<blockquote>
+<p>Inferencias sobre las medias de varias poblaciones</p>
+</blockquote>
+<p>En el tema anterior estuvimos haciendo comparaciones de medias entre dos muestras; frecuentemente, sin embargo, necesitamos comparar las medias de más de dos muestras. La metodología estadística utilizada comúnmente para estos casos, es el <strong>análisis de varianza</strong> (ANOVA).</p>
+<p>El análisis de varianza es la herramienta usualmente utilizada cuando queremos analizar el efecto de diferentes <strong>grupos</strong> (una variable categórica) en una variable medida (<strong>respuesta</strong>). La técnica del ANOVA es útil tanto para <strong>diseños experimentales</strong>, como para <strong>observaciones</strong> o <strong>encuestas</strong>. La hipótesis nula para este tipo de análisis, para el caso de que tengamos tres grupos, es:<br />
+<span class="math display">\[H_0 : \mu_A = \mu_B = \mu_C\]</span> Ahora bien, podemos preguntarnos por qué no usamos múltiples pruebas <em>t</em>, y descomponemos la hipótesis anterior en tres hipótesis nulas. En primer lugar, no es práctico si tenemos muchos grupos. Por ejemplo, con cuatro grupos, usando la fórmula de combinaciones, tendríamos seis parejas de <span class="math inline">\(H_0\)</span> para probar, con ocho grupos tendríamos ¡28! En segundo lugar, al realizar múltiples pruebas <em>t</em> el <strong>error tipo I</strong> se va incrementando al aumentar el número de pruebas. El ANOVA supera ambos problemas.</p>
+<div id="fundamentos-del-anova" class="section level2">
+<h2>3.1.1.Fundamentos del ANOVA</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer los fundamentos teóricos y supuestos para realizar el análisis de varianza</strong></p>
+<p>Vamos a considerar, de acuerdo a la hipótesis nula anterior, que las muestras provienen de una misma población, y por tanto las medias muestrales representan la media poblacional.</p>
+<p>Tenemos el siguiente modelo para describir el valor de cualquier observación, proveniente de varios grupos (<span class="math inline">\(n_i, i=1...k\)</span>), cada uno con <span class="math inline">\(n_{ij}\)</span> observaciones:<br />
+<span class="math display">\[y_{ij} = \mu + \delta_i + e_{ij}\]</span></p>
+<p>donde:</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mu\)</span> representa la media de todas las mediciones de todos los grupos.</li>
+<li><span class="math inline">\(\delta_i\)</span> representa la diferencia entre la media del grupo <span class="math inline">\(n_i\)</span> y la media de todos los grupos, <span class="math inline">\(\mu\)</span>.</li>
+<li><span class="math inline">\(e_{ij}\)</span> representa el error aleatorio alrededor de los valores <span class="math inline">\(\mu + \alpha_i\)</span>, de una observación del grupo <span class="math inline">\(n_i\)</span>.</li>
+</ol>
+</blockquote>
+</div>
+<div id="las-fuentes-de-variación-para-el-análisis-de-la-varianza" class="section level3">
+<h3>Las Fuentes de Variación para el Análisis de la Varianza</h3>
+<blockquote>
+<p>Variabilidad Dentro de Grupos, Variabilidad Entre Grupos, Variabilidad Total</p>
+</blockquote>
+<p>A partir del modelo anterior, podemos rearreglar los términos para diferencias las fuentes de variación que se van a comparar en el análisis de varianza para probar la hipótesis nula de igualdad de las medias de las muestras:<br />
+<span class="math display">\[y_{ij} - \bar{\bar y} =  (\bar y_i - \bar{\bar y}) + (y_{ij} - \bar y_i)\]</span></p>
+<p>donde:</p>
+<blockquote>
+<p><span class="math inline">\(y_{ij} - \bar{\bar y}\)</span>, representa la desviación de una medición con respecto a la media global, o <em>variabilidad total.</em><br />
+<span class="math inline">\(\bar y_i - \bar{\bar y}\)</span>, representa las desviación de la media de un grupo con respecto a la media global, y es un indicador de la <em>variabilidad entre grupos</em> o <em>varianza del tratamiento</em>.<br />
+<span class="math inline">\(y_{ij} - \bar y_i\)</span>, representa la desviación de una medición con respecto a la media de su grupo, y que se conoce como la <em>variabilidad dentro de grupo</em> o <em>varianza del error</em>.</p>
+</blockquote>
+</div>
+<div id="relación-entre-fuentes-de-variación-y-la-hipótesis-nula" class="section level3">
+<h3>Relación entre Fuentes de Variación y la Hipótesis Nula</h3>
+<blockquote>
+<p>Cómo la variabilidad (varianza) permite probar hipótesis sobre las medias</p>
+</blockquote>
+<p>En la ecuación anterior, el término de variabilidad entre grupos debe ser muy cercano a cero para que se compruebe la <span class="math inline">\(H_0\)</span> de igualdad de las medias de las muestras. Podemos visualizar este planteamiento de la siguiente forma:</p>
+<p><img src="imagenes/anovaA.png" alt="(tomado de: Rosner, 2016)" /><br />
+<strong>Figura 1a.</strong> Distribución de la variabilidad dentro (<em>A</em>) y entre grupos (<em>B</em>). <em>B</em> es mucho mayor que <em>A</em> (<span class="math inline">\(\delta_i \neq 0\)</span>), indicando que al menos una de las muestras no proviene de la misma población de valores.</p>
+<p><img src="imagenes/anovaB.png" alt="(tomado de: Rosner, 2016)" /><br />
+<strong>Figura 1b.</strong> Distribución de la variabilidad dentro (<em>A</em>) y entre grupos (<em>B</em>). <em>B</em> es pequeño en comparación con <em>A</em> (<span class="math inline">\(\delta_i \approx 0\)</span>), indicando que se cumple la <span class="math inline">\(H_0\)</span> de muestras que provienen de una misma población de valores.</p>
+</div>
+<div id="la-distribución-f" class="section level3">
+<h3>La Distribución <em>F</em></h3>
+<blockquote>
+<p>Probando la hipótesis nula mediante una distribución para la probabilidad de error tipo I.</p>
+</blockquote>
+<p>Para evaluar la hipótesis nula (<span class="math inline">\(H_0:\mu_A = \mu_B = \mu_C = et c.\)</span>), debemos comparar la varianza del tratamiento (<strong>entre grupos</strong>) con la varianza del error (<strong>dentro de grupos</strong>), utilizando un estadístico de razón o proporción, denominado <em>F</em>, y que se calcula para el análisis de varianza como:<br />
+<span class="math display">\[F = \frac{varianza\ entre\ grupos}{varianza\ dentro\ grupos} = \frac{MS_{entre}}{MS_{dentro}}\]</span><br />
+donde:</p>
+<blockquote>
+<p><span class="math inline">\(MS_{entre}\)</span> = media de la suma de cuadrados entre grupos</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\(MS_{dentro}\)</span> = media de la suma de cuadrados dentro de grupos</p>
+</blockquote>
+<p>Estos estadísticos son una medida de las respectivas varianzas, y su cálculo se detalla más adelante. La distribución de probabilidades de la razón anterior, se denomina <strong>distribución <em>F</em> </strong>, y se utiliza para pruebas de hipótesis como se usan la distribución <em>t</em> y <span class="math inline">\(\chi^2\)</span>.</p>
+<p>Cuando los tratamientos (grupos) no tienen efecto en la respuesta, la varianza en el conjunto de los datos será similar a la varianza dentro de cada grupo; en este caso la razón que se calcula para el estadístico <em>F</em> será cercana a 1.0, o menor que 1. Por el contrario, cuando hay un efecto importante de uno o más tratamientos, entonces <em>F</em> &gt;&gt; 1.</p>
+</div>
+<div id="obtención-del-valor-crítico-de-f" class="section level3">
+<h3>Obtención del Valor Crítico de <em>F</em></h3>
+<blockquote>
+<p>A partir de la tabla o mediante R</p>
+</blockquote>
+<p>Una vez que obtenemos el valor del estadístico <em>F</em>, calculado con los datos, debemos compararlo con el valor correspondiente a un nivel <span class="math inline">\(\alpha\)</span>, usualmente 0.05, con los respectivos grados de libertad. La distribución <em>F</em> depende de dos tipos de grados de libertad:<br />
+<span class="math display">\[gl_{entre} = k - 1\]</span><br />
+<em>k</em>: número de grupos <span class="math display">\[gl_{dentro} = n - k\]</span><br />
+<em>n</em>: número total de mediciones</p>
+<p><img src="imagenes/Fdistribution.png" alt="(tomado de Rosner, 2016)" /><br />
+<strong>Figura 2.</strong> Diagrama de la distribución <em>F</em>, mostrando la región de rechazo de la <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\alpha\)</span>.</p>
+<p>Con la <a href="https://drive.google.com/file/d/1NAnlk4PMiPgof4suSOBxY58inOT1B2Kt/view?usp=sharing">Tabla de la Distribución <em>F</em></a> podemos calcular el valor crítico de <em>F</em> para un nivel <span class="math inline">\(\alpha\)</span> (o <em>p</em>), y los grados de libertad del numerador (<em>k - 1</em>), y del denominador (<em>n - k</em>) del estadístico <em>F</em>.</p>
+<p>El valor crítico de <em>F</em> lo podemos obtener utilizando la función <strong>qf</strong>, o podemos obtener la probabilidad para un valor de <em>F</em> usando <strong>pf</strong>. Las funciones calculan los valores de probabilidades a la izquierda del valor <em>F</em>.</p>
+<pre class="r"><code># valor crítico de F para valores de alfa, glNum, glDenom
+alfa &lt;- 0.05
+glnum &lt;- 5
+glden &lt;- 2
+fcrit &lt;- qf(1 - alfa, df1=glnum, df2=glden)
+# probabilidad para un valor de F
+fval &lt;- 19.3
+pizq &lt;- pf(fval, df1=glnum, df2=glden)
+sprintf(&quot;Valor de F_alfa,gln,gld = %.3f&quot;, fcrit)</code></pre>
+<pre><code>## [1] &quot;Valor de F_alfa,gln,gld = 19.296&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;Probabilidad a la izquierda de F = %.3f&quot;, pizq)</code></pre>
+<pre><code>## [1] &quot;Probabilidad a la izquierda de F = 0.950&quot;</code></pre>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="anova-de-una-vía-con-efectos-fijos" class="section level2">
+<h2>3.1.2.ANOVA de Una Vía con Efectos Fijos</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Realizar los cálculos para una prueba de ANOVA de Una Vía con Efectos Fijos</strong></p>
+<p>Este es probablemente el tipo más común de ANOVA, en el cual el factor de agrupamiento o tratamiento (variable categórica) es un <strong>efecto fijo</strong>. Una de las ventajas de este tipo de diseño es su repetibilidad de manera exacta.</p>
+</div>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo 1</strong></h4>
+<p>En una investigación, 19 cerdos jóvenes fueron asignados, al azar, a cuatro grupos experimentales. Cada grupo se alimentó con una dieta diferente (D1, D2, D3, D4). Luego de ser criados hasta adultos, se midió la masa corporal (kg) de cada animal. Queremos saber si la masa corporal resultó ser igual (<span class="math inline">\(H_0\)</span>) para las cuatro dietas. (Tomado de Zar, 2014).</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3 = \mu_4\]</span> <span class="math display">\[H_A: la\ masa\ promedio\ de\ los\ cerdos\ no\ resultó\ igual\ en\ todas\ las\ dietas.\]</span></p>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Efecto de cuatro dietas en la masa corporal (kg) de cerdos
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Dieta_1
+</th>
+<th style="text-align:right;">
+Dieta_2
+</th>
+<th style="text-align:right;">
+Dieta_3
+</th>
+<th style="text-align:right;">
+Dieta_4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+60.8
+</td>
+<td style="text-align:right;">
+68.7
+</td>
+<td style="text-align:right;">
+69.6
+</td>
+<td style="text-align:right;">
+61.9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67.0
+</td>
+<td style="text-align:right;">
+67.7
+</td>
+<td style="text-align:right;">
+77.1
+</td>
+<td style="text-align:right;">
+64.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65.0
+</td>
+<td style="text-align:right;">
+75.0
+</td>
+<td style="text-align:right;">
+75.2
+</td>
+<td style="text-align:right;">
+63.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+68.6
+</td>
+<td style="text-align:right;">
+73.3
+</td>
+<td style="text-align:right;">
+71.5
+</td>
+<td style="text-align:right;">
+66.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61.7
+</td>
+<td style="text-align:right;">
+71.8
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+60.3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cálculo-de-la-variabilidad-en-forma-de-suma-de-cuadrados-ss" class="section level3">
+<h3>Cálculo de la variabilidad en forma de Suma de Cuadrados (SS)</h3>
+<blockquote>
+<p>Fórmulas generales y rápidas de los estadísticos para el cálculo final de <em>F</em></p>
+</blockquote>
+<p>Para propósitos de cálculo del estadístico <em>F</em> a ser usado para la prueba de hipótesis, se calculan los siguientes estimadores de la variabilidad total, dentro de grupos, y entre grupos:</p>
+<div id="suma-total-de-cuadrados-total-ss" class="section level4">
+<h4><strong>Suma Total de Cuadrados (Total SS)</strong></h4>
+<p><span class="math display">\[\sum_{i=1}^{k} \sum_{j=1}^{n_i}(y_{ij} - \bar{\bar y})^2\]</span></p>
+</div>
+<div id="suma-de-cuadrados-dentro-de-grupos-within-ss" class="section level4">
+<h4><strong>Suma de Cuadrados Dentro de Grupos (Within SS)</strong></h4>
+<p><span class="math display">\[\sum_{i=1}^{k} \sum_{j=1}^{n_i}(y_{ij} - \bar y_i)^2\]</span></p>
+</div>
+<div id="suma-de-cuadrados-entre-grupos-between-ss" class="section level4">
+<h4><strong>Suma de Cuadrados Entre Grupos (Between SS)</strong></h4>
+<p><span class="math display">\[\sum_{i=1}^{k} \sum_{j=1}^{n_i}(\bar y_i - \bar{\bar y})^2\]</span></p>
+</div>
+</div>
+<div id="cálculo-rápido-de-between-ss-y-within-ss" class="section level3">
+<h3>Cálculo “rápido” de ‘Between SS’ y ‘Within SS’</h3>
+<p><span class="math display">\[Between\ SS = \sum_{i=1}^k n_i \bar y_{i}^2 - \frac{y..^2}{n}\]</span> <span class="math display">\[Within\ SS = \sum_{i=1}^k (n_i - 1)s_i^2\]</span></p>
+<p>donde:</p>
+<blockquote>
+<p><span class="math inline">\(y..\)</span> es la suma de todas las observaciones de todos los grupos.<br />
+<span class="math inline">\(k\)</span>, es el número de grupos.<br />
+<span class="math inline">\(n\)</span>, el número total de observaciones de todos los grupos.<br />
+<span class="math inline">\(s_i^2\)</span>, la varianza ( de la muestra) de cada grupo.</p>
+</blockquote>
+</div>
+<div id="cálculo-del-estadístico-f" class="section level3">
+<h3>Cálculo del estadístico <em>F</em></h3>
+<blockquote>
+<p>Primero debemos calcular ‘Between MS’ y ‘Within MS’:</p>
+</blockquote>
+<p><span class="math display">\[Between\ MS = \frac{Between\ SS}{k - 1}\]</span></p>
+<p><span class="math display">\[Within\ MS = \frac{Within\ SS}{n - k}\]</span></p>
+<p>y el estadístico F calculado:</p>
+<p><span class="math display">\[F = \frac{Between\ MS}{Within\ MS}\]</span></p>
+<p>La siguiente tabla resume los cálculos necesarios para obtener el estadístico <em>F</em>:<br />
+<img src="imagenes/onewayanovaresults.png" alt="(tomado de Rosner, 2016)" /></p>
+<p>Una vez obtenido el estadístico <em>F</em> con los datos, procedemos a buscar el valor crítico de <em>F</em> para el nivel de significancia <span class="math inline">\(\alpha\)</span> establecido, con <em>k - 1</em> grados de libertad en el numerador y <em>n - k</em> grados de libertad del denominador.</p>
+</div>
+<div id="cálculos-con-los-datos-del-ejemplo-1" class="section level3">
+<h3>Cálculos con los datos del Ejemplo 1</h3>
+<blockquote>
+<p>Cálculos manuales con R (también se pueden realizar con Excel o calculadora científica)</p>
+</blockquote>
+<pre class="r"><code># datos
+D1 &lt;- c(60.8,67,65,68.6,61.7)
+D2 &lt;- c(68.7,67.7,75,73.3,71.8)
+D3 &lt;- c(69.6,77.1,75.2,71.5)
+D4 &lt;- c(61.9,64.2,63.1,66.7,60.3)
+# lista
+cerdos &lt;- list(Dieta_1 = D1, Dieta_2 = D2, Dieta_3 = D3, Dieta_4 = D4)
+# data frame
+cerditos &lt;- as.data.frame(lapply(cerdos, `length&lt;-`, max(sapply(cerdos, length))))
+library(kableExtra)
+#tamaño de muestra n_i
+n1 &lt;- length(D1)
+n2 &lt;- length(D2)
+n3 &lt;- length(D3)
+n4 &lt;- length(D4)
+df.n &lt;- data.frame(n1,n2,n3,n4)
+kable(df.n, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">n1</th>
+<th align="right">n2</th>
+<th align="right">n3</th>
+<th align="right">n4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#sumatoria de grupos i
+sumX1j &lt;- sum(D1)
+sumX2j &lt;- sum(D2)
+sumX3j &lt;- sum(D3)
+sumX4j &lt;- sum(D4)
+df.sumX &lt;- data.frame(sumX1j,sumX2j,sumX3j,sumX4j)
+kable(df.sumX, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">sumX1j</th>
+<th align="right">sumX2j</th>
+<th align="right">sumX3j</th>
+<th align="right">sumX4j</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">323.1</td>
+<td align="right">356.5</td>
+<td align="right">293.4</td>
+<td align="right">316.2</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#media por grupo i
+Xbar1 &lt;- mean(D1)
+Xbar2 &lt;- mean(D2)
+Xbar3 &lt;- mean(D3)
+Xbar4 &lt;- mean(D4)
+df.Xbar &lt;- data.frame(Xbar1,Xbar2,Xbar3,Xbar4)
+kable(df.Xbar, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Xbar1</th>
+<th align="right">Xbar2</th>
+<th align="right">Xbar3</th>
+<th align="right">Xbar4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">64.62</td>
+<td align="right">71.3</td>
+<td align="right">73.35</td>
+<td align="right">63.24</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#suma de todas las mediciones
+sumXij &lt;- sum(df.sumX[1,])
+#número total de mediciones
+N &lt;- sum(df.n[1,])
+#media global
+TotalXbar &lt;- sumXij/N
+df.Total &lt;- data.frame(sumXij,N,TotalXbar)
+kable(df.Total, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">sumXij</th>
+<th align="right">N</th>
+<th align="right">TotalXbar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1289.2</td>
+<td align="right">19</td>
+<td align="right">67.85263</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#varianza de grupos i
+varX1j &lt;- var(D1)
+varX2j &lt;- var(D2)
+varX3j &lt;- var(D3)
+varX4j &lt;- var(D4)
+df.varX &lt;- data.frame(varX1j,varX2j,varX3j,varX4j)
+#Total SS
+TotalSS &lt;- sum((cerditos - TotalXbar)^2, na.rm = TRUE)
+#Group SS
+GroupSS &lt;- sum(df.n[1,]*(df.Xbar[1,]^2)) - (sumXij^2)/N
+#Error SS
+ErrorSS &lt;- sum((df.n[1,] - 1)*df.varX[1,])
+df.SS &lt;- data.frame(TotalSS,GroupSS,ErrorSS)
+kable(df.SS, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">TotalSS</th>
+<th align="right">GroupSS</th>
+<th align="right">ErrorSS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">479.6874</td>
+<td align="right">338.9374</td>
+<td align="right">140.75</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#grados de libertad y MS y F
+v.groups &lt;- length(df.n) - 1
+v.error &lt;- N - length(df.n)
+GroupMS &lt;- GroupSS/v.groups
+ErrorMS &lt;- ErrorSS/v.error
+Fcalc &lt;- GroupMS/ErrorMS
+Falfa &lt;- qf(0.95,v.groups,v.error)
+Pr &lt;- 1 - pf(Fcalc,v.groups,v.error)
+df.prueba &lt;- data.frame(v.groups,v.error,GroupMS,ErrorMS,Fcalc,Falfa,Pr)
+kable(df.prueba, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">v.groups</th>
+<th align="right">v.error</th>
+<th align="right">GroupMS</th>
+<th align="right">ErrorMS</th>
+<th align="right">Fcalc</th>
+<th align="right">Falfa</th>
+<th align="right">Pr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">15</td>
+<td align="right">112.9791</td>
+<td align="right">9.383333</td>
+<td align="right">12.0404</td>
+<td align="right">3.287382</td>
+<td align="right">0.000283</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Cálculos con la función <strong>aov</strong> de R</p>
+</blockquote>
+<pre class="r"><code>#data frame con factor Dieta
+df.cerdos &lt;- data.frame(Dieta=c(rep(&quot;D1&quot;, times=length(D1)),
+                        rep(&quot;D2&quot;, times=length(D2)),
+                        rep(&quot;D3&quot;, times=length(D3)),
+                        rep(&quot;D4&quot;, times=length(D4))),
+                   masa=c(D1, D2, D3, D4))
+analisis &lt;- aov(masa ~ Dieta, df.cerdos)
+summary(analisis)</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## Dieta        3  338.9  112.98   12.04 0.000283 ***
+## Residuals   15  140.8    9.38                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>En conclusión, al resultar un valor de <em>F</em> calculada mayor que el valor de <em>F</em> crítico, para <span class="math inline">\(\alpha = 0.05\)</span>, podemos rechazar la hipótesis nula de igualdad de medias entre los cuatro tratamientos. Igualmente, la prueba con la función <strong>aov</strong> en R, mostró una probabilidad de error tipo I menor que el nivel de significancia de <span class="math inline">\(\alpha = 0.05\)</span>, por lo cual podemos rechazar la <span class="math inline">\(H_0\)</span>.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="comparaciones-múltiples" class="section level2">
+<h2>3.1.3.Comparaciones Múltiples</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Determinar el o los tratamientos que difieren entre sí</strong></p>
+</div>
+<div id="pruebas-post-hoc" class="section level3">
+<h3>Pruebas <em>post-hoc</em></h3>
+<p>El análisis de varianza nos indica, para cierto nivel de probabilidad, si un factor (o más de uno) produce desviaciones de un valor medio global; sin embargo no nos indica cuál o cuáles niveles del factor son los determinantes en la desviación.</p>
+</div>
+<div id="gráfica-con-intervalos-de-confianza" class="section level3">
+<h3>Gráfica con intervalos de confianza</h3>
+<p>Mediante la siguiente gráfica, de medias e intervalos de confianza (95%), podemos hipotetizar cuáles dietas son diferentes entre sí y cuáles no.</p>
+<pre class="r"><code>library(plyr)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre class="r"><code>library(ggplot2)
+ic.dietas &lt;- ddply(df.cerdos, &quot;Dieta&quot;, plyr::summarize,
+                   masa.mean=mean(masa), masa.sd=sd(masa),
+                   Lenght=NROW(masa),
+                   tfrac=qt(p=.95, df=Lenght-1),
+                   Lower=masa.mean - tfrac*masa.sd/sqrt(Lenght),
+                   Upper=masa.mean + tfrac*masa.sd/sqrt(Lenght)
+                   )
+ggplot(ic.dietas, aes(x=masa.mean, y=Dieta)) + geom_point() + geom_errorbarh(aes(xmin=Lower, xmax=Upper), height=.3)</code></pre>
+<p><img src="modulom1_files/figure-html/icplot-1.png" width="672" /></p>
+</div>
+<div id="prueba-de-tukey" class="section level3">
+<h3>Prueba de Tukey</h3>
+<p>Para poder determinar si las diferencias específicas entre los niveles de los factores son significativas, debemos utilizar las llamadas <strong>pruebas <em>post-hoc</em> </strong> o <strong>procedimientos de comparaciones múltiples (MCP)</strong>.</p>
+<p>Utilizaremos la <strong>prueba de Tukey</strong> para probar cuáles son las dietas del Ejemplo que se diferencian entre si.</p>
+<pre class="r"><code>library(agricolae)
+posthoc &lt;- TukeyHSD(analisis)
+posthoc</code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = masa ~ Dieta, data = df.cerdos)
+## 
+## $Dieta
+##         diff        lwr       upr     p adj
+## D2-D1   6.68   1.096263 12.263737 0.0168421
+## D3-D1   8.73   2.807553 14.652447 0.0034914
+## D4-D1  -1.38  -6.963737  4.203737 0.8906642
+## D3-D2   2.05  -3.872447  7.972447 0.7530266
+## D4-D2  -8.06 -13.643737 -2.476263 0.0041505
+## D4-D3 -10.11 -16.032447 -4.187553 0.0009497</code></pre>
+<pre class="r"><code>par(cex = 0.6)
+plot(posthoc)</code></pre>
+<p><img src="modulom1_files/figure-html/tukey-1.png" width="672" /></p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="supuestos-para-el-anova-y-alternativas" class="section level2">
+<h2>3.1.4.Supuestos para el ANOVA y Alternativas</h2>
+<div id="objetivos-3" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Determinar el cumplimiento de los supuestos para el ANOVA y conocer las alternativas de pruebas de hipótesis cuando no se cumplen</strong></p>
+<p>La prueba de ANOVA, al igual que la prueba t, asume una distribución normal de los datos, y <em>homocedasticidad</em> (homogeneidad de varianzas). Por lo tanto, antes de continuar con otras pruebas es importante primero determinar si los datos cumplen con estos supuestos.</p>
+</div>
+<div id="prueba-de-normalidad" class="section level3">
+<h3>Prueba de normalidad</h3>
+<blockquote>
+<p>La conocida prueba de Shapiro-Wilk</p>
+</blockquote>
+<p>A continuación examinaremos gráficamente si los datos tienen una distribución normal, usando una <em>gráfica de cuantiles-cuantiles</em> (‘Q-Q plot’):</p>
+<pre class="r"><code>library(EnvStats)
+qqPlot(df.cerdos$masa, add.line = TRUE, points.col = &quot;blue&quot;, line.col = &quot;red&quot;, )</code></pre>
+<p><img src="modulom1_files/figure-html/qqplotanova-1.png" width="672" /></p>
+<p>A continuación la <strong>prueba de Shapiro-Wilk</strong> para normalidad, con una hipótesis nula de que los datos se ajustan a la distribución normal:</p>
+<pre class="r"><code>shapiro.test(df.cerdos$masa)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  df.cerdos$masa
+## W = 0.95808, p-value = 0.5352</code></pre>
+<p>No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos tienen una distribución normal.</p>
+</div>
+<div id="homogeneidad-de-varianza" class="section level3">
+<h3>Homogeneidad de varianza</h3>
+<blockquote>
+<p>Prueba de Levene</p>
+</blockquote>
+<p>Para la homogeneidad de varianza realizamos la <strong>prueba de Levene</strong>, que tiene una hipótesis nula de varianzas iguales:</p>
+<pre class="r"><code>library(car)
+leveneTest(masa ~ Dieta, data = df.cerdos)</code></pre>
+<pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
+##       Df F value Pr(&gt;F)
+## group  3  0.4508 0.7205
+##       15</code></pre>
+<p>No podemos rechazar la hipótesis nula con esta probabilidad (error tipo I), y aceptamos que los datos por grupo tienen homogeneidad de varianza.</p>
+</div>
+<div id="remedios-cuando-no-se-cumplen-los-supuestos" class="section level3">
+<h3>Remedios cuando no se cumplen los supuestos</h3>
+<blockquote>
+<p>Transformaciones</p>
+</blockquote>
+<p>Un posible remedio en el caso de que no se cumpla alguno de los supuestos anteriores, es el procedimiento de <strong>transformación</strong>, el cual envuelve realizar una operación matemática en todos y cada uno de los datos. A continuación algunos ejemplos comunes de transformaciones; <em>x</em> se refiere al valor a transformar, y <em>x’</em> al valor transformado.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Transformación Logarítmica</strong><br />
+Se usa a menudo en ANOVA y regresión (veremos más adelante) y puede servir para corregir cuando no se cumple la homogeneidad de varianza. Se utilizan logaritmos naturales o base 10, y cuando hay ceros en los datos, se añade 1:<br />
+<span class="math display">\[x&#39; = log(x + 1)\]</span></p></li>
+<li><p><strong>Transformación Raíz Cuadrada</strong><br />
+Utilizada cuando los datos son conteos (valores enteros), y puede corregir falta de cumplimiento con la normalidad y/o la homogeneidad de la varianza:<br />
+<span class="math display">\[x&#39; = \sqrt x\]</span></p></li>
+<li><p><strong>Transformación Arcoseno de la Raíz Cuadrada</strong><br />
+Las proporciones o porcentajes tienden a ser no-normales, con colas comprimidas. La función <strong>arcoseno</strong> (<span class="math inline">\(sin^{-1}\)</span>) se puede utilizar en ambos casos:</p></li>
+</ol>
+<ul>
+<li><p>para proporciones:<br />
+<span class="math display">\[x&#39; = arcsin(\sqrt{x})\]</span></p></li>
+<li><p>para porcentajes:<br />
+<span class="math display">\[x&#39; = arcsin(\sqrt{x/100})\]</span></p></li>
+</ul>
+<p>Luego de realizar la transformación que corresponda a los datos, se vuelven a realizar las pruebas de los supuestos, y si se cumplen se puede realizar el procedimiento de ANOVA y probar la hipótesis. Si al final se quieren mostrar los valores en su escala original, se realiza una tranformación inversa.</p>
+</div>
+<div id="alternativa-no-paramétrica-al-anova-de-una-vía" class="section level3">
+<h3>Alternativa No-Paramétrica al ANOVA de Una Vía</h3>
+<blockquote>
+<p>La prueba de Kruskal-Wallis</p>
+</blockquote>
+<p>Cuando las transformaciones no proveen una solución a la falta de normalidad, ni a la heterogeneidad de varianzas de los grupos, existen alternativas no-paramétricas como la <strong>prueba de Kruskal-Wallis</strong>. Al igual que otras pruebas no-paramétricas, como Wilcoxon o U-Mann-Whitney, los datos se ordenan de menor a mayor en cada grupo y se les asigna un rango empezando por uno, y cuando los valores son iguales, se les asigna un rango equivalente al promedio de los rangos que les correspondería si fueran diferentes.</p>
+<p><strong>Ejemplo 2</strong><br />
+En la siguiente tabla se muestran los valores de tiempo de copulación (segundos) de parejas de saltamontes machos y hembras, sometidos a cuatro tratamientos (A, B, C, D). Queremos determinar si los tratamientos determinan tiempos diferentes de copulación en los saltamontes; la <span class="math inline">\(H_0\)</span> sería que no hay ningún efecto diferencial de los tratamientos en los tiempos de copulación.</p>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2. Tiempo (segundos) de copulación de parejas de saltamontes en cuatro tratamientos
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Trat A
+</th>
+<th style="text-align:right;">
+Trat B
+</th>
+<th style="text-align:right;">
+Trat C
+</th>
+<th style="text-align:right;">
+Trat D
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+3900
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+10800
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+480
+</td>
+<td style="text-align:right;">
+28900
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+200
+</td>
+<td style="text-align:right;">
+900
+</td>
+<td style="text-align:right;">
+3600
+</td>
+<td style="text-align:right;">
+180
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+200
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+120
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+5400
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+720
+</td>
+<td style="text-align:right;">
+1500
+</td>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1500
+</td>
+<td style="text-align:right;">
+480
+</td>
+<td style="text-align:right;">
+1980
+</td>
+<td style="text-align:right;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+</tbody>
+</table>
+<p>Estos datos no cumplen con los supuestos de normalidad ni homogeneidad de varianza, pero la hipótesis nula sobre la no diferencia entre los tratamientos puede ser probada con la prueba no-paramétrica Kruskal-Wallis. Luego de ordenar los datos y asociarles un valor de rango, según las reglas indicadas, podemos calcular el estadístico de la prueba, conocido como <em>H</em>:<br />
+<span class="math display">\[H = \frac{12}{n_t(n_t + 1)}(\sum \frac{(\sum R_i)^2}{n_i}) - 3(n_t + 1))\]</span></p>
+<p>donde:</p>
+<blockquote>
+<p><span class="math inline">\(R_i\)</span>: rango de cada valor en grupo <em>i</em><br />
+<span class="math inline">\(n_t\)</span>: número total de mediciones<br />
+<span class="math inline">\(n_i\)</span>: número de mediciones en el grupo <em>i</em></p>
+</blockquote>
+<p>Para probar la significancia de <em>H</em> se utiliza la distribución <span class="math inline">\(\chi^2\)</span> con un número de grados de libertad del número de grupos menos 1.</p>
+<p>Con los datos del ejemplo se obtiene un valor de <em>H</em> = 14.273, y el valor crítico de <span class="math inline">\(\chi^2\)</span> para <span class="math inline">\(\alpha\)</span> = 0.05, y grados de libertad = 4 - 1, es de 7.81, por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span>. Podemos concluir que el tiempo promedio (mediana) de cópula de las parejas de saltamonte resulto ser diferente en al menos uno de los tratamientos.</p>
+<p>Utilizando R podemos realizar la prueba mediante la función <strong>kruskal.test</strong>.</p>
+<pre class="r"><code>kruskal.test(time ~ Treatment, data = tabla_salta)</code></pre>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  time by Treatment
+## Kruskal-Wallis chi-squared = 14.294, df = 3, p-value = 0.002532</code></pre>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="otros-diseños-de-anova" class="section level2">
+<h2>3.1.5.Otros Diseños de ANOVA</h2>
+<ul>
+<li>Efectos Aleatorios<br />
+</li>
+<li>Diseño de Bloques Aleatorizados<br />
+</li>
+<li>ANOVA con dos factores<br />
+</li>
+<li>ANOVA con repeticiones<br />
+</li>
+<li>ANCOVA<br />
+</li>
+<li>MANOVA</li>
+</ul>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

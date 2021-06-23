@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Distribución Normal</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Distribución Normal</h1>
+
+</div>
+
+
+<div id="la-distribución-normal" class="section level1">
+<h1>2.3.La Distribución Normal</h1>
+<p>La <strong>distribución normal</strong> es una distribución de frecuencias de variables continuas, que tiene forma de campana (simétrica) y muchas aplicaciones en pruebas estadísticas, que estaremos estudiando más adelante (prueba t, ANOVA, análisis de regresión). También la podemos aplicar directamente para estimar la probabilidad de que ocurran ciertos valores en las medidas de una muestra.</p>
+<div id="propiedades-de-la-distribución-normal" class="section level2">
+<h2>2.3.1.Propiedades de la Distribución Normal</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer las características y propiedades de la distribución normal</strong></p>
+<p>La distribución normal formalmente se especifica por medio de una <strong>curva de densidad normal</strong> (o de Gauss) que describe la densidad de probabilidades en la distribución de valores de observaciones (muestra) de una variable aleatoria, cuando el número de observaciones es grande (&gt; 30, usualmente). Se aplica a muchas de las variables usualmente medidas en biología, aunque hay otras curvas de distribución de densidad, con formas parecidas a la normal (tipo campana), por ejemplo la <strong>t de Student</strong>.</p>
+<p>La curva de densidad normal se expresa formalmente como:<br />
+<span class="math display">\[f(x) = \frac{1}{\sigma \sqrt{2 \pi}}e^{(\frac{-(x - \mu)^2}{2\sigma^2})}\]</span> dónde <span class="math inline">\(\mu\)</span> es la media poblacional (o su estimado), y <span class="math inline">\(\sigma\)</span> la desviación estándar. En realidad a un valor puntual de <em>x</em> no le corresponde un valor de probabilidad, ya que ésta está definida como el área bajo la curva (densidad x <span class="math inline">\(\Delta x\)</span>), y un solo punto no determina un área, sino una línea.</p>
+<div class="figure">
+<img src="imagenes/The-Normal-Distribution_1.png" alt="" />
+<p class="caption">tomada de: alevelmaths.co.uk</p>
+</div>
+</div>
+<div id="la-curva-normal-y-datos-reales" class="section level3">
+<h3>La curva normal y datos reales</h3>
+<p>Cuando realizamos mediciones de una variable continua, como longitud y masa, usualmente esperamos una distribución de frecuencias de valores que se asemeje a la distribución normal, especialmente si es una muestra grande, y no tenemos evidencia de algún sesgo en la medición.</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Tenemos datos de la masa de 487 semillas de la especie <em>Thespesia populnea</em> (emajagüilla), y a continuación podemos ver el histograma de la variable masa, en gramos:</p>
+<pre class="r"><code>#histograma para masa de semillas de Thespesia populnea
+# datos
+library(readxl)
+library(tidyverse)
+library(ggplot2)
+semillas &lt;- read_excel(&quot;data/masa_semilla_thepol.xlsx&quot;, 
+    sheet = &quot;masa&quot;)
+# gráfica de histograma
+m_sd &lt;- semillas %&gt;%
+  summarise(means = mean(masa_g), sd=sd(masa_g))
+ggplot(semillas, aes(x=masa_g)) +
+  geom_histogram(aes(y=..count..), position=&quot;identity&quot;, binwidth=.02, color=&quot;blue&quot;, fill=&quot;gray&quot;) +
+  labs(x=&quot;Masa de semilla, g&quot;, y=&quot;frecuencia&quot;)</code></pre>
+<p><img src="moduloi3_files/figure-html/norm-1.png" width="672" /> <strong>Figura 1</strong>. Histograma de frecuencias de valores de masa (g) de semillas de <em>T. populnea</em> (<em>n</em> = 487).</p>
+<p>A continuación podemos observar si la distribución de frecuencias de los datos se ajustan a la curva de densidad normal con los valores de media (0.224) y desviación estándar (0.052) de la muestra.</p>
+<pre class="r"><code># gráfica con curva de densidad normal
+m_sd &lt;- semillas %&gt;%
+  summarise(means = mean(masa_g), sd=sd(masa_g))
+ggplot(semillas, aes(x=masa_g)) +
+  geom_histogram(aes(y=..density..), position=&quot;identity&quot;, binwidth=.02, color=&quot;blue&quot;, fill=&quot;gray&quot;) +
+  stat_function(fun = dnorm, color=&quot;red&quot;, size=1, args=list(mean=m_sd$means, sd=m_sd$sd)) +
+  labs(x=&quot;Masa de semilla, g&quot;, y=&quot;densidad&quot;)</code></pre>
+<p><img src="moduloi3_files/figure-html/unnamed-chunk-1-1.png" width="672" /> <strong>Figura 2</strong>. Histograma de frecuencias de valores de masa (g) y curva de densidad normal con <span class="math inline">\(\mu\)</span> = 0.224 y <span class="math inline">\(\sigma\)</span> = 0.052, de semillas de <em>T. populnea</em> (<em>n</em> = 487).</p>
+<p>La correspondencia entre datos y la curva no es exacta; más adelante estaremos realizando pruebas para determinar si la desviación de los datos con respecto a la distribución normal es significativa con cierto nivel de probabilidad.</p>
+</div>
+</div>
+<div id="area-bajo-la-curva---proporción-y-probabilidad" class="section level3">
+<h3>Area bajo la curva - proporción y probabilidad</h3>
+<p>Como pudimos observar en la función de densidad normal, la curva está definida por la media (<span class="math inline">\(\mu\)</span>) y la desviación estándar (<span class="math inline">\(\sigma\)</span>), lo cual determina que exista una relación fija entre la desviación estándar y la proporción de área bajo la curva, que ocurre entre <span class="math inline">\(\mu\)</span> y un valor de <span class="math inline">\(\sigma\)</span>, o entre valores de <span class="math inline">\(\sigma\)</span>. A continuación podemos observar valores notables de probabilidades (o proporción de la muestra) para ciertos valores de <span class="math inline">\(\sigma\)</span>:</p>
+<p><img src="imagenes/8-3%20Normal%20Distribution%20Areas.jpg" /></p>
+<p><strong>Figura 3</strong>. Areas de probabilidad o proporción bajo la curva de distribución normal estándar (<span class="math inline">\(\mu = 0, \sigma = 1\)</span>), para algunos valores de <span class="math inline">\(\sigma\)</span>.</p>
+<p>La imagen anterior nos muestra la proporción de valores o probabilidades de ocurrencia (área) que hay debajo de la curva y entre 1 y entre 1.96 veces la desviación estándar. Por ser una función simétrica, podemos decir que entre la media y 1 o 1.96 veces la desviación estándar, tendremos la mitad de la probabilidad o proporción de valores.</p>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>¿Cuál es la proporción de valores entre +1<span class="math inline">\(\sigma\)</span> y -1.96<span class="math inline">\(\sigma\)</span>?</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="transformación-z-y-aplicaciones" class="section level2">
+<h2>2.3.2.Transformación Z y Aplicaciones</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Aplicar la distribución normal estándar a problemas de probabilidades y proporciones de una muestra</strong></p>
+<p>En la Figura 3 se indica que se trata de una curva de <strong>distribución normal estándar</strong> porque tiene una media de 0 y una desviación estándar de 1. Esta curva sirve de referencia para el cálculo de las probabilidades o proporción de valores entre puntos de <span class="math inline">\(x\)</span> o valores de <span class="math inline">\(\sigma\)</span>, mediante tablas que tienen los cómputos del área (proporción) entre esos valores. Pero para usar esas tablas debemos antes convertir nuestra supuesta distribución normal, con su valor de media y desviación estándar, a una distribución normal estándar, para esto transformamos los valores incluidos en nuestra distribución (<span class="math inline">\(x\)</span>) a valores denominados <em>z-scores</em> (puntuación z), mediante la siguiente fórmula:<br />
+<span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span><br />
+dónde <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span> son las media y desviación estándar de nuestra muestra, y asumiendo que ésta es representativa de la población de valores.</p>
+<p>Con el <em>z-score</em> podemos calcular las probabilidades o proporciones (áreas) antes o después de algún valor de <em>z</em>, o entre la media y <em>z</em>, o entre dos valores de <em>z</em>.</p>
+<p><img src="imagenes/zscore_left.png" /></p>
+<p><strong>Figura 4</strong>. Probabilidad o proporción de valores, antes (a la izquierda) del valor <em>z</em> calculado a partir de nuestra muestra.</p>
+<p><img src="imagenes/zscore_mean.gif" /></p>
+<p><strong>Figura 5</strong>. Probabilidad o proporción de valores a la izquierda y derecha de la media, para los correspondientes valores de <em>z</em>.</p>
+</div>
+<div id="tablas-para-la-distribución-normal-estándar" class="section level3">
+<h3>Tablas para la Distribución Normal Estándar</h3>
+<blockquote>
+<p>Para obtener valores de <em>z</em> o de <em>P</em></p>
+</blockquote>
+<p>Para obtener las áreas bajo la curva (probabilidad o proporción de valores) a la izquierda de valores de <em>z</em> podemos utilizar la tabla disponible en los recursos de la clase: <a href="https://drive.google.com/file/d/1oyh1qDsng2BEVe01tkkOWHfkQoPmPj9O/view?usp=sharing">Tabla distribución normal izquierda z-score</a>. Para obtener las áreas bajo la curva desde la media a valores de <em>z</em> podemos utilizar la tabla que trae el libro de Havel <em>et al.</em> (2019), <em>Appendix A, Table A.1</em>.</p>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Para una muestra de 487 semillas de la especie <em>Thespesia populnea</em> la longitud ápice-base de las semillas tiene una <span class="math inline">\(\mu\)</span> = 10.15 mm y una <span class="math inline">\(\sigma\)</span> = 1.60 mm. Asumiendo una distribución normal, ¿cuántas semillas tienen una longitud mayor de 11 mm?</p>
+<p>Para poder consultar la tabla de proporciones de la distribución normal estándar, primero debemos calcular el valor de <em>z</em> para 11 mm:<br />
+<span class="math display">\[z = \frac{11 - 10.15}{1.60} = 0.53125\]</span></p>
+<p>Consultando la tabla podemos obtener un valor de probabilidad o proporción <em>P</em> a la izquierda de 11; como la tabla solo provee dos decimales para el valor <em>z</em>, podemos interpolar utilizando la siguiente fórmula: <span class="math display">\[P_{interp.} = \frac{(z_{calc.} - z_{abajo})(P_{arriba} - P_{abajo})}{z_{arriba} - z_{abajo}} + P_{abajo}\]</span> El valor de <em>P</em> interpolado es de 0.70237, es decir que el 70.237% de las semillas son de una longitud menor o igual a 11 mm; como el problema nos pide la proporción mayor de 11 mm, debemos calcular 1 - 0.70237 = 0.29763, es decir: 29.763 % de las semillas tienen una longitud mayor de 11 mm.</p>
+<p>Utilizando R podemos trabajar el problema de la siguiente manera:</p>
+<pre class="r"><code># proporción para media y desviación estándar conocidas
+psem &lt;- pnorm(11, mean = 10.15, sd = 1.60, lower.tail= FALSE)
+sprintf(&quot;Proporción de semillas con longitud mayor de 11 mm = %.3f&quot;, psem)</code></pre>
+<pre><code>## [1] &quot;Proporción de semillas con longitud mayor de 11 mm = 0.298&quot;</code></pre>
+<p>Para calcular el valor de <em>z</em> (y de la variable estudiada) que corresponde a una probabilidad o proporción <em>P</em>, podemos utilizar la tabla y realizar la interpolación correspondiente. Luego utilizamos la fórmula de <em>z</em> y calculamos el valor <em>x</em> de nuestra variable.</p>
+<p>Otra alternativa, mediante R:</p>
+<pre class="r"><code># valor correspondiente a una P de la distr. normal
+valor &lt;- qnorm(0.29763, mean = 10.15, sd = 1.60, lower.tail = FALSE)
+sprintf(&quot;Longitud de semillas para separar el 29.76%% más grandes = %.3f&quot;, valor)</code></pre>
+<pre><code>## [1] &quot;Longitud de semillas para separar el 29.76% más grandes = 11.000&quot;</code></pre>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="distribución-y-error-estándar-de-la-media-muestral" class="section level2">
+<h2>2.3.3.Distribución y Error Estándar de la Media Muestral</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Reconocer algunas propiedades de las muestras de una población</strong></p>
+<p>En la <strong>Figura 2.</strong> observamos la distribución de la variable masa de 487 semillas de <em>T. populnea</em>, y encontramos que no parece ajustarse a la distribución normal correspondiente a <span class="math inline">\(\bar X = 0.224\)</span> y <span class="math inline">\(s = 0.052\)</span>. Vamos a tomar muestras aleatorias (1000) de esta “población” de semillas, y observar cómo se distribuyen las medias de cada muestra, para diferentes tamaños de muestra. Calcularemos la media y la desviación estándar en cada caso.</p>
+<pre class="r"><code># 1000 muestras de n = 4
+samples &lt;- replicate(1000, sample(semillas$masa_g, 4, replace = TRUE))
+# media y suma de columnas (muestras)
+sample_means &lt;- colMeans(samples)
+sample_sums &lt;- colSums(samples)
+# media y sd de las medias muestrales
+mx &lt;- mean(sample_means)
+smx &lt;- sd(sample_means)
+# data frame para ggplot
+sample_stats &lt;- data.frame(sample_means, sample_sums)
+# histograma y curva normal ajustada
+ggplot(sample_stats, aes(x=sample_means)) +
+  geom_histogram(aes(y=..density..), position=&quot;identity&quot;, binwidth=.01, color=&quot;blue&quot;, fill=&quot;gray&quot;) +
+  stat_function(fun = dnorm, color=&quot;red&quot;, size=1, args=list(mean=mx, sd=smx)) +
+  labs(x=&quot;Masa de semilla, g&quot;, y=&quot;densidad&quot;)</code></pre>
+<p><img src="moduloi3_files/figure-html/centralt-1.png" width="672" /></p>
+<pre class="r"><code>sprintf(&quot;Media de las muestras (n = 4) = %.4f&quot;, mx)</code></pre>
+<pre><code>## [1] &quot;Media de las muestras (n = 4) = 0.2227&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;Desv. Est. de la media muestral (n = 4) = %.4f&quot;, smx)</code></pre>
+<pre><code>## [1] &quot;Desv. Est. de la media muestral (n = 4) = 0.0258&quot;</code></pre>
+<p><strong>Figura 6a.</strong> Histograma de frecuencias de valores de masa (g) de semillas y curva de densidad normal de las medias muestrales para n = 4.</p>
+<p><img src="moduloi3_files/figure-html/centraltt-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Media de las muestras (n = 12) = 0.2247&quot;</code></pre>
+<pre><code>## [1] &quot;Desv. Est. de la media muestral (n = 12) = 0.0151&quot;</code></pre>
+<p><strong>Figura 6b.</strong> Histograma de frecuencias de valores de masa (g) de semillas y curva de densidad normal de las medias muestrales para n = 12.</p>
+<p><img src="moduloi3_files/figure-html/centralttt-1.png" width="672" /></p>
+<pre><code>## [1] &quot;Media de las muestras (n = 30) = 0.2243&quot;</code></pre>
+<pre><code>## [1] &quot;Desv. Est. de la media muestral (n = 30) = 0.0098&quot;</code></pre>
+<p><strong>Figura 6c.</strong> Histograma de frecuencias de valores de masa (g) de semillas y curva de densidad normal de las medias muestrales para n = 30.</p>
+<p>Como podemos observar en todas la gráficas <strong>(Figuras 6a-6c)</strong> la distribución de las medias de las muestras tiene una distribución más cercana a la curva normal, que los datos totales de las semillas, conservándose el valor de la media. Por otra parte, la desviación estándar disminuye al aumentar el tamaño de la muestra <em>(n)</em>.</p>
+</div>
+<div id="teorema-del-límite-central" class="section level3">
+<h3>Teorema del Límite Central</h3>
+<p>Las observaciones anteriores se corresponden con lo que se denomina en estadísticas el <strong>Teorema del Límite Central</strong>, que se puede resumir como:<br />
+“En una población de valores (con o sin distribución normal), si los tamaños de las muestras son suficientemente grandes, sus medias tienden a una distribución normal”</p>
+</div>
+<div id="el-error-estándar-de-la-media" class="section level3">
+<h3>El Error Estándar de la Media</h3>
+<p>La otra observación importante tiene que ver con la disminución de la desviación estándar de la media muestral, con el aumento del tamaño de la muestra. Podemos comprobar, con los datos obtenidos anteriormente, que se ajusta a la definición matemática del <strong>error estándar de la media</strong>:<br />
+<span class="math display">\[\sigma_{\bar X} = \frac{\sigma}{\sqrt n}\]</span> dónde:</p>
+<blockquote>
+<p><span class="math inline">\(\sigma_{\bar X}\)</span>: error estándar de la media<br />
+<span class="math inline">\(\sigma\)</span>: desviación estándar de la población<br />
+<span class="math inline">\(n\)</span>: tamaño de la muestra</p>
+</blockquote>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="pruebas-de-normalidad" class="section level2">
+<h2>2.3.4.Pruebas de Normalidad</h2>
+<div id="objetivos-3" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Probar si una variable tiene una distribución aproximada a la normal</strong></p>
+<p>Muchas de las pruebas de hipótesis que estaremos realizando, asumen una distribución normal de las variables.</p>
+</div>
+<div id="sesgo-y-curtosis" class="section level3">
+<h3>Sesgo y Curtosis</h3>
+<blockquote>
+<p>Medidas de la simetría y agrupamiento de los datos</p>
+</blockquote>
+<p>En la <strong>Figura 2</strong> de los datos de masa de las semillas de <em>T. populnea</em> observamos que la distribución de valores parece corrida hacia la derecha, es decir asimétricos. Además las frecuencias alrededor de la media parecen más elevadas que lo esperado para la distribución normal. Las desviaciones de la simetría en una distribución de frecuencias, se mide mediante el estadístico <strong>sesgo</strong> <em>(skewness)</em>; en una distribución simétrica, el sesgo es 0, negativo si la distribucioón presenta una cola más larga hacia la izquierda, y positivo si la cola es a la derecha. Las desviaciones en la altura y amplitud de los valores de frecuencia de la distribución se miden con el estadístico <strong>curtosis</strong> <em>(kurtosis)</em>. La curtosis de la distribución normal es 0; si los valores se agrupan en exceso en la parte central (media), la curtosis es positiva, de lo contrario (valores más expandidos alrededor de la media) es negativa.</p>
+<p>Para el cálculo del sesgo (<span class="math inline">\(g_1\)</span>) hay varias fórmulas, una de ellas es:</p>
+<p><span class="math display">\[g_1=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{3}}{(n-1) s^{3}}\]</span> Igualmente, para la curtosis (<span class="math inline">\(g_2\)</span>) hay diferentes fórmulas, una de ellas: <span class="math display">\[g_2=\frac{\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{4}}{(n-1) s^{4}} - 3\]</span> En ambas:</p>
+<blockquote>
+<p><span class="math inline">\(n\)</span>: tamaño de la muestra<br />
+<span class="math inline">\(x_i\)</span>: valores de la variable<br />
+<span class="math inline">\(\bar x\)</span>: media de la muestra<br />
+<span class="math inline">\(s\)</span>: desviación estándar de la muestra</p>
+</blockquote>
+<p>Usando R podemos calcular ambos estadísticos:</p>
+<pre class="r"><code>library(moments)
+sk &lt;- skewness(semillas$masa_g)
+ku &lt;- kurtosis(semillas$masa_g) - 3
+sprintf(&quot;Sesgo en distribución valores de masa = %.3f&quot;, sk)</code></pre>
+<pre><code>## [1] &quot;Sesgo en distribución valores de masa = -0.293&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;Curtosis en distribución valores de masa = %.3f&quot;, ku)</code></pre>
+<pre><code>## [1] &quot;Curtosis en distribución valores de masa = 0.916&quot;</code></pre>
+<p>Los valores calculados confirman las observaciones anteriores sobre el histograma de la <strong>Figura 2</strong>. En general se acepta que si los valores de sesgo y curtosis se encuentran entre -1 y 1, la desviación de la normalidad no es muy grande. A continuación estudiaremos otras pruebas más concretas sobre esta afirmación.</p>
+</div>
+<div id="gráficas-q-q" class="section level3">
+<h3>Gráficas Q-Q</h3>
+<blockquote>
+<p>Observando el ajuste de los datos a los valores de z</p>
+</blockquote>
+<p>Si se grafican los datos crudos y los transformados mediante la fórmula de <em>z</em>, deberíamos obtener una línea recta que pasa por los puntos de la gráfica, si los valores de la variable poseen una distribución normal. Si los puntos están separados de la recta identidad, especialmente en la parte central, podemos sospechar de una desviación importante de la distribución normal.</p>
+<pre class="r"><code>library(car)
+car::qqPlot(semillas$masa_g, id = FALSE, xlab = &quot;valores de z&quot;, ylab = &quot;masa de semilla, g&quot;)</code></pre>
+<p><img src="moduloi3_files/figure-html/qqplot-1.png" width="672" /></p>
+<p>Podemos observar desviación de la recta de distribución normal, particularmente en los extremos.</p>
+</div>
+<div id="prueba-de-hipótesis-de-shapiro-y-wilk" class="section level3">
+<h3>Prueba de hipótesis de Shapiro y Wilk</h3>
+<blockquote>
+<p>La prueba definitiva para decidir sobre la normalidad de la variable</p>
+</blockquote>
+<p>La prueba de hipótesis de <strong>normalidad de Shapiro-Wilk</strong> nos permite decidir con una probabilidad establecida (<span class="math inline">\(\alpha\)</span>) si aceptamos o rechazamos la <span class="math inline">\(H_0\)</span>:los datos se distribuyen de forma normal.</p>
+<pre class="r"><code>sw &lt;- shapiro.test(semillas$masa_g)
+sw</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  semillas$masa_g
+## W = 0.96488, p-value = 2.156e-09</code></pre>
+<p>Los resultados de la prueba indican que podemos rechazar la <span class="math inline">\(H_0\)</span>, por lo tanto los valores de la variable masa de las semillas no presentan una distribución normal. Mediante diversos métodos podemos realizar <strong>transformaciones</strong> para ajustar los datos a una distribución normal.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

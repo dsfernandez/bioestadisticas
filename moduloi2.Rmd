@@ -1,0 +1,299 @@
+---
+title:
+output:
+  html_document:
+    css: !expr here::here("styles/styles.css")
+    toc: true
+    toc_depth:  3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("yaml.eval.expr" = TRUE)
+```
+
+# 2.2.Hipótesis sobre Frecuencias  
+En las investigaciones biológicas, muchas veces determinamos las frecuencias con la que ocurren ciertos eventos, que están clasificados en ciertas categorías.  
+
+#### __Ejemplos__
+
+* La razón o proporción de los sexos en las poblaciones.  
+* La frecuencia de ciertos fenotipos.  
+* La incidencia de ciertas enfermedades.  
+
+En esta sección estaremos conociendo sobre dos tipos de problemas:  
+
+1. Probar la __bondad de ajuste__ de frecuencias observadas, a ciertas expectativas.  
+2. Probar la __asociación__ entre dos variables categóricas.
+
+## 2.2.1.Prueba de Bondad de Ajuste  
+#### Objetivos  
+__Aplicar la prueba de Chi-cuadrado a problemas de frecuencias en los datos observados__  
+
+La hipótesis nula de ($H_0$) para una __prueba de bondad de ajuste__ es que la distribución de frecuencias observadas en los datos no es diferencte de una distribución de frecuencias especificada con anterioridad (binomial, Poisson).  Si $H_0$ no se puede rechazar, quiere decir que cualquier alejamiento de la distribución esperada, es debido al azar.  
+
+### Supuestos de la prueba  
+> Para revisar antes de realizar la prueba  
+
+1. Los datos son frecuencias en __categorías mutuamente excluyentes__.  
+2. Las __observaciones son independientes__ una de otra.  
+3. Cada categoría debe que tener un __número mínimo de datos__.  En general, las categorías esperadas no deberían tener frecuencias de menos de 5.
+
+### El estadístico Chi-cuadrado ($\chi^2$)    
+> Midiendo las discrepancias entre frecuencias observadas y frecuencias esperadas  
+
+La pregunta que nos hacemos: ¿es la diferencia entre los resultados (frecuencias) observadas, y los esperados estadísticamente significativa?  
+
+El estadístico __Chi-cuadrado ($\chi^2$)__ se utiliza para esa pregunta, y su fórmula es la siguiente:  
+
+$$\chi^2 = \sum_{i=1}^k\frac{(f_o - f_e)^2}{f_e}$$
+donde:  
+
+> $f_o$ es la frecuencia observada en la categoría _i_  
+> $f_e$ es la frecuencia esperada en la categoría _i_  
+> _k_ es el número de categorías  
+
+### Ajuste a frecuencias teóricas  
+#### __Ejemplo__  
+Un geneticista de plantas evalúa el resultado de cruces en una población de plantas con flores amarillas y flores verdes: de un total de 100 semillas que sembró, obtuvo 84 plantas con flores amarillas y 16 con flores verdes. ¿Se ajusta este resultado a un sistema dominante-recesivo, 3:1?  
+
+Podemos establecer las siguientes hipótesis, asumiendo que esperamos una distribución según un sistema dominante-recesivo:  
+$H_0$: la muestra proviene de una población con una proporción 3:1 de flores amarillas a flores verdes.  
+$H_A$: la muestra proviene de una población que no tiene la proporción 3:1.  
+
+Tabla 1. frecuencias observadas y esperadas de colores de flores.  
+
+|    |amarillas| verdes | n |
+|----|---------|--------|---|
+|$f_o$|84|16|100|
+|$f_e$|75|25| |  
+
+Primero debemos verificar si se cumplen los supuestos.  Luego procedemos al cálculo del estadístico usando la fórmula anterior.  
+```{r chi}
+#calculo de chi-cuadrado
+fo <- c(84,16)
+fe <- c(75,25)
+chicu <- sum(((fo - fe)^2)/fe)
+sprintf("Chi-cuadrado calculado = %.2f", chicu)
+```
+Ahora debemos comprobar si el valor del estadístico calculado ($\chi^2_{c}$) nos indica si podemos o no rechazar $H_0$.  Esto lo podemos hacer de dos maneras:  
+
+1. Buscacndo un __valor crítico__ de $\chi^2$, para el valor de $\alpha$ previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico $\chi^2$,  [Chi-square Distribution Table](https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing), la cual tiene en la parte superior los valores de $\alpha$ y en la columna de la izquierda los valores de __grados de libertad__ _(degrees of freedom, df)_, que en el caso de esta prueba se calculan como: $df = número\ de\ categorías - 1$. Si el $\chi^2_{c}$ es __mayor__ que el valor crítico, podemos decir que rechazamos la $H_0$ con alguna $p \leq \alpha$.  
+
+2. Calculando el valor de la probabilidad _(p-value)_, y si este es menor que el valor de $\alpha$ podemos rechazar $H_0$ con ese nivel de probabilidad calculado.  Este cálculo lo podemos hacer utilizando R.  
+
+```{r chi2r}
+chisq.test(fo, p=fe, rescale.p = TRUE, correct = TRUE)
+```  
+
+En resumen, el valor calculado de $\chi^2$ resultó mayor que el valor crítico (3.84), y el valor de _p_ (0.037) fue menor que $\alpha$ = 0.05, por lo tanto podemos rechazar $H_0$ y decir que es muy probable que los valores observados no se ajustan a un sistema dominante-recesivo. 
+
+\
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)  
+
+### Ajuste a una distribución de frecuencias  
+#### __Ejemplo__  
+En los datos de número de plántulas de arce por parcela de muestreo de 1 $m^2$, (ver 1.5.5 Distribución de Poisson, Figura 4) esperamos una distribución de frecuencias de Poisson $(H_0)$, si las plántulas se encuentran distribuidas al azar en un bosque.  Vamos a realizar la prueba de bondad de ajuste con el estadístico Chi-cuadrado:  
+```{r tabla, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+# datos y frecuencias esperadas (Poisson)
+n_plant <- c("0", "1", "2", "3", "4", "5 o más")
+f_obs <- c(35, 28, 15, 10, 7, 5)
+f_esp <- (dpois(0:5, lambda = 1.41))*100
+# tabla de datos
+bondad_poisson <- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson <- setNames(bondad_poisson, c("# plant./parcela", "frec. observada", "frec. esperada"))
+bondad_poisson %>% 
+  kable(caption = "Tabla 2a. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+Observando la tabla anterior podemos notar que las dos últimas categorías tienen valores de frecuencia esperada menores que 5, por lo que se está violando uno de los supuestos; podemos superar esta situación agrupando estos dos últimos valores.  
+
+```{r}
+# datos y frecuencias esperadas (Poisson)
+n_plant <- c("0", "1", "2", "3", "4 o más")
+f_obs <- c(35, 28, 15, 10, 12)
+f_esp <- (dpois(0:4, lambda = 1.41))*100
+f_esp[5] <- 5.1
+# tabla de datos
+bondad_poisson <- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson <- setNames(bondad_poisson, c("# plant./parcela", "frec. observada", "frec. esperada"))
+bondad_poisson %>% 
+  kable(caption = "Tabla 2b. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado") %>%
+  kable_classic(full_width = F, html_font =
+                  "Cambria")
+```
+
+
+Vamos a calcular el estadístico $\chi^2$ para esta prueba, y encontrar el valor crítico usando la tabla, para $\alpha$ = 0.05, y grados de libertad:
+$df = num. categorías - 1 - num. parámetros\ de\ la\ distribución$, 5 - 1 - 1 = 3
+
+```{r chip}
+#calculo de chi-cuadrado
+f_obsc <- c(35, 28, 15, 10, 12)
+f_espc <- c(24.4, 34.4, 24.3, 11.4, 5.1)
+chicup <- sum(((f_obsc - f_espc)^2)/f_espc)
+sprintf("Chi-cuadrado calculado = %.2f", chicup)
+```
+Al comparar el $\chi^2$ calculado con el valor de la tabla, 7.81, vemos que es mayor, por lo tanto podemos rechazar la $H_0$ con una probabilidad menor de $\alpha$.  A continuación la prueba en R:
+```{r}
+chisq.test(f_obsc, p=f_espc, rescale.p = TRUE, correct = TRUE)
+```
+y observamos que el valor de p es menor que $\alpha$, por lo que podemos rechazar la $H_0$ de que las plántulas están distribuidas al azar en el bosque.
+
+\
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html) 
+
+## 2.2.2.Prueba de Asociación
+#### Objetivos  
+__Determinar si las frecuencias en dos variables categóricas son independientes__   
+
+La __prueba de asociación de Chi-cuadrado__ permite evaluar si dos variables categóricas están asociadas.  En esta prueba, los mismos datos generan la hipótesis nula a probar.  Los supuestos para esta prueba son similares a los de la prueba de bondad de ajuste.  
+
+ En esta prueba se utiliza el estadístico $\chi^2$ y la forma más común de calcularlo es:
+$$\chi^2 = \sum_{i=1}^r \sum_{j=1}^c \frac{(f_{ij} - E_{ij})^2}{E_{ij}}$$  
+donde:
+
+> $f_{ij}$ es la frecuencia observada de la fila _i_, columna _j_  
+> $E_{ij}$ es la frecuencia esperada de la fila _i_, columna _j_  
+> _c_ es el número de columnas  
+> _r_ es el número de filas ('rows')  
+
+#### __Ejemplo__   
+Queremos probar la independencia entre la característica color de pelo y sexo, en 300 humanos, seleccionando al azar 100 hombres y 200 mujeres.  En primer lugar, creamos lo que se conoce como una __tabla de contingencia__:
+
+| |color de pelo| | | | |
+|--|:--:|:--:|:--:|:--:|--|  
+|__sexo__|NEGRO|MARRON|RUBIO|ROJO|__total__|    
+|HOMBRE|32|43|16|9|100|    
+|MUJER|55|65|64|16|200|    
+|__total__|87|108|80|25|300|  
+
+La forma más general de plantear las hipótesis es:  
+$H_0$: _el color del pelo es independiente del sexo en la población muestreada_, y  
+$H_A$: _el color del pelo no es independiente del sexo en la población muestreada_.  
+
+### Cálculo de frecuencias esperadas  
+
+Para calcular el estadístico $\chi^2$, necesitamos primero calcular las frecuencias esperadas de cada categoría _ij_:
+$$E_{ij} = \frac{R_i*C_j}{n}$$
+donde:
+$$R_i = \sum_{j=1}^c f_{ij}$$
+
+$$C_j = \sum_{i=1}^r f_{ij}$$  
+_c_ es el número de columnas y _r_ es el número de filas.
+
+Calculamos las frecuencias esperadas:
+```{r fect}
+library(kableExtra)
+Ri <- c(100,200)
+Ci <- c(87,108,80,25)
+mfe <- (Ri%*%t(Ci))/300
+fe <- as.data.frame(mfe)
+sexo <- c("Hombre","Mujer")
+colnames(fe) <- c("Negro","Marrón","Rubio","Rojo")
+tablafe <- cbind(sexo,fe)
+kable(tablafe, format = "markdown", caption = "Frecuencias Esperadas")
+```
+y construimos nuestra tabla de contingencia completa, con los valores esperados entre paréntesis:  
+
+| |color de pelo| | | | |  
+|--|:--:|:--:|:--:|:--:|--|  
+|__sexo__|NEGRO|MARRON|RUBIO|ROJO|__total__|    
+|HOMBRE|32(29)|43(36)|16(26.7)|9(8.3)|100 = $R_1$|    
+|MUJER|55(58)|65(72)|64(53.3)|16(16.7)|200 = $R_2$|    
+|__total__|87 = $C_1$|108 = $C_2$|80 = $C_3$|25 = $C_4$|300 = $n$|
+
+### Cálculo de $\chi^2$, valor crítico y resultado 
+
+Con los valores de la tabla de contingencia completa, podemos calcular $\chi^2$ usando la fórmula a mano, o mediante R:  
+```{r chitc}
+#matriz de frecuencia esperada es mfe
+#definimos matriz frecuencias observadas
+mfo <- matrix(c(32,43,16,9,55,65,64,16), ncol = 4, byrow = TRUE)
+#cálculo de chi-cuadrado
+chicu2 = 0
+for(i in 1:2){
+  for(j in 1:4){
+    chicu1 = sum(((mfo[i,j] - mfe[i,j])^2)/mfe[i,j])
+      chicu2 = chicu2 + chicu1
+  }
+}
+sprintf("Chi-cuadrado calculado = %.2f", chicu2)
+```
+Utilizamos la tabla para encontrar el valor crítico para un $\alpha$ = 0.05, y grados de libertad:
+$$df = (filas - 1)*(columnas - 1)$$
+el cual resulta ser:
+$$\chi^2_{0.05,3} = 7.81$$  
+El valor calculado es mayor que el valor crítico, por lo cual podemos rechazar la $H_0$ de independencia, y por lo tanto parece existir alguna asociación entre tener algún color del pelo y el sexo de la persona.  
+
+A continuación la prueba mediante R:
+```{r}
+#data frame desde matriz de datos
+fo <- as.data.frame(mfo)
+chisq.test(fo)
+```
+
+### Gráfica de mosaico para tablas de contingencia
+Ahora bien, la prueba estadística solo nos indica si se acepta o rechaza la hipótesis nula, pero no nos específica dónde están las principales discrepancias entre las frecuencias, por efecto de la no-independencia entre los variables nominales.  Una __gráfica de mosaico__ puede ayudarnos a identificar las categorías entre las que se producen las mayores discrepancias.  
+
+```{r mosaic, message=FALSE, warning=FALSE}
+library(vcd)
+mosaic(mfo, shade = TRUE, legend = FALSE, labeling_args = list(set_varnames = c(A = "Sexo", B = "Color Pelo")), set_labels = list(A = c("Hombre","Mujer"), B = c("Negro","Marrón","Rubio","Rojo")))
+```
+
+\ 
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+
+## 2.2.3.Prueba de Probabilidad Exacta de Fisher  
+#### Objetivos  
+__Utilizar una prueba de asociación cuando no se cumple uno de los supuestos de $\chi^2$__  
+
+Cuando se tiene una tabla de contingencia 2 x 2, y alguna de las frecuencias esperadas es menor que 5, no debemos utilizar la prueba de $\chi^2$; una alternativa es la prueba de __probabilidad exacta de Fisher__.
+
+Para esta prueba se calcula directamente un valor de probabilidad _p_ que se contrasta con el nivel de probabilidad escogido $\alpha$, usualmente 0.05.  La siguiente tabla muestra la estructura de los datos:  
+
+|    |categoría 1| categoría 2| Totales |
+|----|:---------:|:--------:|---|
+|grupo 1|A|B|A+B|
+|grupo 2|C|D|C+D|
+|Totales|A+C|B+D|A+B+C+D|  
+
+La fórmula para la probabilidad es la siguiente:
+$$p = \frac{(A+B)!*(C+D)!*(A+C)!*(B+D)!}{n!*A!*B!*C!*D!}$$
+
+#### __Ejemplo__  
+En un experimento con la especie de serpiente _Thamnophis sirtalis_ se estudió la respuesta de escape de individuos recién nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos.  Los resultados fueron los siguientes:  
+
+|    |Escape| No escape| Totales |
+|----|:---------:|:--------:|---|
+|Estimulo arriba|6|1|7|
+|Estimulo lateral|1|6|7|
+|Totales|7|7|14|  
+
+Calculamos el valor de _p_ para la $H_0$ de no asociación.  
+```{r}
+# matriz de datos
+matx <- matrix(c(6, 1, 1, 6), ncol = 2, byrow = TRUE)
+# calculo de p
+pf <- (factorial(matx[1,1]+matx[1,2])*factorial(matx[2,1]+matx[2,2])*factorial(matx[1,1]+matx[2,1])*factorial(matx[2,1]+matx[2,2]))/(factorial(sum(matx))*factorial(matx[1,1])*factorial(matx[1,2])*factorial(matx[2,1])*factorial(matx[2,2]))
+sprintf("Probabilidad exacta de Fisher = %.4f", pf)
+```
+
+El valor de la _p_ nos indica que la probabilidad de que los datos observados se ajusten a la $H_0$ es menor que $\alpha$, y por lo tanto podemos rechazar la $H_0$ de que la respuesta es independiente del estímulo.
+
+R posee una función para realizar la prueba:  
+```{r}
+fisher.test(matx, alternative = "g", conf.int = FALSE)
+```
+
+
+[  __Home__](https://dsfernandez.github.io/bioestadisticas/index.html)
+

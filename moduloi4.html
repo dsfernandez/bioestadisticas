@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Inferencias con Una Población</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Inferencias con Una Población</h1>
+
+</div>
+
+
+<div id="inferencias-acerca-de-la-media-de-una-población" class="section level1">
+<h1>2.4.Inferencias acerca de la Media de Una Población</h1>
+<p>Es usual preguntarnos sobre el valor de la media de una población, a partir de una muestra: ¿cuál es la concentración de nitrógeno en este lago? ¿cuál es el nivel de azúcar en la sangre de la población de Humacao? En esta sección estaremos realizando pruebas de hipótesis acerca de la media y su intervalo de confianza, en una sola muestra.</p>
+<div id="la-distribución-t-de-student" class="section level2">
+<h2>2.4.1.La distribución t de Student</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer la distribución <em>t</em> y sus aplicaciones</strong></p>
+<p>Cuando no conocemos la desviación estándar de la población estudiada, la distribución de la media de las muestras, se desvía de la normalidad, especialmente cuando el tamaño de la muestra es pequeño. En estos casos se utiliza la <strong>distribución <em>t</em> </strong>, también conocida como <strong><em>t</em> de Student.</strong></p>
+</div>
+<div id="grados-de-libertad" class="section level3">
+<h3>Grados de Libertad</h3>
+<blockquote>
+<p>Observaciones necesarias para determinar un parámetro estadístico</p>
+</blockquote>
+<p>La distribución <em>t</em> es similar a la distribución normal, excepto que está determinada por los <strong>grados de libertad</strong>(<em>gl</em>). Los grados de libertad indican el número de observaciones independientes que pueden usarse para estimar un parámetro estadístico. Un ejemplo es el cálculo de la media: el cálculo de la media incluye la suma de todos los valores de una muestra, por lo tanto si conocemos <em>n - 1</em> valores y la media de los valores valores, podemos conocer el <em>enésimo</em> valor desconocido, por lo tanto en cualquier cálculo de un estadístico que requiera la media de una muestra, debemos rebajar 1 al tamaño de la muestra para obtener los grados de libertad de ese estadístico.</p>
+<p>La siguiente gráfica nos muestra la dependencia de la distribución <em>t</em> en el tamaño de la muestra, por lo tanto los valores de <em>t</em> dependen de los grados de libertad <em>(n - 1)</em> y de la probabilidad <span class="math inline">\(\alpha\)</span>.</p>
+<pre class="r"><code>curve(dnorm(x), -4, 4, col = &quot;red&quot;, ylab = &quot;Densidad&quot;)
+curve(dt(x, df = 2), col = &quot;blue&quot;, add = TRUE)
+curve(dt(x, df = 6), add = TRUE)
+curve(dt(x, df = 12), add = TRUE)</code></pre>
+<p><img src="moduloi4_files/figure-html/normal-t-1.png" width="672" /> <strong>Figura 1.</strong> Distribución normal estándar (roja) y distribución <em>t</em> para grados de libertad = 2 (azul), 6, 12.</p>
+</div>
+<div id="valores-de-la-distribución-t" class="section level3">
+<h3>Valores de la Distribución <em>t</em></h3>
+<blockquote>
+<p>Valores de <em>t</em> mediante tabla y las funciones <strong>pt</strong> y <strong>qt</strong></p>
+</blockquote>
+<p>Usualmente la distribución <em>t</em> se utiliza para encontrar valores críticos para un determinado valor de <span class="math inline">\(\alpha\)</span> (error tipo I), por ejemplo 0.05. En la tabla <a href="https://drive.google.com/file/d/1_em5NreF48RjHKJk0TUsoEhbrgeIroZC/view?usp=sharing"><em>t Table</em></a> podemos encontrar valores de <em>t</em> para algunos valores representativos de <span class="math inline">\(\alpha\)</span>. En esta tabla podemos determinar el valor crítico para una probabilidad a un lado u otro de la curva (<strong>una cola</strong>), o repartir la probabilidad entre ambos extremos de la curva (<strong>dos colas</strong>).</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Encontrar en la tabla el valor de <em>t</em> para un <span class="math inline">\(\alpha\)</span> de 0.10 de dos colas, y para un <span class="math inline">\(\alpha\)</span> de 0.05 en la cola izquierda, para una muestra de 10 observaciones.</p>
+<p>Ahora utilizaremos las funciones que provee R:</p>
+<pre class="r"><code># valor de t alfa = 0.05 izquierda
+qt(0.05, 9, lower.tail = TRUE)</code></pre>
+<pre><code>## [1] -1.833113</code></pre>
+<pre class="r"><code># valor de t alfa = 0.05 derecha
+qt(0.05, 9, lower.tail = FALSE)</code></pre>
+<pre><code>## [1] 1.833113</code></pre>
+<pre class="r"><code># probabilidad con valor de t
+pt(1.83311, 9,lower.tail = FALSE)</code></pre>
+<pre><code>## [1] 0.05000023</code></pre>
+<p>En las próximas secciones utilizaremos la distribución <em>t</em> para calcular <strong>intervalos de confianza</strong> y pruebas de hipótesis sobre la media de una población.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="intervalo-de-confianza-para-la-media" class="section level2">
+<h2>2.4.2.Intervalo de Confianza para la Media</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Calcular intervalos de confianza para la media</strong></p>
+<p>Con una muestra, obtenida de una población que asumimos tiene una distribución normal de valores de alguna variable, podemos calcular el <strong>intervalo de confianza</strong>, dentro del cual tenemos cierto nivel de confianza (dado por la probabilidad establecida) de que se encuentra la media poblacional (<span class="math inline">\(\mu\)</span>).</p>
+<p>A partir de una muestra obtenemos la media muestral (<span class="math inline">\(\bar x\)</span>) y la desviación estándar de la muestra (<span class="math inline">\(s\)</span>), y el error estándar de la media muestral (<span class="math inline">\(s_{\bar x} = s / \sqrt n\)</span>). Ahora podemos calcular el intervalo de confianza mediante las siguientes fórmulas:<br />
+<span class="math display">\[LS_{Pr} = \bar x + (t_{\alpha,n-1}*s_{\bar x})\]</span><br />
+<span class="math display">\[LI_{Pr} = \bar x - (t_{\alpha,n-1}*s_{\bar x})\]</span><br />
+Donde:</p>
+<blockquote>
+<p><span class="math inline">\(LS\)</span>: límite superior del intervalo de confianza<br />
+<span class="math inline">\(LI\)</span>: límite inferior del intervalo de confianza<br />
+<span class="math inline">\(Pr\)</span>: probabilidad dentro del intervalo de confianza<br />
+<span class="math inline">\(\bar x\)</span>: media de la muestra<br />
+<span class="math inline">\(t\)</span>: valor del estadístico t<br />
+<span class="math inline">\(\alpha\)</span>: probabilidad fuera del intervalo (1 - Pr)<br />
+<span class="math inline">\(n - 1\)</span>: grados de libertad (n, tamaño de la muestra)<br />
+<span class="math inline">\(s_{\bar x}\)</span>: error estándar de la media muestral</p>
+</blockquote>
+</div>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Se colectó una muestra de 20 individuos de <em>Gambusia affinis</em> (<em>mosquito fish</em>), y se les midió la longitud a cada uno. La longitud media de la muestra (<span class="math inline">\(\bar x\)</span>) fue 21.0 mm, y la desviación estándar de la muestra (<em>s</em>) fue 1.76 mm. Queremos encontrar el intervalo de 95% de confianza para la media poblacional. Asumimos que la longitud de los peces es una variable con distribución normal y que la muestra fue tomada al azar.</p>
+<p>A continuación el cálculo de los intervalos de confianza utilizando R; para el cálculo de la <em>t</em> se usa una probabilidad de error <span class="math inline">\(\alpha / 2\)</span> debido a que por definición el intervalo de confianza es a ambos lados de la curva de distribución y es simétrico con respecto a la media.</p>
+<pre class="r"><code># media de la muestra
+media &lt;- 21
+# desviación estándar de la muestra
+de &lt;- 1.76
+# tamaño de la muestra
+n &lt;- 20
+# cálculo del error para el intervalo con alfa/2
+# grados de libertad = n - 1
+# error estándar = de/raíz cuadrada de n
+error &lt;- qt(0.025,df = n-1, lower.tail = FALSE)*de / sqrt(n)
+# límite inferior (izquierdo) del intervalo
+left &lt;- media - error
+# límite superior (derecho) del intervalo
+right &lt;- media + error
+sprintf(&quot;Límite Inferior = %.2f&quot;, left)</code></pre>
+<pre><code>## [1] &quot;Límite Inferior = 20.18&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;Límite Superior = %.2f&quot;, right)</code></pre>
+<pre><code>## [1] &quot;Límite Superior = 21.82&quot;</code></pre>
+<p>La media de la población de encuentra dentro del intervalo 20.18 - 21.82, con una confianza de 95 %.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="hipótesis-para-la-media-de-una-muestra" class="section level2">
+<h2>2.4.3.Hipótesis para la Media de una Muestra</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Realizar pruebas de hipótesis sobre una sola media</strong></p>
+<p>En general, una <strong>prueba t para una muestra</strong> se utiliza para probar la hipótesis nula:<br />
+<span class="math display">\[H_0 : \mu = \mu_0\]</span> donde <span class="math inline">\(\mu_0\)</span> es algún número específico, pre-establecido, y una hipótesis alterna puede ser:<br />
+<span class="math display">\[H_a : \mu \neq \mu_0\]</span> Para probar la <span class="math inline">\(H_0\)</span> se utiliza el estadístico <em>t</em>, calculado (<span class="math inline">\(t_s\)</span>) de la siguiente manera:<br />
+<span class="math display">\[t_s = \frac{\bar x - \mu_0}{\frac{s}{\sqrt n}}\]</span> Utilizando la tabla o funciones de R, calculamos el valor crítico de t (<span class="math inline">\(t_{\alpha,n-1}\)</span>) para un valor establecido de <span class="math inline">\(\alpha\)</span>, usualmente 0.05. Si el valor <span class="math inline">\(t_s\)</span> excede al valor crítico, podemos rechazar <span class="math inline">\(H_0\)</span>, para una probabilidad (error tipo I) igual o menor de <span class="math inline">\(\alpha\)</span>. Por el contrario, un valor de <span class="math inline">\(t_s\)</span> menor que el valor crítico, no nos permite rechazar la <span class="math inline">\(H_0\)</span> para nuestro nivel de <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+<div id="pruebas-de-una-o-dos-colas" class="section level3">
+<h3>Pruebas de una o dos colas</h3>
+<blockquote>
+<p>Depende de nuestras hipótesis</p>
+</blockquote>
+<p>Les indiqué anteriormente que al usar la tabla de la distribución <em>t</em>, debemos escoger una cola o dos colas para ubicar el valor crítico. La selección de una o dos colas, y en el caso de una cola, la parte de la curva, depende de las hipótesis establecidas. Si las hipótesis no indican una tendencia (mayor o menor) en particular para el valor de la media, como se formularon anteriormente, entonces debemos utilizar una prueba de dos colas, y el valor de <span class="math inline">\(\alpha\)</span> se reparte entre los dos extremos como <span class="math inline">\(\alpha / 2\)</span>. Si por el contrario las hipótesis tienen esta forma:<br />
+<span class="math display">\[H_0 : \mu \geq \mu_0\quad ó\quad H_0 : \mu \leq \mu_0\]</span> <span class="math display">\[H_a : \mu &lt; \mu_0\quad ó\quad H_a : \mu &gt; \mu_0\]</span> entonces debemos usar una prueba de una cola.</p>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<div class="figure">
+<img src="imagenes/9-4%20Comparison%20t-distribution%201%20and%202-tailed.jpg" alt="" />
+<p class="caption">tomado de Havel <em>et al</em>., 2019</p>
+</div>
+<p><strong>Figura 2.</strong> Ejemplo para ilustrar la selección de prueba de una o dos colas.</p>
+</div>
+<div id="ejercicio-1" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Las reglas de la FDA exigen que los medicamentos cumplan con estrictos estándares de contenido de las sustancias activas de los mismos. Para un suplemento vitamínico está establecido que el contenido de vitamina X sea de un promedio de 100 unidades por píldora. Una bioquímica de la farmaceútica que las produce, toma una muestra de 50 píldoras de un lote de miles de píldoras. En su análisis encontró que la muestra tiene un contenido promedio de 100.5 unidades de vitamina X por píldora, con una desviación estándar de 2.19 unidades. Desea comprobar si la muestra se tomo de una población (el lote completo) con una media de 100 unidades.</p>
+<p>Mediante R podemos calcular el valor del estadístico <em>t</em> y compararlo con el de la distribución <em>t</em> correspondiente para realizar la prueba de hipótesis <span class="math inline">\(H_0:\mu=100\)</span>:</p>
+<pre class="r"><code># cálculo de t
+tcalc &lt;- (100.5 - 100) / (2.19 / sqrt(50))
+# t de la distribución para alfa = 0.05 (dos colas) y gl = 49
+ttab &lt;- qt(0.025, 49, lower.tail = FALSE)
+# mostrar valores
+sprintf(&quot;t calculado para la muestra = %.3f&quot;, tcalc)</code></pre>
+<pre><code>## [1] &quot;t calculado para la muestra = 1.614&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;t para la distribución con 49 g.l. = %.3f&quot;, ttab)</code></pre>
+<pre><code>## [1] &quot;t para la distribución con 49 g.l. = 2.010&quot;</code></pre>
+<p>Por lo tanto, para nuestras condiciones, no podemos rechazar la hipótesis nula.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="prueba-t-pareada" class="section level2">
+<h2>2.4.4.Prueba t Pareada</h2>
+<div id="objetivos-3" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Probar hipótesis en experimentos de comparaciones pareadas</strong></p>
+<p>En el diseño de <strong>comparaciones pareadas</strong> un sujeto experimental se empareja con otro lo más similar posible y, de manera aleatoria, a uno se le da un tratamiento y al otro no o uno diferente. El efecto de un tratamiento se mide mediante la diferencia entre los sujetos emparejados, por eso la prueba de hipótesis se realiza como de una muestra.</p>
+</div>
+<div id="supuestos-de-la-prueba" class="section level3">
+<h3>Supuestos de la prueba</h3>
+<blockquote>
+<p>Normalidad y muestra aleatoria</p>
+</blockquote>
+<ul>
+<li>Las mediciones son continuas, o si son discretas tienen un ámbito amplio de valores.<br />
+</li>
+<li>La distribución de la variable de las diferencias entre los pares es normal.<br />
+</li>
+<li>Los datos son una muestra aleatoria de una población de interés.</li>
+</ul>
+<div id="ejemplo-2" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+Vamos a analizar datos del tiempo de curación de quemaduras (días) utilizando dos preparaciones de un medicamento. Los sujetos (<em>n</em> = 20) fueron tratados de quemaduras en ambos brazos, un brazo con la versión O y el otro con la versión N del medicamento.
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Tiempo de curación (días) de quemaduras en brazos de pacientes (n = 20), tratados con sendas versiones (O y N) de un medicamento y la diferencia entre ambos
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+paciente
+</th>
+<th style="text-align:right;">
+versión O
+</th>
+<th style="text-align:right;">
+versión N
+</th>
+<th style="text-align:right;">
+diferencia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+23.5
+</td>
+<td style="text-align:right;">
+19.5
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+22.3
+</td>
+<td style="text-align:right;">
+20.1
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+<td style="text-align:right;">
+19.1
+</td>
+<td style="text-align:right;">
+1.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+22.5
+</td>
+<td style="text-align:right;">
+19.2
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+21.3
+</td>
+<td style="text-align:right;">
+21.2
+</td>
+<td style="text-align:right;">
+0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+23.2
+</td>
+<td style="text-align:right;">
+19.6
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+23.7
+</td>
+<td style="text-align:right;">
+19.8
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+22.7
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+20.2
+</td>
+<td style="text-align:right;">
+17.7
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+20.9
+</td>
+<td style="text-align:right;">
+18.6
+</td>
+<td style="text-align:right;">
+2.3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+22.3
+</td>
+<td style="text-align:right;">
+20.8
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+23.1
+</td>
+<td style="text-align:right;">
+21.1
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+20.3
+</td>
+<td style="text-align:right;">
+18.5
+</td>
+<td style="text-align:right;">
+1.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+25.1
+</td>
+<td style="text-align:right;">
+16.1
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+24.8
+</td>
+<td style="text-align:right;">
+17.3
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+22.0
+</td>
+<td style="text-align:right;">
+22.4
+</td>
+<td style="text-align:right;">
+-0.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+21.3
+</td>
+<td style="text-align:right;">
+21.5
+</td>
+<td style="text-align:right;">
+-0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+23.2
+</td>
+<td style="text-align:right;">
+18.6
+</td>
+<td style="text-align:right;">
+4.6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+21.3
+</td>
+<td style="text-align:right;">
+20.5
+</td>
+<td style="text-align:right;">
+0.8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+22.0
+</td>
+<td style="text-align:right;">
+20.4
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+</tr>
+</tbody>
+</table>
+<p>En primer lugar debemos formular las hipótesis de trabajo; en este experimento esperamos que la versión N del medicamento sea mejor que la versión O, por lo tanto el tiempo de curación debe ser menor y la diferencia O - N debe ser un número positivo. <span class="math display">\[H_0 : \mu_{diferencia}  \leq 0\]</span><br />
+<span class="math display">\[H_A : \mu_{diferencia}  &gt; 0\]</span></p>
+<p>A partir de los datos anteriores podemos calcular la media de las diferencias y su desviación estándar:</p>
+<pre><code>## [1] &quot;Media de las diferencias (días) = 2.685&quot;</code></pre>
+<pre><code>## [1] &quot;Desviación estándar de las diferencias (días) = 2.362&quot;</code></pre>
+<p>Ahora calcularemos el valor del estadístico <em>t</em> para nuestra muestra:<br />
+<span class="math display">\[t = \frac{2.685 - 0}{\frac{2.362}{\sqrt{20}}} = 5.08\]</span></p>
+<p>Utilizando la tabla de la <em>t</em> de Student calculamos el valor crítico (umbral) de <em>t</em> para un <span class="math inline">\(\alpha\)</span> = 0.05, y <em>n</em> - 1 = 19 grados de libertad. De acuerdo a nuestras hipótesis, la prueba debe ser de una cola. También podemos utilizar la función correspondiente en R.</p>
+<pre class="r"><code>tumbral &lt;- qt(0.05, 19, lower.tail = FALSE)
+tcrit &lt;- sprintf(&quot;%.2f&quot;, tumbral)</code></pre>
+<p><span class="math inline">\(t_{0.05,19} =\)</span> 1.73</p>
+<p>El estadístico <em>t</em> calculado es mayor que el valor crítico de <em>t</em>, por lo tanto rechazamos la <span class="math inline">\(H_0\)</span> con una probabilidad menor de 0.05 de equivocarnos (error tipo I). La versión N del medicamento cura más rápidamente las quemaduras.</p>
+<p>Utilizando R podemos realizar un análisis gráfico del experimento.</p>
+<pre class="r"><code>library(PairedData)
+versionO &lt;- curacion$`versión O`
+versionN &lt;- curacion$`versión N`
+pd &lt;- paired(versionO,versionN)
+plot(pd, type = &quot;profile&quot;) + ylab(&quot;Tiempo de curación, días&quot;)</code></pre>
+<p><img src="moduloi4_files/figure-html/grafpar-1.png" width="672" /></p>
+<p><strong>Figura 3.</strong> Tiempo de curación (días) para dos versiones de un medicamento. Box-plot de los valores de cada versión y líneas de conexión de los sujetos pareados.</p>
+<p>La prueba <em>t</em> pareada también se puede hacer a partir de los datos originales:</p>
+<pre class="r"><code>res &lt;- t.test(versionO, versionN, paired = TRUE, alternative = &quot;greater&quot;)
+res</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  versionO and versionN
+## t = 5.0831, df = 19, p-value = 3.303e-05
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  1.771641      Inf
+## sample estimates:
+## mean of the differences 
+##                   2.685</code></pre>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="supuestos-y-pruebas-no-paramétricas" class="section level2">
+<h2>2.4.5.Supuestos y Pruebas No-paramétricas</h2>
+<div id="objetivos-4" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer las alternativas cuando no se cumplen los supuestos para usar una prueba <em>t</em> </strong></p>
+<p>Los supuestos principales para las <strong>pruebas paramétricas</strong> (basadas en la distribución normal y sus parámetros, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>) de una muestra, son la aleatoriedad de la muestra y la normalidad en los datos. Si no se cumple la primera, no hay alternativa, pero en el caso de fallar la normalidad, podemos usar <strong>pruebas no-paramétricas</strong>.</p>
+</div>
+<div id="prueba-de-wilcoxon-wilcoxon-signed-rank-test" class="section level3">
+<h3>Prueba de Wilcoxon (<em>Wilcoxon Signed Rank Test</em>)</h3>
+<blockquote>
+<p>Alternativa a la prueba <em>t</em> pareada</p>
+</blockquote>
+<p>Cuando los datos no cumplen con el supuesto de normalidad, o las muestras no son suficientemente grandes para obviar ese supuesto, podemos recurrir a pruebas no-paramétricas como sustituto a la prueba <em>t</em> pareada. La <strong>prueba de Wilcoxon</strong> es un ellas, y consiste en colocar en orden (usualmente de menor a mayor) los resultados (valores absolutos) de las diferencias entre los valores pareados. Luego se suman los valores de rango de las diferencias positivas y de las diferencias negativas, y se aplica la fórmula:<br />
+<span class="math display">\[W = \sum_{i=1}^{N_r}[sgn(x_{2,i} - x_{1,i})*R_i]\]</span> dónde:</p>
+<blockquote>
+<p><span class="math inline">\(W\)</span>: estadístico de Wilcoxon<br />
+<span class="math inline">\(N_r\)</span>: tamaño de la muestra, excluyendo parejas con valores iguales<br />
+<span class="math inline">\(sgn\)</span>: función signo (extrae el signo de la diferencia)<br />
+<span class="math inline">\(x_{2,i} - x_{1,i}\)</span>: diferencia entre parejas de valores<br />
+<span class="math inline">\(R_i\)</span>: rango (orden) de las diferencias</p>
+</blockquote>
+<p>El valor calculado se compara con un <a href="https://drive.google.com/file/d/1GwFMYPAU8YHuYVjZ02ky1F_BHAnCv94S/view?usp=sharing">valor crítico de W</a> para una probabilidad establecida.</p>
+<p>Los cálculos para usar la fórmula y realizar la prueba correspondiente son algo engorrosos, pero disponemos de procedimientos computacionales, como R, para realizarlos.</p>
+<div id="ejemplo-3" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Se piensa que las gatas se vuelven más agresivas al tener gatitos. En un experimento se evaluó la agresividad de 7 gatas antes y después de que parieran. La agresividad se midió mediante una escala entre 1 y 10, con 10 representando la mayor agresividad. Estos datos no cumplen con la distribución normal y son pocos para obviar este requerimiento. Queremos probar la hipótesis de si hay un aumento de la agresividad (<span class="math inline">\(H_a:diferencia\ en\ agresividad &gt; 0\)</span>).</p>
+<pre class="r"><code>library(kableExtra)
+# vector agresividad x1
+x1 &lt;- c(3,2,5,6,5,1,8)
+# vector agresividad x2
+x2 &lt;- c(7,8,4,9,10,9,9)
+# vector diferencia x2 - x1
+dif &lt;- x2 - x1
+# tabla de datos
+gatas &lt;- data.frame(x1,x2,dif)
+# ver tabla
+names(gatas) &lt;- c(&quot;Agresividad antes&quot;, &quot;Agresividad después&quot;, &quot;Diferencia&quot;)
+gatas %&gt;%
+  kbl(caption = &quot;Tabla 2. Agresividad antes y después de parir en gatas (n = 7) y la diferencia después - antes&quot;) %&gt;%
+  kable_classic(full_width = F, html_font = &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2. Agresividad antes y después de parir en gatas (n = 7) y la diferencia después - antes
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Agresividad antes
+</th>
+<th style="text-align:right;">
+Agresividad después
+</th>
+<th style="text-align:right;">
+Diferencia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Realizaremos la prueba para una <span class="math inline">\(H_0 : diferencia \leq 0\)</span> mediante R:</p>
+<pre class="r"><code># prueba Wilcoxon (estado final x2, estado inicial x1)
+res &lt;- wilcox.test(x2, x1, paired = TRUE, alternative = &quot;greater&quot;)
+res</code></pre>
+<pre><code>## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  x2 and x1
+## V = 26.5, p-value = 0.02108
+## alternative hypothesis: true location shift is greater than 0</code></pre>
+<p>Podemos concluir de la prueba que podemos rechazar la <span class="math inline">\(H_0\)</span> con un error tipo I de 0.021, y que las gatas son más agresivas después de parir.</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Probabilidades y Distribuciones Discretas</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Probabilidades y Distribuciones Discretas</h1>
+
+</div>
+
+
+<div id="probabilidades-y-distribuciones-discretas" class="section level1">
+<h1>1.5.Probabilidades y Distribuciones Discretas</h1>
+<p>Todo lo biológico es incierto, pero podemos conocer algo de esa incertidumbre mediante el estudio de las <strong>probabilidades</strong>.</p>
+<div id="probabilidades" class="section level2">
+<h2>1.5.1.Probabilidades</h2>
+<div id="objetivo" class="section level4">
+<h4>Objetivo</h4>
+<p><strong>Conocer las reglas básicas de las probabilidades</strong><br />
+<strong>Probabilidad</strong> es la medida de la oportunidad de que ocurra un evento, y puede variar entre 0 y 1. Cuando la probabilidad es 0, el evento no es posible. Cuando la probabilidad es 1, el evento es totalmente posible. En el campo de la biología, las probabilidades varían entre esos dos extremos teóricos.</p>
+</div>
+<div id="probabilidad-clásica-y-empírica" class="section level3">
+<h3>Probabilidad clásica y empírica</h3>
+<p>Hay dos maneras básicas de determinar la probabilidad de que ocurra un evento.</p>
+<p>La <strong>probabilidad clásica</strong>, se basa en consideraciones teóricas. Por ejemplo, un dado tiene seis caras (es un cubo), cada una con un número de puntos del 1 al 6; por lo tanto, la probabilidad de que ocurre un evento en particular, digamos que salgan en la parte superior 3 puntos, se puede calcular sin lanzar el dado, simplemente calculando la proporción: ocurrencias del evento esperado (3 puntos) dividido entre el número de eventos posibles (seis): <span class="math display">\[p = \frac{1}{6} \approx 0.1667\]</span> Otros ejemplos son las fichas de dominó, las caras de una moneda, las cartas de un juego de baraja.</p>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Calcule la probabilidad de tomar una ficha específica de dominó.</p>
+<p>Otra manera de determinar la probabilidad de un evento, está basada en la frecuencia relativa del evento en la población (o la muestra, generalmente) de interés. A esta frecuencia relativa (o proporción del evento) se la conoce como <strong>probabilidad empírica</strong>. Por ejemplo, la probabilidad de ocurrencia en una problación de alguna condición genética, se determina de manera empírica según las evaluaciones médicas, como el número de casos (eventos) por nacimientos, aunque no conozcamos el mecanismo u origen de la condición.</p>
+</div>
+<div id="ejercicio-1" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>¿Cuál es la probabilidad de ocurrencia de gemelos en la población de Puerto Rico?</p>
+</div>
+</div>
+<div id="la-regla-de-la-división" class="section level3">
+<h3>La ‘Regla de la División’</h3>
+<p>Los cálculos de probabilidades en los ejemplos anteriores, siguen la denominada Regla de la División: la probabilidad de un evento <em>(p)</em> es el número de veces en las que el evento puede ocurrir <em>(s)</em> dividido por el número total de eventos posibles <em>(n)</em>, asumiendo que todos los eventos individuales son igualmente probables.<br />
+<span class="math display">\[p = \frac{s}{n}\]</span></p>
+</div>
+<div id="la-ley-de-la-probabilidad-total" class="section level3">
+<h3>La Ley de la Probabilidad Total</h3>
+<p>En algunos casos es difícil calcular la probabilidad de un evento en particular, no así las probabilidades de los otros eventos que no son el que nos interesa. En este caso se puede aplicar la <strong>ley de la probabilidad total</strong> que establece que la suma de las probabilidades de todos los eventos posibles es igual a 1. Por lo tanto si conocemos las probabilidades de todos los eventos que no son el que nos interesa, podemos aplicar la <strong>regla de substracción</strong>:<br />
+<span class="math display">\[p = 1 - q\]</span><br />
+dónde <em>(p)</em> es la probabilidad del evento que nos interesa, y <em>(q)</em> la probabilidad de todos los otros eventos posibles.</p>
+</div>
+<div id="distribución-de-probabilidades" class="section level3">
+<h3>Distribución de probabilidades</h3>
+<p>Una manera práctica de presentar las probabilidades de varios eventos, en grupos o poblaciones diversas, es mediante una lista de las probabilidades en forma de tabla o gráfica.</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<pre class="r"><code>library(readxl)
+library(kableExtra)
+# datos ABO grupos étnicos
+abo &lt;- read_excel(&quot;data/ABOtypes-ethnic-groups.xlsx&quot;, sheet = &quot;tabla&quot;)
+# tabla
+abo %&gt;% 
+  kbl(caption = &quot;Tabla 1. Distribución de probabilidades (a partir de frecuencias) de los tipos de sangre ABO, en cuatro grupos étnicos de los Estados Unidos.&quot;) %&gt;%
+  kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 1. Distribución de probabilidades (a partir de frecuencias) de los tipos de sangre ABO, en cuatro grupos étnicos de los Estados Unidos.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Blood Type
+</th>
+<th style="text-align:right;">
+African
+</th>
+<th style="text-align:right;">
+Asian
+</th>
+<th style="text-align:right;">
+Caucasian
+</th>
+<th style="text-align:right;">
+Latino
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+O
+</td>
+<td style="text-align:right;">
+0.51
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+0.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+0.40
+</td>
+<td style="text-align:right;">
+0.31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+<td style="text-align:right;">
+0.25
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AB
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>library(ggplot2)
+# datos
+abog &lt;- read_excel(&quot;data/ABOtypes-ethnic-groups.xlsx&quot;, sheet = &quot;barras&quot;)
+# gráfica de barras por grupo étnico
+ggplot(abog, aes(x=Ethnic_Group, y = Probability,
+                 fill=Blood_Type)) +
+     geom_col(position=&quot;fill&quot;)</code></pre>
+<p><img src="modulod5_files/figure-html/barras-1.png" width="672" /></p>
+<p><strong>Figura 1</strong> Distribución de probabilidades (a partir de frecuencias) de los tipos de sangre ABO, en cuatro grupos étnicos de los Estados Unidos.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="número-de-posibilidades" class="section level2">
+<h2>1.5.2.Número de Posibilidades</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Contabilizar todos los posibles resultados y eventos de un experimento o prueba</strong><br />
+La definición de probabilidad requiere conocer el número total de eventos posibles, para poder calcular la misma. En esta sección trataremos algunas maneras de cómo podemos contar los posibles resultados de experimentos o pruebas.</p>
+</div>
+<div id="secuencia-de-repeticiones" class="section level3">
+<h3>Secuencia de repeticiones</h3>
+<p>Cuando es importante la secuencia en los resultados de repeticiones podemos aplicar una función de potencia para encontrar el número total de eventos posibles: <span class="math display">\[eventos = (resultados\ posibles)^{número-repeticiones}\]</span><br />
+Al tirar un dado existen 6 resultados posibles, y los eventos diferentes que podemos observar son <span class="math inline">\(6^1 = 6\)</span>; si tiramos el dado dos veces podemos calcular el total de números diferentes de dos dígitos que se formarán: <span class="math inline">\(6^2 = 36\)</span>.</p>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p><em>¿Por qué son necesarios codones de tres nucleótidos para codificar un aminoácido?</em><br />
+Para la síntesis de proteínas a partir de un RNA mensajero, se necesitan RNAs de transferencia que posean codones específicos (secuencias de tres de los cuatro nucleótidos - U, C, A, G) para 20 aminoácidos.</p>
+<p><img src="imagenes/aa-codon-mrna.png" /><br />
+<strong>Figura 1.</strong> Esquema de la síntesis de una proteína a partir de un mRNA y codones con sus respectivos aminoácidos. Hay también codones de inicio y parada de la síntesis. (tomada de Khan Academy, khanacademy.org)</p>
+<p>Aplicando la fórmula de potencia podemos calcular cuantas secuencias (eventos) podemos producir tomando de 1 a n nucleótidos: <span class="math display">\[4^1 = 4\]</span><br />
+<span class="math display">\[4^2 = 16\]</span><br />
+<span class="math display">\[4^3 = 64\]</span><br />
+<span class="math display">\[4^4 = 256\]</span><br />
+Codones de dos nucleótidos no producen suficientes secuencias diferentes para los 20 aminoácidos, inicio y paradas. Codones de tres aminoácidos producen 64 diferentes secuencias, suficiente para los 20 aminoácidos, y le provee redundancia al sistema.</p>
+</div>
+<div id="ejercicio-2" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>¿Cuántos números (eventos) son posibles en la lotería de 5 números?</p>
+</div>
+</div>
+<div id="permutaciones" class="section level3">
+<h3>Permutaciones</h3>
+<p>En el caso de las secuencias, los elementos disponibles para cada repetición son ilimitados, ahora consideremos el caso cuando estos elementos son limitados, si ocurre uno, no vuelve a ocurrir. En este caso los resultados son permutaciones <em>(P)</em> de los <em>n</em> elementos, y se calculan: <span class="math display">\[_nP_n = n!\]</span><br />
+Si no usamos todos los <em>n</em> elementos al mismo tiempo, sino un subconjunto de <em>X</em> elementos, entonces la fórmula es:<br />
+<span class="math display">\[_nP_X = \frac{n!}{(n - X)!}\]</span></p>
+<div id="ejemplo-2" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Si tenemos las siguientes letras: m, x, y, z, p, t, l, k, calcular cuántos códigos de ocho letras podemos crear con ellas, sin que se repitan las letras; también vamos a calcular cuántos códigos de cuatro letras podemos crear:</p>
+<pre class="r"><code># con n letras
+n &lt;- 8
+Pn &lt;- factorial(n)
+# con X letras
+X &lt;- 4
+PX &lt;- factorial(n) / factorial(n - X)
+# resultados
+sprintf(&quot;%s = %i&quot;, &quot;códigos de 8 letras&quot;, Pn)</code></pre>
+<pre><code>## [1] &quot;códigos de 8 letras = 40320&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;%s = %i&quot;, &quot;códigos de 4 letras&quot;, PX)</code></pre>
+<pre><code>## [1] &quot;códigos de 4 letras = 1680&quot;</code></pre>
+</div>
+</div>
+<div id="combinaciones" class="section level3">
+<h3>Combinaciones</h3>
+<p>Podemos contar los posibles resultados en cuanto a grupos de objetos tomados todos o parcialmente, sin que nos importe la secuencia en que ocurran en cada grupo, y en este caso estamos contando combinaciones:<br />
+<span class="math display">\[_nC_X = \frac{n!}{X!(n - X)!}\]</span></p>
+<p>Usaremos el ejemplo anterior para contar el número de combinaciones de ocho y cuatro letras:</p>
+<pre class="r"><code># con n letras
+n &lt;- 8 # X = n
+Cn &lt;- factorial(n)/(factorial(n) * factorial(n - n))
+# con X letras
+X &lt;- 4
+CX &lt;- factorial(n) /(factorial(X) * factorial(n - X))
+# resultados
+sprintf(&quot;%s = %i&quot;, &quot;códigos de 8 letras&quot;, Cn)</code></pre>
+<pre><code>## [1] &quot;códigos de 8 letras = 1&quot;</code></pre>
+<pre class="r"><code>sprintf(&quot;%s = %i&quot;, &quot;códigos de 4 letras&quot;, CX)</code></pre>
+<pre><code>## [1] &quot;códigos de 4 letras = 70&quot;</code></pre>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="independencia-y-probabilidad-condicional" class="section level2">
+<h2>1.5.3.Independencia y Probabilidad Condicional</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Distinguir las probabilidades de eventos independientes y eventos no independientes</strong></p>
+</div>
+<div id="probabilidad-de-eventos-independientes" class="section level3">
+<h3>Probabilidad de eventos independientes</h3>
+<p>Dos eventos son independientes cuando la ocurrencia de uno, no afecta la ocurrencia del otro. El ejemplo clásico es el lanzamiento varias veces de una modeda, en cada lanzamiento la probabilidad de obtener cara o cruz es la misma: 1/2 (0.5). Ahora bien, si para cada lanzamiento esperamos un evento en particular, digamos que el primer lanzamiento sea cara y el segundo sea cara también, en este caso se aplica la <strong>Regla de la Multiplicación</strong>, es decir, esperamos que el evento A ocurra con un resultado y que el evento B ocurra también con un resultado esperado:<br />
+<span class="math display">\[p(A\ y\ B) = p(A)\ *\ p(B)\]</span></p>
+<div id="ejemplo-3" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Una aplicación de esta regla en la biología, la encontramos cuando calculamos la probabilidad de un tipo particular de genotipo. Por ejemplo, si queremos calcular la probabilidad de un genotipo recesivo, a partir de padres heterocigotos, asumiendo igual segregación de los alelos, la probabilidad del genotipo recesivo será: 1/2 x 1/2 = 1/4 (0.25).</p>
+</div>
+</div>
+<div id="probabilidad-condicional" class="section level3">
+<h3>Probabilidad condicional</h3>
+<p>Si dos eventos no son independientes, la probabilidad conjunta es una <strong>condicional</strong>, donde la probabilidad del segundo evento, está ligada a la probabilidad de la ocurrencia del primero. En este caso se aplica la <strong>Regla General de la Multiplicación</strong>:<br />
+<span class="math display">\[p(A\ y\ B) = p(A)\ *\ p(B|A)\]</span><br />
+que se lee: la probabilidad de la ocurrencia secuencial de los eventos A y B, es la probabilidad del evento A, multiplicada por la probabilidad del evento B cuando ocurre el evento A.</p>
+<div id="ejemplo-4" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>En una universidad hay 12242 estudiantes, de las cuales 6027 se identifican como mujeres; la universidad tiene 5000 estudiantes graduados, de las cuales 2213 se identifican como mujeres. ¿Cuál es la probabilidad de seleccionar de la lista de estudiantes a una estudiante, y que además sea estudiante graduada?<br />
+Aplicando la regla general de la multiplicación:<br />
+<span class="math display">\[P(M\ y\ G) = P(M)\ *\ P(G|M)\]</span><br />
+6027/12242 = 0.49 y 2213/5000 = 0.44<br />
+<span class="math display">\[P(M\ y\ G) = 0.49*0.44 = 0.22\]</span></p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="eventos-mutualmente-exclusivos" class="section level2">
+<h2>1.5.4.Eventos Mutualmente Exclusivos</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Calcular probabilidades de eventos mutuamente exclusivos total o parcialmente</strong></p>
+<p>En algunas situaciones deseamos conocer la probabilidad de que ocurran al menos dos o más eventos específicos excluyentes en una prueba; es decir ¿cuál es la probabilidad de que ocurra el evento A o el B (no ambos) en una prueba. En este caso se aplica la <strong>Regla de Adición Simple</strong>:<br />
+<span class="math display">\[P(A\ o\ B) = P(A) + P(B)\]</span></p>
+</div>
+<div id="ejemplo-5" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>¿Cuál es la probabilidad de que un dado muestre un 3 o un 1 en una tirada? P(3) = 1/6 y P(1) = 1/6, por lo tanto la probabilidad P(3 o 1) = 1/6 + 1/6 = 1/3.</p>
+</div>
+<div id="exclusión-incompleta" class="section level3">
+<h3>Exclusión incompleta</h3>
+<p>En el campo de la biología es frecuente la ocurrencia de eventos de forma exclusiva en algunos casos, pero en otros de manera concurrente. En estos casos, la probabilidad de ocurrencia de un evento u otro, tomando en cuenta la concurrencia se calcula con la <strong>Regla General de la Adición</strong>:<br />
+<span class="math display">\[P(A\ o\ B) = P(A) + P(B) - P(A\ y\ B)\]</span><br />
+podemos que cuando hay exclusión mutua completa, P(A y B) será igual a 0.</p>
+<div id="ejemplo-6" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Ciertas condiciones de salud pueden estar presentes de manera excluyente (si ocurre una no ocurre la otra), o pueden ocurrir ambas simultáneamente. Un ejemplo es la alta presión sanguínea y altos niveles de colesterol en la sangre. Una forma de representar las probabilidades de estos eventos, es mediante lo que se conoce como diagramas de Venn.</p>
+<p><img src="imagenes/5-5%20Venn%20Diagram%20AB.jpg" /></p>
+<p><strong>Figura 2.</strong> Diagrama de Venn de los conjuntos de probabilidades de los eventos alta presión sanguínea, altos niveles de colesterol en la sangre, y la probabilidad concurrente de ambas condiciones.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="distribución-binomial-y-de-poisson" class="section level2">
+<h2>1.5.5.Distribución Binomial y de Poisson</h2>
+<div id="objetivos-3" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Identificar las distribuciones adecuadas a datos discretos</strong></p>
+</div>
+<div id="la-distribución-binomial" class="section level3">
+<h3>La Distribución Binomial</h3>
+<p>Para muchos eventos o casos existen solo dos categorías mutuamente exclusivas, o aún cuando existan más de dos, se pueden separar en la categoría de interés y las otras en una sola categoría.</p>
+<div id="ejemplo-7" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<ul>
+<li>Tirar una moneda varias veces solo tiene dos categorías de resultados.<br />
+</li>
+<li>Tirar los dados, aunque tiene seis posibles resultados, se pueden dividir en dos categorías: el número del 1 al 6 que me interesa, y los demás (p. ej.: 3 versus 1, 2, 4, 5 y 6).</li>
+</ul>
+<p>Una <strong>distribución binomial de probabilidades</strong> describe las probabilidades de resultados para eventos, que presenten las siguientes propiedades:</p>
+<ol style="list-style-type: decimal">
+<li>El evento (p. ej: tirar los dados) ocurre una cantidad específica de veces <em>(k)</em>.<br />
+</li>
+<li>Cada vez que el evento ocurre, hay dos posibles resultados mutuamente excluyentes. Uno de los resultados se considera “éxito” <em>(success)</em> y su probabilidad se denota como <em>p</em>, y al otro se le denomina “falla” <em>(failure)</em> y se denota como <em>q</em>. Como solo hay dos posibles resultados, entonces: <span class="math inline">\(p + q = 1\)</span>.<br />
+</li>
+<li>Los eventos son independientes (revisar definición).<br />
+</li>
+<li>El número de veces en los <em>k</em> eventos que ocurre el resultado esperado, se denomina <em>x</em>; la probabilidad de ocurrencia de <em>x</em> se representa como <em>p(x)</em>.</li>
+</ol>
+</div>
+</div>
+<div id="ecuación-binomial" class="section level3">
+<h3>Ecuación Binomial</h3>
+<p>La probabilidad de ocurrencia <em>p(x)</em> de un resultado de un evento en particular <em>x</em>, en <em>k</em> ocurrencias del evento, está dada por la ecuación de la <strong>distribución binomial</strong>:<br />
+<span class="math display">\[p(x) = \frac{k!}{x!(k - x)!} p^{x} q^{(k - x)}\]</span></p>
+<div id="ejemplo-8" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>(Example 5.7 - Havel <em>et al.</em> 2019) La fibrosis cística (FC) es un desorden hereditario, caracterizado por acumulación de mucosidad en los pulmones. El gen que la determina es uno autosómico recesivo, por lo tanto si dos portadores heterocigotos tienen hijos, el riesgo de producir un bebé homocigoto con FC es 0.25 (25%). ¿Cuál será la probabilidad de que en una pareja portadora con tres hijo/as haya uno o más afectado por FC?</p>
+<p>Podemos usar la fórmula de la distribución binomial, y obtener las probabilidades de cada evento de interés:</p>
+<p>Para <em>x = 0</em>, con <em>k = 3</em> (tres hijos, tres pruebas): <span class="math display">\[p(0) = \frac{3!}{0!(3 - 0)!} 0.25^{0} 0.75^{(3 - 0)} = 0.75^3 = 0.42188\]</span></p>
+<p>Podemos calcular las probabilidades para <em>x</em> = 1, 2, 3, usando el siguiente código:</p>
+<pre class="r"><code># un hijo con FC
+p_uno &lt;- dbinom(1, size=3, prob=0.25)
+sprintf(&quot;probabilidad de un hijo con FC = %.5f&quot;, p_uno)</code></pre>
+<pre><code>## [1] &quot;probabilidad de un hijo con FC = 0.42188&quot;</code></pre>
+<pre class="r"><code># dos hijos con FC
+p_dos &lt;- dbinom(2, size=3, prob=0.25)
+sprintf(&quot;probabilidad de dos hijos con FC = %.5f&quot;, p_dos)</code></pre>
+<pre><code>## [1] &quot;probabilidad de dos hijos con FC = 0.14062&quot;</code></pre>
+<pre class="r"><code># tres hijos con FC
+p_tres &lt;- dbinom(3, size=3, prob=0.25)
+sprintf(&quot;probabilidad de tres hijos con FC = %.5f&quot;, p_tres)</code></pre>
+<pre><code>## [1] &quot;probabilidad de tres hijos con FC = 0.01563&quot;</code></pre>
+<p>Como lo que pide el problema es la probabilidad de uno o más hijos con FC, podemos aplicar la regla de la adición (p(1 o 2 o 3)) ya que se trata de eventos mutuamente excluyentes, y sumar las probabilidades anteriores para uno, dos y tres hijos con FC.</p>
+<p>También podemos usar el siguiente código para probabilidades acumuladas de mayor o igual a un hijo con FC, usando la regla de la substracción:</p>
+<pre class="r"><code># probabilidad acumulada de 1 o más hijos con FC
+pacum1plus &lt;- 1 - dbinom(0, size = 3, prob = 0.25)
+sprintf(&quot;probabilidad de uno o más hijos con FC = %.5f&quot;, pacum1plus)</code></pre>
+<pre><code>## [1] &quot;probabilidad de uno o más hijos con FC = 0.57812&quot;</code></pre>
+</div>
+</div>
+<div id="frecuencias-esperadas" class="section level3">
+<h3>Frecuencias Esperadas</h3>
+<p>Es común en la investigación en biología, comparar los resultados de múltiples ensayos con las frecuencias esperadas de los eventos posibles en cada ensayo.</p>
+<div id="ejemplo-9" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>(Example 5.8 Havel <em>et al.</em> 2019) Una especie de cerdo silvestre africano, produce con mucha frecuencia un tamaño de camada de 6 cerditos. Asumimos que la probabilidad de cada cerdito de ser macho o hembra es <em>p</em> = 0.5, y por tratarse de camadas de 6 cerditos, <em>k</em> = 6.</p>
+<pre class="r"><code>library(kableExtra)
+# probabilidades de que ocurran 0 a 6 cerditos machos en una camada
+cero &lt;- dbinom(0, size = 6, prob = 0.5)
+uno &lt;- dbinom(1, size = 6, prob = 0.5)
+dos &lt;- dbinom(2, size = 6, prob = 0.5)
+tres &lt;- dbinom(3, size = 6, prob = 0.5)
+cuatro &lt;- dbinom(4, size = 6, prob = 0.5)
+cinco &lt;- dbinom(5, size = 6, prob = 0.5)
+seis &lt;- dbinom(6, size = 6, prob = 0.5)
+x_machos &lt;- c(0, 1, 2, 3, 4, 5, 6)
+p_x &lt;- c(cero, uno, dos, tres, cuatro, cinco, seis)
+binomial &lt;- data.frame(x_machos, p_x)
+# producir tabla
+binomial %&gt;%
+kbl(caption = &quot;Tabla 2. Probabilidad binomial de un número x de cerditos machos en camadas de 6 cerditos.&quot;) %&gt;%
+kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2. Probabilidad binomial de un número x de cerditos machos en camadas de 6 cerditos.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+x_machos
+</th>
+<th style="text-align:right;">
+p_x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.015625
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.093750
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.234375
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.312500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.234375
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.093750
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.015625
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>library(ggplot2)
+# gráfica de columnas
+graf_binom &lt;- ggplot(x=x_machos, y=p_x, binomial) +
+  geom_col(aes(x = x_machos, y = p_x))
+graf_binom</code></pre>
+<p><img src="modulod5_files/figure-html/unnamed-chunk-3-1.png" width="672" /> <strong>Figura 3</strong>. Distribución binomial de probabilidades, para la ocurrencia de camadas de cerdo silvestre con cantidades de machos entre 0 y 6.</p>
+<p>Asumimos que la probabilidad de los cerditos de ser macho o hembra es 0.5. En un sitio de cria de estos cerditos, examinaron el número de machos por camada de seis, y encontraron que de 100 camadas 20 tuvieron 5 o más machos. Queremos saber si esta cantidad se ajusta a la distribución binomial y es un resultado aleatorio o no.</p>
+<p>Primero vamos a calcular las <strong>frecuencias esperadas</strong>, (<span class="math inline">\(E(x) = n*p(x)\)</span>) a apartir de las probabilidades binomiales y el número de ensayos (camadas).</p>
+<pre class="r"><code># frecuencia esperada
+f_esp &lt;- p_x * 100
+frec_esp &lt;- data.frame(x_machos, p_x, f_esp)
+# tabla
+frec_esp %&gt;%
+kbl(caption = &quot;Tabla 3. Probabilidad binomial de un número x de cerditos machos en camadas de 6 cerditos y la frecuencia esperada en 100 camadas.&quot;) %&gt;%
+kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 3. Probabilidad binomial de un número x de cerditos machos en camadas de 6 cerditos y la frecuencia esperada en 100 camadas.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+x_machos
+</th>
+<th style="text-align:right;">
+p_x
+</th>
+<th style="text-align:right;">
+f_esp
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.015625
+</td>
+<td style="text-align:right;">
+1.5625
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.093750
+</td>
+<td style="text-align:right;">
+9.3750
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.234375
+</td>
+<td style="text-align:right;">
+23.4375
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.312500
+</td>
+<td style="text-align:right;">
+31.2500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.234375
+</td>
+<td style="text-align:right;">
+23.4375
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.093750
+</td>
+<td style="text-align:right;">
+9.3750
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.015625
+</td>
+<td style="text-align:right;">
+1.5625
+</td>
+</tr>
+</tbody>
+</table>
+<p>En la tabla anterior observamos que la frecuencia de camadas (usando la regla de la adición de eventos excluyentes) con 5 o 6 cerditos en 100 casos (camadas) es aproximadamente 11. Obtener 20 camadas con 5 o 6 cerditos, parece no ajustarse a un proceso aleatorio, y es posible que algún factor no aleatorio determina el sexo en las camadas.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="la-distribución-de-poisson" class="section level3">
+<h3>La Distribución de Poisson</h3>
+<p>Otra distribución de probabilidades de eventos discretos, muy utilizada en biología, es la <strong>distribución de Poisson</strong>. Una aplicación común de esta distribución de probabilidades, es en el estudio de eventos con frecuencia muy baja, y tratar de probar si su ocurrencia es independiente con respecto a otras. En teoría esta distribución no tiene un límite superior, pero su límite inferior es la no ocurrencia del evento.</p>
+<p>Usualmente las frecuencias (o proporciones de un total) de las ocurrencias se miden en función del espacio (distancias) y en el tiempo.</p>
+</div>
+<div id="ecuación-de-la-distribución-de-poisson" class="section level3">
+<h3>Ecuación de la distribución de Poisson</h3>
+<p>La distribución de proporciones (frecuencias) o probabilidades de ocurrencia, de eventos independientes, sin límite teórico de ocurrencias, se puede definir con la siguiente ecuación:<br />
+<span class="math display">\[p(x) = \frac{\mu^{x}e^{-\mu}}{x!}\]</span> donde <span class="math inline">\(\mu\)</span> es la media de la población de ocurrencias del evento por unidad de muestreo o caso, <span class="math inline">\(e\)</span> es la base de los logaritmos naturales, y <span class="math inline">\(p(x)\)</span> es la probabilidad de ocurrencia de <span class="math inline">\(x\)</span> eventos en una unidad de muestreo o caso. Sin embargo, usualmente no conocemos la media de la población, y usamos la media de la muestra:<br />
+<span class="math display">\[p(x) = \frac{\bar x^{x}e^{-\bar x}}{x!}\]</span></p>
+<p>Alternativamente, podemos encontrar los valores de probabilidad <em>p(x)</em>, utilizando una <a href="https://drive.google.com/file/d/13FYc6FRVBZstAeSOC0IjI0yA9v2suCFJ/view?usp=sharing">tabla de probabilidades de Poisson</a>, cuyas filas son los valores de <strong>x</strong> y las columnas los valores de <span class="math inline">\(\bar x\)</span>, llamados también <span class="math inline">\(\lambda\)</span>.</p>
+<div id="ejemplo-10" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>(Example 5.9 Havel <em>et al.</em> 2019) La distribución del número de plántulas de arce <em>(maple)</em> en 100 parcelas cuadradas de 1 <span class="math inline">\(m^2\)</span>, en teoría puede seguir una distribución de Poisson. La media de la muestra, llamada también lambda (<span class="math inline">\(\lambda\)</span>) en la distribución de Poisson, es 1.41 plántulas de arce por parcela. La siguiente gráfica compara los valores teóricos con los reales.</p>
+<pre class="r"><code># datos reales de arce
+arce &lt;- read.csv(&quot;data/Table 3.3.csv&quot;)
+# función Poisson
+# pois &lt;- dpois(0:5, lambda = 1.41)
+pois &lt;- dpois(0:6, lambda = 1.41) * 100
+# gráficas
+hist(arce$Seedlings, right = FALSE, breaks = seq(0, 6, 1), las = 1, col = &quot;green&quot;, xaxt = &quot;n&quot;, main = &quot;&quot;, xlab = &quot;Número de plántulas en parcelas&quot;)
+axis(1, at = seq(0.5, 5.5, 1), labels = seq(0,5,1))
+lines(pois ~ c(0:6 + 0.5), lwd = 2)
+points(pois ~ c(0:6 + 0.5), lwd = 2)</code></pre>
+<p><img src="modulod5_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><strong>Figura 4</strong> Distribución de frecuencias del número de plantas por parcela (barras), y la frecuencia esperada de la distribución de Poisson (puntos y línea), con <span class="math inline">\(\lambda = 1.41\)</span>.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

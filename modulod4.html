@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Estadísticas Descriptivas</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Estadísticas Descriptivas</h1>
+
+</div>
+
+
+<div id="estadísticas-descriptivas-medidas-de-la-tendencia-central-y-de-dispersión-de-los-datos" class="section level1">
+<h1>1.4.Estadísticas Descriptivas: Medidas de la Tendencia Central y de Dispersión de los Datos</h1>
+<p>Al medir alguna característica (variable) en individuos de una población (o muestra generalmente), usualmente encontraremos que hay diferencias en los valores obtenidos. En esta sección del curso conoceremos algunas maneras de encontrar medidas de la tendencia central de las variables, y de la variación entre los individuos.</p>
+<div id="parámetros-poblacionales-y-de-la-muestra" class="section level2">
+<h2>1.4.1.Parámetros Poblacionales y de la Muestra</h2>
+<div id="objetivo" class="section level4">
+<h4>Objetivo</h4>
+<p><strong>Diferenciar parámetros y estadísticos, en el lenguaje de las estadísticas</strong></p>
+<p>Con las mediciones que realizamos en una muestra, podemos calcular algunos aspectos de la tendencia central y variación entre individuos; estos valores se denominan <strong>estadísticos</strong>, y permiten estimar los valores de la tendencia central y la dispersión en la población, los que en este caso se denominan <strong>parámetros poblacionales</strong>.</p>
+</div>
+<div id="parámetros-y-estadísticos" class="section level3">
+<h3>Parámetros y estadísticos</h3>
+<p>A continuación una lista de algunos parámetros y estadísticos de uso común:</p>
+<blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>medida</th>
+<th align="center">parámetro</th>
+<th align="center">estadístico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>media</td>
+<td align="center"><span class="math inline">\(\mu\)</span></td>
+<td align="center"><span class="math inline">\(\bar X\)</span></td>
+</tr>
+<tr class="even">
+<td>mediana</td>
+<td align="center"><span class="math inline">\(\theta\)</span></td>
+<td align="center"><span class="math inline">\(M\)</span></td>
+</tr>
+<tr class="odd">
+<td>varianza</td>
+<td align="center"><span class="math inline">\(\sigma^2\)</span></td>
+<td align="center"><span class="math inline">\(s^2\)</span></td>
+</tr>
+<tr class="even">
+<td>desviación estándar</td>
+<td align="center"><span class="math inline">\(\sigma\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td>proporción</td>
+<td align="center"><span class="math inline">\(p\)</span></td>
+<td align="center"><span class="math inline">\(\hat p\)</span></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="medidas-de-la-tendencia-central" class="section level2">
+<h2>1.4.2.Medidas de la Tendencia Central</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Conocer los estadísticos que describen la tendencia central</strong></p>
+<p>La <strong>tendencia central</strong> de una muestra (o población) es el valor alrededor del cual se agrupan las observaciones o mediciones de una variable. Existen varios estadísticos para describirlas, y su selección depende del tipo de variable y la distribución de los datos.</p>
+</div>
+<div id="proporción" class="section level3">
+<h3>Proporción</h3>
+<p>Se refiere a la <strong>fracción</strong> de individuos o casos en una muestra, que tienen alguna característica (o nivel de una variable categórica).<br />
+Si <em>x</em> es el número de observaciones de interés y <em>n</em> el tamaño de la muestra, entonces la proporción observada será: <span class="math display">\[\hat p = \frac{x}{n}\]</span> A menudo las proporciones se convierten a porcentajes <em>(%)</em> multiplicando por 100.</p>
+<div id="ejercicio" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>A partir de los resultados de una encuesta vamos a calcular la proporción de estudiantes que viven en Humacao.</p>
+<pre class="r"><code># individuos que cumplen la condición
+x &lt;- 7
+# total de individuos en la muestra
+n &lt;- 29
+# proporción
+p &lt;- x / n
+# porcentaje
+pciento &lt;- p * 100
+# resultados
+resulta &lt;- data.frame(x, n, p, pciento)
+colnames(resulta) &lt;- c(&quot;en Humacao&quot;, &quot;Total&quot;, &quot;proporción&quot;, &quot;%&quot;)
+resulta</code></pre>
+<pre><code>##   en Humacao Total proporción        %
+## 1          7    29  0.2413793 24.13793</code></pre>
+</div>
+</div>
+<div id="moda" class="section level3">
+<h3>Moda</h3>
+<p>Es otra manera de describir la tendencia central de una variable categórica. La <strong>moda</strong> es el valor más común de unos datos. Para determinar la moda no es necesario un cálculo especial, la moda se identifica; una manera de obtenerla es observar una gráfica de barras de frecuencias o un histograma (para variables continuas). A continuación tiene una función para identificar la moda en números y caracteres.</p>
+<div id="ejercicio-1" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Moda de los datos de edad de la clase.</p>
+<p>¿Cúal es la diferencia entre moda y proporción?</p>
+<pre class="r"><code># tomado de: tutorials-point
+# crear la función
+getmode &lt;- function(x) {
+   uniqv &lt;- unique(x)
+   uniqv[which.max(tabulate(match(x, uniqv)))]
+}
+# vector con números
+v &lt;- c(2,1,2,3,1,2,3,4,1,5,5,3,2,3)
+
+# identificación de la moda
+result &lt;- getmode(v)
+print(result)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code># vector con texto
+charv &lt;- c(&quot;o&quot;,&quot;it&quot;,&quot;the&quot;,&quot;it&quot;,&quot;it&quot;)
+
+# identificación de la moda
+result &lt;- getmode(charv)
+print(result)</code></pre>
+<pre><code>## [1] &quot;it&quot;</code></pre>
+</div>
+</div>
+<div id="mediana" class="section level3">
+<h3>Mediana</h3>
+<p>En una lista ordenada de valores numéricos, la <strong>mediana</strong> es el valor que divide de manera igual, por arriba y por abajo, la cantidad de valores de la variable.</p>
+<p>Cuando el número de datos es impar, el valor de la mediana es uno de los datos, aquel que divide en partes iguales la secuencia de datos. Cuando el número de datos es par, los dos valores centrales se promedian, para obtener la mediana:</p>
+<blockquote>
+<p><em>caso 1:</em>   2, 2, 2, <strong>3</strong>, 3, 4, 4     M = 3</p>
+</blockquote>
+<blockquote>
+<p><em>caso 2:</em>   2, 2, 2, <strong>3, 4</strong>, 4, 4, 4     M = 3.5</p>
+</blockquote>
+<blockquote>
+<p><em>caso 3:</em>   2, 2, 2, <strong>3, 4</strong>, 10, 100, 1000     M = 3.5</p>
+</blockquote>
+<pre class="r"><code># mediana caso 1
+mediana1 &lt;- median(c(2, 2, 2, 3, 3, 4, 4))
+# mediana caso 2
+mediana2 &lt;- median(c(2, 2, 2, 3, 4, 4, 4, 4))
+# mediana caso 3
+mediana3 &lt;- median(c(2, 2, 2, 3, 4, 10, 100, 1000))
+medianas &lt;- data.frame(mediana1, mediana2, mediana3)
+colnames(medianas) &lt;- c(&quot;Caso 1&quot;, &quot;Caso 2&quot;, &quot;Caso 3&quot;)
+medianas</code></pre>
+<pre><code>##   Caso 1 Caso 2 Caso 3
+## 1      3    3.5    3.5</code></pre>
+<div id="ejercicio-2" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Calcular manualmente la mediana de la edad de la clase.</p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="media" class="section level3">
+<h3>Media</h3>
+<p>La <strong>media</strong> es el promedio aritmético de un conjunto de datos numéricos. Si realizamos la medición de todos los individuos de una población y calculamos la media, obtendremos la verdadera <strong>media poblacional</strong> (<span class="math inline">\(\mu\)</span>). Si las mediciones son en una muestra de la población y calculamos la media, obtendremos la <strong>media muestral</strong> (<span class="math inline">\(\bar X\)</span>).</p>
+<p>La fórmula de la media, para un conjunto de valores <span class="math inline">\(x_1,\ x_2,\ x_3,...,\ x_n\)</span>, será:<br />
+<span class="math display">\[\bar X = \frac{\sum x}{n}\]</span></p>
+<p>es decir, la suma de todos los valores, dividido entre la cantidad de valores de la muestra.</p>
+<p>La función de R para calcular la media en <strong>mean(x)</strong>, donde <strong>x</strong> es un vector de datos de una variable.</p>
+<div id="ejercicio-3" class="section level4">
+<h4><strong>Ejercicio</strong></h4>
+<p>Calculo de la media de la edad de la clase.</p>
+</div>
+</div>
+<div id="media-ponderada" class="section level3">
+<h3>Media ponderada</h3>
+<p>En algunos casos los datos numéricos discretos están organizados como una distribución de frecuencia (ver Figura 7 del tema Gráficas y Tablas). En estos casos usamos lo que se conoce como una <strong>media ponderada</strong> <em>(weighted mean)</em>, y su fórmula es la siguiente:<br />
+<span class="math display">\[\bar X_w = \frac{\sum fx}{\sum f}\]</span></p>
+<p>La media ponderada se usa cuando diferentes medidas tienen diferentes pesos o niveles de importancia. Un ejemplo conocido es el cálculo de “promedio” o <em>GPA</em>.</p>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>J. Picachú tiene las siguientes notas luego de su primer año en la universidad:</p>
+<pre><code>## # A tibble: 14 x 3
+##    curso creditos nota 
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;
+##  1 B01          4 B    
+##  2 B02          4 A    
+##  3 M01          3 F    
+##  4 M02          3 A    
+##  5 F01          3 B    
+##  6 F02          4 A    
+##  7 Q01          4 D    
+##  8 Q02          4 B    
+##  9 H01          3 A    
+## 10 H02          3 B    
+## 11 L01          3 B    
+## 12 L02          3 B    
+## 13 S01          3 C    
+## 14 S02          3 B</code></pre>
+<p>Para usar el promedio ponderado primero debemos calcular la cantidad de créditos por nota <strong>(f)</strong>:</p>
+<pre><code>## # A tibble: 5 x 3
+##   nota      f valor_nota
+##   &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1 A        14          4
+## 2 B        23          3
+## 3 C         3          2
+## 4 D         4          1
+## 5 F         3          0</code></pre>
+<p>Ahora podemos calcular el promedio ponderado, o <em>GPA</em> para este caso:</p>
+<pre class="r"><code>GPA &lt;- sum(frecuencia$f * frecuencia$valor_nota) / sum(frecuencia$f)
+GPA</code></pre>
+<pre><code>## [1] 2.87234</code></pre>
+</div>
+</div>
+<div id="comparación-entre-la-moda-la-mediana-y-la-media" class="section level3">
+<h3>Comparación entre la moda, la mediana y la media</h3>
+<p>Según sea la distribución de frecuencias de los valores de una muestra, la moda, la mediana y la media podrán estar muy cerca o separadas una de otra.</p>
+<p><img src="imagenes/4-1a%20Symmetrical%20Frequency.jpg" alt="Distribución Simétrica de los Datos" /><br />
+<strong>Figura 1. Histograma mostrando una distribución simétrica de la frecuencia de valores de los datos.</strong></p>
+<p><img src="imagenes/4-1b%20Right-Skewed%20Frequency%20Distribution.jpg" alt="Distribución Asimétrica (Sesgada) de los Datos" /><br />
+<strong>Figura 2. Histograma mostrando una distribución asimétrica o sesgada de la frecuencia de valores de los datos.</strong></p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="medidas-de-dispersión" class="section level2">
+<h2>1.4.3.Medidas de Dispersión</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Obtener medidas para evaluar la variación de los datos alrededor de la tendencia central</strong></p>
+<p>En algunas situaciones puede ser más importante conocer las variaciones de las medidas con respecto al valor de la tendencia central, que esta misma. En el manejo de la diabetes, las variaciones diarias en la concentración de azúcar en la sangre son más importantes que su promedio.</p>
+<p>A esta variación en las medidas de las observaciones alrededor de la media se la conoce con el término <strong>dispersión</strong>. Vamos a revisar las medidas de dispersión más comunes en estadística.</p>
+</div>
+<div id="rango-o-ámbito" class="section level3">
+<h3>Rango o ámbito</h3>
+<p>El <strong>rango</strong> (en castellano puede llamarse también ámbito o alcance) es la diferencia entre el valor más grande y el más pequeño en los datos de una muestra.</p>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Con los datos de <em>Melocactus intortus</em> vamos a calcular el rango de los datos de la altura total de la planta.</p>
+<pre class="r"><code># leer los datos
+melocactus &lt;- read.csv(&quot;./data/melocactus.csv&quot;)
+# valor máximo
+LImax &lt;- max(melocactus$alturatotal)
+# valor mínimo
+LImin &lt;- min(melocactus$alturatotal)
+# rango
+Rango &lt;- LImax - LImin
+resultados &lt;- data.frame(LImax, LImin, Rango)
+resultados</code></pre>
+<pre><code>##   LImax LImin Rango
+## 1    69     3    66</code></pre>
+<p>El valor del rango está muy influenciado por los valores extremos o <em>outliers</em>, por esto el rango es solo una medida de los posibles valores que puede tener una variable, pero no una buena medida de la dispersión en muchos casos.</p>
+</div>
+</div>
+<div id="percentilas-cuartiles-y-sus-distancias" class="section level3">
+<h3>Percentilas, cuartiles y sus distancias</h3>
+<p>Cómo vimos anteriormente, la mediana divide los datos de tal manera que la mitad de los valores entán por debajo de su valor, y la otra mitad sobre ese valor. Podemos dividir los datos en conjuntos compuestos por proporciones diferentes a 0.5 (50%), y a estos valores de los datos que marcan esas divisiones se les denomina <strong>percentilas</strong>; la mediana sería la percentila 50%.<br />
+En las estadísticas descriptivas usualmente se utilizan las percentilas 25% y 75%, para medir la dispersión de los datos, y a estas y a la mediana (percentila 50%) se les denomina <strong>cuartiles</strong> (primero, segundo (mediana) y tercer cuartiles). Las percentilas 5% y 95% son también muy usadas para describir los datos que están muy por debajo o muy por encima de la tendencia central.</p>
+<div id="ejemplo-2" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Con los datos de <em>Melocactus intortus</em> vamos a calcular percentilas de los datos de la altura total de la planta.</p>
+<pre class="r"><code># leer los datos
+melocactus &lt;- read.csv(&quot;./data/melocactus.csv&quot;)
+# cálculo de percentilas
+summary(melocactus$alturatotal)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    3.00   11.00   18.00   21.93   30.00   69.00</code></pre>
+<pre class="r"><code># otras percentilas
+quantile(melocactus$alturatotal, c(0.05, 0.90, 0.95))</code></pre>
+<pre><code>##  5% 90% 95% 
+##   6  45  48</code></pre>
+</div>
+</div>
+<div id="gráficas-box-whisker" class="section level3">
+<h3>Gráficas Box &amp; Whisker</h3>
+<p>La representación gráfica de la dispersión, medida con cuartiles se puede hacer utilizando la gráfica <strong>Box &amp; Whisker</strong> (caja y bigote).</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(melocactus, aes(x=alturatotal)) + geom_boxplot(fill=&quot;cornflowerblue&quot;) +
+  labs(x = &quot;Altura total de la planta, cm&quot;)</code></pre>
+<p><img src="modulod4_files/figure-html/graficaBW-1.png" width="672" /></p>
+<div id="figura-3.-gráfica-de-box-whisker-para-la-altura-total-de-la-planta-cm-a-partir-de-los-datos-de-melocactus-intortus-en-el-bosque-de-guánica." class="section level4">
+<h4>Figura 3. Gráfica de Box &amp; Whisker para la altura total de la planta (cm), a partir de los datos de <em>Melocactus intortus</em> en el Bosque de Guánica.</h4>
+<p>En esta gráfica la línea dentro de la caja representa la mediana (segundo cuartil, percentila 50%), el borde izquierdo de la caja es la percentila 25% (primer cuartil), y el borde de la derecha el tercer cuartil (percentila 75%). Las puntas de los bigotes se calculan restando al valor del primer cuartil y sumando al del tercer cuartil, 1.5 veces la <strong>distancia intercuartil</strong> (<span class="math inline">\(Q_3 - Q_1\)</span>), y localizando el dato con valor mínimo y máximo correspondiente, dentro de esos límites. Estos valores corresponden, aproximadamente, a la percentila 10% y 90%, respectivamente.</p>
+</div>
+</div>
+<div id="gráfica-de-frecuencia-acumulada" class="section level3">
+<h3>Gráfica de frecuencia acumulada</h3>
+<p>Otra manera de visualizar la ubicación de las percentilas y la mediana es usar una gráfica de frecuencia acumulada de los datos.<br />
+<img src="imagenes/4-3%20Cumulative%20Freq%20for%20Percentiles.jpg" /></p>
+<div id="figura-4.-frecuencia-acumulada-de-valores-de-la-longitud-de-peces-mm.-las-líneas-verticales-indican-los-valores-de-longitud-en-el-eje-x-del-primer-cuartil-25-de-los-valores-de-la-mediana-50-de-los-valores-y-del-tercer-cuartil-75-de-los-valores" class="section level4">
+<h4>Figura 4. Frecuencia acumulada de valores de la longitud de peces (mm). Las líneas verticales indican los valores de longitud, en el eje x, del primer cuartil (25% de los valores), de la mediana (50% de los valores) y del tercer cuartil (75% de los valores)</h4>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="varianza-desviación-estándar-y-error-estándar" class="section level3">
+<h3>Varianza, desviación estándar y error estándar</h3>
+<p>Ahora consideraremos algunas medidas de la dispersión alrededor de la media. De manera intuitiva podemos sugerir que una medida de dispersión es la diferencia entre cada valor (<span class="math inline">\(x_i\)</span>) de nuestra muestra y la media de la muestra (<span class="math inline">\(\bar X\)</span>): <span class="math display">\[d = (x_i - \bar X)\]</span> y que la suma de estas diferencias (<span class="math inline">\(\sum (x_i - \bar X)\)</span>) será una medida de la dispersión. Sin embargo, podemos probar, por la misma definición de media, que esta sumatoria es igual a 0, ya que los valores negativos y positivos se cancelan. Pero si elevamos al cuadrado cada diferencia, esto no ocurre y podemos definir la dispersión total como la <strong>suma de cuadrados de las diferencias</strong> <em>(SS)</em>, una cantidad muy importante en estadísticas y que se representa: <span class="math display">\[SS = \sum (x_i - \bar X)^2\]</span> <em>SS</em> mide la dispersión total, es decir que si tenemos más valores de la variable medida, tendremos más variación, y no serían comparables medidas de dispersión entre muestras de diversos tamaños. Para normalizar (estandarizar) está cantidad, se divide entre el tamaño de la muestra menos 1 (ajuste para evitar sesgo, según la teoría estadística), y tenemos entonces lo que se conoce como la <strong>varianza</strong>:<br />
+<span class="math display">\[s^2 = \frac{\sum (x_i - \bar X)^2}{n-1}\]</span><br />
+Para fines prácticos, es más común usar la raíz cuadrada de la varianza, llamada <strong>desviación estándar</strong> <em>(s)</em>, y así las unidades de la tendencia central y la dispersión se expresan en las mismas unidades de medición.</p>
+<p>La desviación estándar es una medida de la dispersión alrededor de la media en una muestra, pero podemos también considerar el caso en que tomemos un número grande de muestras de la misma población, y queremos conocer una medida de la dispersión de los valores de las medias de ese conjunto de muestras; en este caso se usa el <strong>error estándar</strong> como estimador de esa cantidad:<br />
+<span class="math display">\[s_{\bar X} = \frac{s}{\sqrt n}\]</span> dónde <em>n</em> es el tamaño de nuestra muestra, y <em>s</em> su desviación estándar. En términos prácticos este valor representa una medida de la <strong>precisión</strong> de nuestras mediciones, la cual aumenta al disminuir el error estándar. Esto justifica, en parte, la necesidad de tener muchos datos en una muestra.</p>
+</div>
+<div id="coeficiente-de-variación" class="section level3">
+<h3>Coeficiente de variación</h3>
+<p>Los valores anteriores de medidas de dispersión, son comparables entre muestras de la misma variable, sujetos o casos y unidades de medición, pero dejan de serlo cuando los grupos o variables medidas son muy dispares o tienen unidades diferentes. En estas situaciones es conveniente el uso del <strong>coeficiente de variación</strong> <em>(CV)</em>:</p>
+<p><span class="math display">\[CV(\%) = \frac{s}{\bar X} * 100\]</span> <strong>Ejemplo</strong><br />
+En la siguiente tabla se ilustra la utilidad del coeficiente de variación:</p>
+<p><strong>Masa Corporal en kg</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Estadístico</th>
+<th align="left">Ratón</th>
+<th align="left">Elefante</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\bar X\)</span></td>
+<td align="left">0.0125</td>
+<td align="left">1240</td>
+</tr>
+<tr class="even">
+<td align="center"><em>s</em></td>
+<td align="left">0.0072</td>
+<td align="left">626</td>
+</tr>
+<tr class="odd">
+<td align="center"><em>CV</em></td>
+<td align="left">57.6</td>
+<td align="left">50.4</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+</div>
+<div id="método-para-calcular-tendencia-central-y-medidas-de-dispersión-en-r" class="section level2">
+<h2>1.4.4. Método para calcular tendencia central y medidas de dispersión en R</h2>
+<p>Hay varias maneras de calcular los estadísticos de la tendencia central usando R, a continuación usaremos una que permite calcular varios de ellos en los datos de altura total de la planta (cm) de <em>Melocactus intortus</em>, para grupos separados por un factor (estado: Enfermos, Saludables, X muertos).</p>
+<pre class="r"><code># leer los datos
+melocactus &lt;- read.csv(&quot;./data/melocactus.csv&quot;)
+# activar paquete doBy
+library(doBy)
+library(htmlTable) # para tablas elegantes
+descriptivas &lt;- summaryBy(alturatotal ~ estado, data = melocactus,
+  FUN = function(x) { c(media = mean(x), var = var(x), de = sd(x), es = sd(x)/sqrt(length(x)), CV = (sd(x)/mean(x))*100) } )
+colnames(descriptivas) &lt;- c(&quot;estado&quot;, &quot;media&quot;, &quot;varianza&quot;, &quot;desv. est.&quot;, &quot;error est.&quot;, &quot;CV%&quot;)
+txtRound(descriptivas, 2) #redondeo</code></pre>
+<pre><code>##   estado media varianza desv. est. error est.   CV%
+## 1      E 21.93   222.23      14.91       2.87 67.99
+## 2      S 23.04   241.01      15.52       1.79 67.38
+## 3      X 20.00   121.29      11.01       1.68 55.06</code></pre>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

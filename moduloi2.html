@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>moduloi2.knit</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles/styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadísticas</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="home.html">
+    <span class="fa fa-home"></span>
+     
+    Hola
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Datos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulod1.html">Estadísticas</a>
+    </li>
+    <li>
+      <a href="modulod2.html">Variables - Manejo de Datos</a>
+    </li>
+    <li>
+      <a href="modulod3.html">Tablas y Gráficas</a>
+    </li>
+    <li>
+      <a href="modulod4.html">Estadísticas Descriptivas</a>
+    </li>
+    <li>
+      <a href="modulod5.html">Probabilidades - Distribuciones Discretas</a>
+    </li>
+    <li>
+      <a href="datos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Inferencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="moduloi1.html">Inferencia Estadística - Prueba de Hipótesis</a>
+    </li>
+    <li>
+      <a href="moduloi2.html">Hipótesis sobre Frecuencias</a>
+    </li>
+    <li>
+      <a href="moduloi3.html">Distribución Normal</a>
+    </li>
+    <li>
+      <a href="moduloi4.html">Inferencias: Una Población</a>
+    </li>
+    <li>
+      <a href="moduloi5.html">Inferencias: Dos Poblaciones</a>
+    </li>
+    <li>
+      <a href="inferencia.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Modelos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modulom1.html">Análisis de Varianza</a>
+    </li>
+    <li>
+      <a href="modulom2.html">Análisis de Correlación</a>
+    </li>
+    <li>
+      <a href="modulom3.html">Análisis de Regresión</a>
+    </li>
+    <li>
+      <a href="modulom4.html">Otros Modelos</a>
+    </li>
+    <li>
+      <a href="modulom5.html">Diseño Experimental</a>
+    </li>
+    <li>
+      <a href="modelos.html">Otros Recursos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="hipótesis-sobre-frecuencias" class="section level1">
+<h1>2.2.Hipótesis sobre Frecuencias</h1>
+<p>En las investigaciones biológicas, muchas veces determinamos las frecuencias con la que ocurren ciertos eventos, que están clasificados en ciertas categorías.</p>
+<div id="ejemplos" class="section level4">
+<h4><strong>Ejemplos</strong></h4>
+<ul>
+<li>La razón o proporción de los sexos en las poblaciones.<br />
+</li>
+<li>La frecuencia de ciertos fenotipos.<br />
+</li>
+<li>La incidencia de ciertas enfermedades.</li>
+</ul>
+<p>En esta sección estaremos conociendo sobre dos tipos de problemas:</p>
+<ol style="list-style-type: decimal">
+<li>Probar la <strong>bondad de ajuste</strong> de frecuencias observadas, a ciertas expectativas.<br />
+</li>
+<li>Probar la <strong>asociación</strong> entre dos variables categóricas.</li>
+</ol>
+</div>
+<div id="prueba-de-bondad-de-ajuste" class="section level2">
+<h2>2.2.1.Prueba de Bondad de Ajuste</h2>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Aplicar la prueba de Chi-cuadrado a problemas de frecuencias en los datos observados</strong></p>
+<p>La hipótesis nula de (<span class="math inline">\(H_0\)</span>) para una <strong>prueba de bondad de ajuste</strong> es que la distribución de frecuencias observadas en los datos no es diferencte de una distribución de frecuencias especificada con anterioridad (binomial, Poisson). Si <span class="math inline">\(H_0\)</span> no se puede rechazar, quiere decir que cualquier alejamiento de la distribución esperada, es debido al azar.</p>
+</div>
+<div id="supuestos-de-la-prueba" class="section level3">
+<h3>Supuestos de la prueba</h3>
+<blockquote>
+<p>Para revisar antes de realizar la prueba</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li>Los datos son frecuencias en <strong>categorías mutuamente excluyentes</strong>.<br />
+</li>
+<li>Las <strong>observaciones son independientes</strong> una de otra.<br />
+</li>
+<li>Cada categoría debe que tener un <strong>número mínimo de datos</strong>. En general, las categorías esperadas no deberían tener frecuencias de menos de 5.</li>
+</ol>
+</div>
+<div id="el-estadístico-chi-cuadrado-chi2" class="section level3">
+<h3>El estadístico Chi-cuadrado (<span class="math inline">\(\chi^2\)</span>)</h3>
+<blockquote>
+<p>Midiendo las discrepancias entre frecuencias observadas y frecuencias esperadas</p>
+</blockquote>
+<p>La pregunta que nos hacemos: ¿es la diferencia entre los resultados (frecuencias) observadas, y los esperados estadísticamente significativa?</p>
+<p>El estadístico <strong>Chi-cuadrado (<span class="math inline">\(\chi^2\)</span>)</strong> se utiliza para esa pregunta, y su fórmula es la siguiente:</p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^k\frac{(f_o - f_e)^2}{f_e}\]</span> donde:</p>
+<blockquote>
+<p><span class="math inline">\(f_o\)</span> es la frecuencia observada en la categoría <em>i</em><br />
+<span class="math inline">\(f_e\)</span> es la frecuencia esperada en la categoría <em>i</em><br />
+<em>k</em> es el número de categorías</p>
+</blockquote>
+</div>
+<div id="ajuste-a-frecuencias-teóricas" class="section level3">
+<h3>Ajuste a frecuencias teóricas</h3>
+<div id="ejemplo" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Un geneticista de plantas evalúa el resultado de cruces en una población de plantas con flores amarillas y flores verdes: de un total de 100 semillas que sembró, obtuvo 84 plantas con flores amarillas y 16 con flores verdes. ¿Se ajusta este resultado a un sistema dominante-recesivo, 3:1?</p>
+<p>Podemos establecer las siguientes hipótesis, asumiendo que esperamos una distribución según un sistema dominante-recesivo:<br />
+<span class="math inline">\(H_0\)</span>: la muestra proviene de una población con una proporción 3:1 de flores amarillas a flores verdes.<br />
+<span class="math inline">\(H_A\)</span>: la muestra proviene de una población que no tiene la proporción 3:1.</p>
+<p>Tabla 1. frecuencias observadas y esperadas de colores de flores.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>amarillas</th>
+<th>verdes</th>
+<th>n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(f_o\)</span></td>
+<td>84</td>
+<td>16</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(f_e\)</span></td>
+<td>75</td>
+<td>25</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Primero debemos verificar si se cumplen los supuestos. Luego procedemos al cálculo del estadístico usando la fórmula anterior.</p>
+<pre class="r"><code>#calculo de chi-cuadrado
+fo &lt;- c(84,16)
+fe &lt;- c(75,25)
+chicu &lt;- sum(((fo - fe)^2)/fe)
+sprintf(&quot;Chi-cuadrado calculado = %.2f&quot;, chicu)</code></pre>
+<pre><code>## [1] &quot;Chi-cuadrado calculado = 4.32&quot;</code></pre>
+<p>Ahora debemos comprobar si el valor del estadístico calculado (<span class="math inline">\(\chi^2_{c}\)</span>) nos indica si podemos o no rechazar <span class="math inline">\(H_0\)</span>. Esto lo podemos hacer de dos maneras:</p>
+<ol style="list-style-type: decimal">
+<li><p>Buscacndo un <strong>valor crítico</strong> de <span class="math inline">\(\chi^2\)</span>, para el valor de <span class="math inline">\(\alpha\)</span> previamente seleccionado (digamos que 0.05). Para esto podemos usar una tabla del estadístico <span class="math inline">\(\chi^2\)</span>, <a href="https://drive.google.com/file/d/1YmEAW7H4oh0C2nVUP3JIHvYJP0rwezG3/view?usp=sharing">Chi-square Distribution Table</a>, la cual tiene en la parte superior los valores de <span class="math inline">\(\alpha\)</span> y en la columna de la izquierda los valores de <strong>grados de libertad</strong> <em>(degrees of freedom, df)</em>, que en el caso de esta prueba se calculan como: <span class="math inline">\(df = número\ de\ categorías - 1\)</span>. Si el <span class="math inline">\(\chi^2_{c}\)</span> es <strong>mayor</strong> que el valor crítico, podemos decir que rechazamos la <span class="math inline">\(H_0\)</span> con alguna <span class="math inline">\(p \leq \alpha\)</span>.</p></li>
+<li><p>Calculando el valor de la probabilidad <em>(p-value)</em>, y si este es menor que el valor de <span class="math inline">\(\alpha\)</span> podemos rechazar <span class="math inline">\(H_0\)</span> con ese nivel de probabilidad calculado. Este cálculo lo podemos hacer utilizando R.</p></li>
+</ol>
+<pre class="r"><code>chisq.test(fo, p=fe, rescale.p = TRUE, correct = TRUE)</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  fo
+## X-squared = 4.32, df = 1, p-value = 0.03767</code></pre>
+<p>En resumen, el valor calculado de <span class="math inline">\(\chi^2\)</span> resultó mayor que el valor crítico (3.84), y el valor de <em>p</em> (0.037) fue menor que <span class="math inline">\(\alpha\)</span> = 0.05, por lo tanto podemos rechazar <span class="math inline">\(H_0\)</span> y decir que es muy probable que los valores observados no se ajustan a un sistema dominante-recesivo.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="ajuste-a-una-distribución-de-frecuencias" class="section level3">
+<h3>Ajuste a una distribución de frecuencias</h3>
+<div id="ejemplo-1" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>En los datos de número de plántulas de arce por parcela de muestreo de 1 <span class="math inline">\(m^2\)</span>, (ver 1.5.5 Distribución de Poisson, Figura 4) esperamos una distribución de frecuencias de Poisson <span class="math inline">\((H_0)\)</span>, si las plántulas se encuentran distribuidas al azar en un bosque. Vamos a realizar la prueba de bondad de ajuste con el estadístico Chi-cuadrado:</p>
+<pre class="r"><code>library(dplyr)
+library(kableExtra)
+# datos y frecuencias esperadas (Poisson)
+n_plant &lt;- c(&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5 o más&quot;)
+f_obs &lt;- c(35, 28, 15, 10, 7, 5)
+f_esp &lt;- (dpois(0:5, lambda = 1.41))*100
+# tabla de datos
+bondad_poisson &lt;- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson &lt;- setNames(bondad_poisson, c(&quot;# plant./parcela&quot;, &quot;frec. observada&quot;, &quot;frec. esperada&quot;))
+bondad_poisson %&gt;% 
+  kable(caption = &quot;Tabla 2a. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado&quot;) %&gt;%
+  kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2a. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+# plant./parcela
+</th>
+<th style="text-align:right;">
+frec. observada
+</th>
+<th style="text-align:right;">
+frec. esperada
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+24.414328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+34.424203
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+24.269063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+11.406460
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+4.020777
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5 o más
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1.133859
+</td>
+</tr>
+</tbody>
+</table>
+<p>Observando la tabla anterior podemos notar que las dos últimas categorías tienen valores de frecuencia esperada menores que 5, por lo que se está violando uno de los supuestos; podemos superar esta situación agrupando estos dos últimos valores.</p>
+<pre class="r"><code># datos y frecuencias esperadas (Poisson)
+n_plant &lt;- c(&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4 o más&quot;)
+f_obs &lt;- c(35, 28, 15, 10, 12)
+f_esp &lt;- (dpois(0:4, lambda = 1.41))*100
+f_esp[5] &lt;- 5.1
+# tabla de datos
+bondad_poisson &lt;- data.frame(n_plant, f_obs, f_esp)
+bondad_poisson &lt;- setNames(bondad_poisson, c(&quot;# plant./parcela&quot;, &quot;frec. observada&quot;, &quot;frec. esperada&quot;))
+bondad_poisson %&gt;% 
+  kable(caption = &quot;Tabla 2b. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado&quot;) %&gt;%
+  kable_classic(full_width = F, html_font =
+                  &quot;Cambria&quot;)</code></pre>
+<table class=" lightable-classic" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Tabla 2b. Frecuencias observadas y esperadas (Poisson) para el número de plántulas de arce por metro cuadrado
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+# plant./parcela
+</th>
+<th style="text-align:right;">
+frec. observada
+</th>
+<th style="text-align:right;">
+frec. esperada
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+24.41433
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+34.42420
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+24.26906
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+11.40646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4 o más
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+5.10000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Vamos a calcular el estadístico <span class="math inline">\(\chi^2\)</span> para esta prueba, y encontrar el valor crítico usando la tabla, para <span class="math inline">\(\alpha\)</span> = 0.05, y grados de libertad: <span class="math inline">\(df = num. categorías - 1 - num. parámetros\ de\ la\ distribución\)</span>, 5 - 1 - 1 = 3</p>
+<pre class="r"><code>#calculo de chi-cuadrado
+f_obsc &lt;- c(35, 28, 15, 10, 12)
+f_espc &lt;- c(24.4, 34.4, 24.3, 11.4, 5.1)
+chicup &lt;- sum(((f_obsc - f_espc)^2)/f_espc)
+sprintf(&quot;Chi-cuadrado calculado = %.2f&quot;, chicup)</code></pre>
+<pre><code>## [1] &quot;Chi-cuadrado calculado = 18.86&quot;</code></pre>
+<p>Al comparar el <span class="math inline">\(\chi^2\)</span> calculado con el valor de la tabla, 7.81, vemos que es mayor, por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span> con una probabilidad menor de <span class="math inline">\(\alpha\)</span>. A continuación la prueba en R:</p>
+<pre class="r"><code>chisq.test(f_obsc, p=f_espc, rescale.p = TRUE, correct = TRUE)</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  f_obsc
+## X-squared = 18.785, df = 4, p-value = 0.0008662</code></pre>
+<p>y observamos que el valor de p es menor que <span class="math inline">\(\alpha\)</span>, por lo que podemos rechazar la <span class="math inline">\(H_0\)</span> de que las plántulas están distribuidas al azar en el bosque.</p>
+<p><br />
+</p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+<div id="prueba-de-asociación" class="section level2">
+<h2>2.2.2.Prueba de Asociación</h2>
+<div id="objetivos-1" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Determinar si las frecuencias en dos variables categóricas son independientes</strong></p>
+<p>La <strong>prueba de asociación de Chi-cuadrado</strong> permite evaluar si dos variables categóricas están asociadas. En esta prueba, los mismos datos generan la hipótesis nula a probar. Los supuestos para esta prueba son similares a los de la prueba de bondad de ajuste.</p>
+<p>En esta prueba se utiliza el estadístico <span class="math inline">\(\chi^2\)</span> y la forma más común de calcularlo es: <span class="math display">\[\chi^2 = \sum_{i=1}^r \sum_{j=1}^c \frac{(f_{ij} - E_{ij})^2}{E_{ij}}\]</span><br />
+donde:</p>
+<blockquote>
+<p><span class="math inline">\(f_{ij}\)</span> es la frecuencia observada de la fila <em>i</em>, columna <em>j</em><br />
+<span class="math inline">\(E_{ij}\)</span> es la frecuencia esperada de la fila <em>i</em>, columna <em>j</em><br />
+<em>c</em> es el número de columnas<br />
+<em>r</em> es el número de filas (‘rows’)</p>
+</blockquote>
+</div>
+<div id="ejemplo-2" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>Queremos probar la independencia entre la característica color de pelo y sexo, en 300 humanos, seleccionando al azar 100 hombres y 200 mujeres. En primer lugar, creamos lo que se conoce como una <strong>tabla de contingencia</strong>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">color de pelo</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>sexo</strong></td>
+<td align="center">NEGRO</td>
+<td align="center">MARRON</td>
+<td align="center">RUBIO</td>
+<td align="center">ROJO</td>
+<td><strong>total</strong></td>
+</tr>
+<tr class="even">
+<td>HOMBRE</td>
+<td align="center">32</td>
+<td align="center">43</td>
+<td align="center">16</td>
+<td align="center">9</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>MUJER</td>
+<td align="center">55</td>
+<td align="center">65</td>
+<td align="center">64</td>
+<td align="center">16</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td><strong>total</strong></td>
+<td align="center">87</td>
+<td align="center">108</td>
+<td align="center">80</td>
+<td align="center">25</td>
+<td>300</td>
+</tr>
+</tbody>
+</table>
+<p>La forma más general de plantear las hipótesis es:<br />
+<span class="math inline">\(H_0\)</span>: <em>el color del pelo es independiente del sexo en la población muestreada</em>, y<br />
+<span class="math inline">\(H_A\)</span>: <em>el color del pelo no es independiente del sexo en la población muestreada</em>.</p>
+</div>
+<div id="cálculo-de-frecuencias-esperadas" class="section level3">
+<h3>Cálculo de frecuencias esperadas</h3>
+<p>Para calcular el estadístico <span class="math inline">\(\chi^2\)</span>, necesitamos primero calcular las frecuencias esperadas de cada categoría <em>ij</em>: <span class="math display">\[E_{ij} = \frac{R_i*C_j}{n}\]</span> donde: <span class="math display">\[R_i = \sum_{j=1}^c f_{ij}\]</span></p>
+<p><span class="math display">\[C_j = \sum_{i=1}^r f_{ij}\]</span><br />
+<em>c</em> es el número de columnas y <em>r</em> es el número de filas.</p>
+<p>Calculamos las frecuencias esperadas:</p>
+<pre class="r"><code>library(kableExtra)
+Ri &lt;- c(100,200)
+Ci &lt;- c(87,108,80,25)
+mfe &lt;- (Ri%*%t(Ci))/300
+fe &lt;- as.data.frame(mfe)
+sexo &lt;- c(&quot;Hombre&quot;,&quot;Mujer&quot;)
+colnames(fe) &lt;- c(&quot;Negro&quot;,&quot;Marrón&quot;,&quot;Rubio&quot;,&quot;Rojo&quot;)
+tablafe &lt;- cbind(sexo,fe)
+kable(tablafe, format = &quot;markdown&quot;, caption = &quot;Frecuencias Esperadas&quot;)</code></pre>
+<table>
+<caption>Frecuencias Esperadas</caption>
+<thead>
+<tr class="header">
+<th align="left">sexo</th>
+<th align="right">Negro</th>
+<th align="right">Marrón</th>
+<th align="right">Rubio</th>
+<th align="right">Rojo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hombre</td>
+<td align="right">29</td>
+<td align="right">36</td>
+<td align="right">26.66667</td>
+<td align="right">8.333333</td>
+</tr>
+<tr class="even">
+<td align="left">Mujer</td>
+<td align="right">58</td>
+<td align="right">72</td>
+<td align="right">53.33333</td>
+<td align="right">16.666667</td>
+</tr>
+</tbody>
+</table>
+<p>y construimos nuestra tabla de contingencia completa, con los valores esperados entre paréntesis:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">color de pelo</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>sexo</strong></td>
+<td align="center">NEGRO</td>
+<td align="center">MARRON</td>
+<td align="center">RUBIO</td>
+<td align="center">ROJO</td>
+<td><strong>total</strong></td>
+</tr>
+<tr class="even">
+<td>HOMBRE</td>
+<td align="center">32(29)</td>
+<td align="center">43(36)</td>
+<td align="center">16(26.7)</td>
+<td align="center">9(8.3)</td>
+<td>100 = <span class="math inline">\(R_1\)</span></td>
+</tr>
+<tr class="odd">
+<td>MUJER</td>
+<td align="center">55(58)</td>
+<td align="center">65(72)</td>
+<td align="center">64(53.3)</td>
+<td align="center">16(16.7)</td>
+<td>200 = <span class="math inline">\(R_2\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>total</strong></td>
+<td align="center">87 = <span class="math inline">\(C_1\)</span></td>
+<td align="center">108 = <span class="math inline">\(C_2\)</span></td>
+<td align="center">80 = <span class="math inline">\(C_3\)</span></td>
+<td align="center">25 = <span class="math inline">\(C_4\)</span></td>
+<td>300 = <span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cálculo-de-chi2-valor-crítico-y-resultado" class="section level3">
+<h3>Cálculo de <span class="math inline">\(\chi^2\)</span>, valor crítico y resultado</h3>
+<p>Con los valores de la tabla de contingencia completa, podemos calcular <span class="math inline">\(\chi^2\)</span> usando la fórmula a mano, o mediante R:</p>
+<pre class="r"><code>#matriz de frecuencia esperada es mfe
+#definimos matriz frecuencias observadas
+mfo &lt;- matrix(c(32,43,16,9,55,65,64,16), ncol = 4, byrow = TRUE)
+#cálculo de chi-cuadrado
+chicu2 = 0
+for(i in 1:2){
+  for(j in 1:4){
+    chicu1 = sum(((mfo[i,j] - mfe[i,j])^2)/mfe[i,j])
+      chicu2 = chicu2 + chicu1
+  }
+}
+sprintf(&quot;Chi-cuadrado calculado = %.2f&quot;, chicu2)</code></pre>
+<pre><code>## [1] &quot;Chi-cuadrado calculado = 8.99&quot;</code></pre>
+<p>Utilizamos la tabla para encontrar el valor crítico para un <span class="math inline">\(\alpha\)</span> = 0.05, y grados de libertad: <span class="math display">\[df = (filas - 1)*(columnas - 1)\]</span> el cual resulta ser: <span class="math display">\[\chi^2_{0.05,3} = 7.81\]</span><br />
+El valor calculado es mayor que el valor crítico, por lo cual podemos rechazar la <span class="math inline">\(H_0\)</span> de independencia, y por lo tanto parece existir alguna asociación entre tener algún color del pelo y el sexo de la persona.</p>
+<p>A continuación la prueba mediante R:</p>
+<pre class="r"><code>#data frame desde matriz de datos
+fo &lt;- as.data.frame(mfo)
+chisq.test(fo)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  fo
+## X-squared = 8.9872, df = 3, p-value = 0.02946</code></pre>
+</div>
+<div id="gráfica-de-mosaico-para-tablas-de-contingencia" class="section level3">
+<h3>Gráfica de mosaico para tablas de contingencia</h3>
+<p>Ahora bien, la prueba estadística solo nos indica si se acepta o rechaza la hipótesis nula, pero no nos específica dónde están las principales discrepancias entre las frecuencias, por efecto de la no-independencia entre los variables nominales. Una <strong>gráfica de mosaico</strong> puede ayudarnos a identificar las categorías entre las que se producen las mayores discrepancias.</p>
+<pre class="r"><code>library(vcd)
+mosaic(mfo, shade = TRUE, legend = FALSE, labeling_args = list(set_varnames = c(A = &quot;Sexo&quot;, B = &quot;Color Pelo&quot;)), set_labels = list(A = c(&quot;Hombre&quot;,&quot;Mujer&quot;), B = c(&quot;Negro&quot;,&quot;Marrón&quot;,&quot;Rubio&quot;,&quot;Rojo&quot;)))</code></pre>
+<p><img src="moduloi2_files/figure-html/mosaic-1.png" width="672" /></p>
+<p> </p>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+<div id="prueba-de-probabilidad-exacta-de-fisher" class="section level2">
+<h2>2.2.3.Prueba de Probabilidad Exacta de Fisher</h2>
+<div id="objetivos-2" class="section level4">
+<h4>Objetivos</h4>
+<p><strong>Utilizar una prueba de asociación cuando no se cumple uno de los supuestos de <span class="math inline">\(\chi^2\)</span></strong></p>
+<p>Cuando se tiene una tabla de contingencia 2 x 2, y alguna de las frecuencias esperadas es menor que 5, no debemos utilizar la prueba de <span class="math inline">\(\chi^2\)</span>; una alternativa es la prueba de <strong>probabilidad exacta de Fisher</strong>.</p>
+<p>Para esta prueba se calcula directamente un valor de probabilidad <em>p</em> que se contrasta con el nivel de probabilidad escogido <span class="math inline">\(\alpha\)</span>, usualmente 0.05. La siguiente tabla muestra la estructura de los datos:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">categoría 1</th>
+<th align="center">categoría 2</th>
+<th>Totales</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>grupo 1</td>
+<td align="center">A</td>
+<td align="center">B</td>
+<td>A+B</td>
+</tr>
+<tr class="even">
+<td>grupo 2</td>
+<td align="center">C</td>
+<td align="center">D</td>
+<td>C+D</td>
+</tr>
+<tr class="odd">
+<td>Totales</td>
+<td align="center">A+C</td>
+<td align="center">B+D</td>
+<td>A+B+C+D</td>
+</tr>
+</tbody>
+</table>
+<p>La fórmula para la probabilidad es la siguiente: <span class="math display">\[p = \frac{(A+B)!*(C+D)!*(A+C)!*(B+D)!}{n!*A!*B!*C!*D!}\]</span></p>
+</div>
+<div id="ejemplo-3" class="section level4">
+<h4><strong>Ejemplo</strong></h4>
+<p>En un experimento con la especie de serpiente <em>Thamnophis sirtalis</em> se estudió la respuesta de escape de individuos recién nacidos, cuando se le presentaba un estímulo en una de dos formas: por arriba, fuera de su campo visual y de forma lateral, frente a sus ojos. Los resultados fueron los siguientes:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Escape</th>
+<th align="center">No escape</th>
+<th>Totales</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estimulo arriba</td>
+<td align="center">6</td>
+<td align="center">1</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>Estimulo lateral</td>
+<td align="center">1</td>
+<td align="center">6</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>Totales</td>
+<td align="center">7</td>
+<td align="center">7</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<p>Calculamos el valor de <em>p</em> para la <span class="math inline">\(H_0\)</span> de no asociación.</p>
+<pre class="r"><code># matriz de datos
+matx &lt;- matrix(c(6, 1, 1, 6), ncol = 2, byrow = TRUE)
+# calculo de p
+pf &lt;- (factorial(matx[1,1]+matx[1,2])*factorial(matx[2,1]+matx[2,2])*factorial(matx[1,1]+matx[2,1])*factorial(matx[2,1]+matx[2,2]))/(factorial(sum(matx))*factorial(matx[1,1])*factorial(matx[1,2])*factorial(matx[2,1])*factorial(matx[2,2]))
+sprintf(&quot;Probabilidad exacta de Fisher = %.4f&quot;, pf)</code></pre>
+<pre><code>## [1] &quot;Probabilidad exacta de Fisher = 0.0143&quot;</code></pre>
+<p>El valor de la <em>p</em> nos indica que la probabilidad de que los datos observados se ajusten a la <span class="math inline">\(H_0\)</span> es menor que <span class="math inline">\(\alpha\)</span>, y por lo tanto podemos rechazar la <span class="math inline">\(H_0\)</span> de que la respuesta es independiente del estímulo.</p>
+<p>R posee una función para realizar la prueba:</p>
+<pre class="r"><code>fisher.test(matx, alternative = &quot;g&quot;, conf.int = FALSE)</code></pre>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  matx
+## p-value = 0.01457
+## alternative hypothesis: true odds ratio is greater than 1
+## sample estimates:
+## odds ratio 
+##    23.4961</code></pre>
+<p><a href="https://dsfernandez.github.io/bioestadisticas/index.html"><strong>Home</strong></a></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
