@@ -21,7 +21,7 @@ Es usual preguntarnos sobre el valor de la media de una población, a partir de 
 #### Objetivos  
 __Conocer la distribución _t_ y sus aplicaciones__  
 
-Cuando no conocemos la desviación estándar de la población estudiada, la distribución de la media de las muestras, se desvía de la normalidad, especialmente cuando el tamaño de la muestra es pequeño.  En estos casos se utiliza la __distribución _t_ __, también conocida como ___t_ de Student.__  
+En probabilidad y estadística, la distribución __t de Student__ (o simplemente la distribución _t_) es cualquier miembro de una familia de distribuciones de probabilidad continua que surgen al estimar la media de una población con distribución normal, en situaciones en las que el tamaño de la muestra es pequeño y se desconoce la desviación estándar de la población. Fue desarrollado por el estadístico inglés William Sealy Gosset bajo el seudónimo "Student". 
 
 ### Grados de Libertad  
 > Observaciones necesarias para determinar un parámetro estadístico
