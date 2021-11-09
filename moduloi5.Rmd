@@ -157,7 +157,7 @@ A partir de los datos anteriores se pueden calcular los estadísticos que necesi
 El estadístico U se calcula para ambas muestras:  
 $$U_A = n_A n_B + \frac{n_A(n_A + 1)}{2} - \sum R_A$$
 $$U_B = n_A n_B - U_A$$
-y obtenemos $U_A$ = 70.5 y $U_B$ = 19.5.  Se utiliza el valor mayor para comparar con el valor crítico de _U_ en la [Tabla U-Mann-Whitney](https://drive.google.com/file/d/1424rM80eN5CUszoIY24ARLQaNHKHI9Qg/view?usp=sharing), para $\alpha$ = 0.05 (dos colas), $n_1$ = 9 y $n_2$ = 10.  Al ser el valor $U_A$ mayor que el valor de $U_{0.05,9,10}$ = 20, podemos rechazar la hipótesis nula de igualdad de medianas, y concluir que los territorios de gatos machos son mayores en la localidad B.  
+y obtenemos $U_A$ = 70.5 y $U_B$ = 19.5.  Se utiliza el valor mayor para comparar con el valor crítico de _U_ en la [Tabla U-Mann-Whitney](https://drive.google.com/file/d/1424rM80eN5CUszoIY24ARLQaNHKHI9Qg/view?usp=sharing), para $\alpha$ = 0.05 (dos colas), $n_1$ = 9 y $n_2$ = 10.  Al ser el valor $U_A$ mayor que el valor de $U_{0.05,9,10}$ = 70, podemos rechazar la hipótesis nula de igualdad de medianas, y concluir que los territorios de gatos machos son mayores en la localidad B.  
 
 ### Prueba U de Mann-Whitney con R  
 La prueba U de Mann-Whitney se realiza en R usando la misma función de la prueba Wilcoxon, pero sin especificar para prueba pareada.  Solamente se proveen los datos crudos, sin tener que realizar el ordenamiento ni la codificación.  
