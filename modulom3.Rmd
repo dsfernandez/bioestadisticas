@@ -184,7 +184,7 @@ Para probar el modelo de regresión utilizamos el estadístico _F_, de manera si
 #### __Fórmulas para los cálculos de sumas de cuadrados:__  
 
 __Suma de Cuadrados de _y_ o Total $\sum y^2$:__  
-$$total\ SS = \sum y_i{^2} - \frac{(\sum y_i)^2}{n}$$
+$$total\ SS = \sum Y_i{^2} - \frac{(\sum Y_i)^2}{n}$$
 
 __Suma de Cuadrados de la Regresión:__
 $$regresión\ SS =\frac{(Suma\ Productos\ Cruzados\ xy)^2}{Suma\ Cuadrados\ de\ x} = \frac{(\sum xy)^2}{\sum x^2} = b\sum xy$$

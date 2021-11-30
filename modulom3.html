@@ -513,123 +513,65 @@ sparrow &lt;- data.frame(edad,l.ala)
 #tabla de datos
 knitr::kable(sparrow, col.names = c(&quot;Edad (días)&quot;, &quot;Longitud ala (cm)&quot;), caption = &#39;Tabla 1.  Longitud del ala derecha de gorriones de diferente edad&#39;) </code></pre>
 <table>
-<caption>
-Tabla 1. Longitud del ala derecha de gorriones de diferente edad
-</caption>
+<caption>Tabla 1. Longitud del ala derecha de gorriones de diferente edad</caption>
 <thead>
-<tr>
-<th style="text-align:right;">
-Edad (días)
-</th>
-<th style="text-align:right;">
-Longitud ala (cm)
-</th>
+<tr class="header">
+<th align="right">Edad (días)</th>
+<th align="right">Longitud ala (cm)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1.4
-</td>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1.4</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1.5
-</td>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">1.5</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2.2
-</td>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">2.2</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-2.4
-</td>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">2.4</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-3.1
-</td>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">3.1</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-3.2
-</td>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">3.2</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-3.2
-</td>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">3.2</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-3.9
-</td>
+<tr class="even">
+<td align="right">11</td>
+<td align="right">3.9</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-4.1
-</td>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">4.1</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-4.7
-</td>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">4.7</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-4.5
-</td>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">4.5</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:right;">
-5.2
-</td>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">5.2</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-17
-</td>
-<td style="text-align:right;">
-5.0
-</td>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">5.0</td>
 </tr>
 </tbody>
 </table>
@@ -704,7 +646,7 @@ Por otra parte, es importante cuantificar qué tan bien el modelo de regresión 
 <div id="fórmulas-para-los-cálculos-de-sumas-de-cuadrados" class="section level4">
 <h4><strong>Fórmulas para los cálculos de sumas de cuadrados:</strong></h4>
 <p><strong>Suma de Cuadrados de <em>y</em> o Total <span class="math inline">\(\sum y^2\)</span>:</strong><br />
-<span class="math display">\[total\ SS = \sum y_i{^2} - \frac{(\sum y_i)^2}{n}\]</span></p>
+<span class="math display">\[total\ SS = \sum Y_i{^2} - \frac{(\sum Y_i)^2}{n}\]</span></p>
 <p><strong>Suma de Cuadrados de la Regresión:</strong> <span class="math display">\[regresión\ SS =\frac{(Suma\ Productos\ Cruzados\ xy)^2}{Suma\ Cuadrados\ de\ x} = \frac{(\sum xy)^2}{\sum x^2} = b\sum xy\]</span></p>
 <p><strong>Suma de Cuadrados de Residuales:</strong> <span class="math display">\[residual\ SS = total\ SS - regresión\ SS\]</span></p>
 </div>
